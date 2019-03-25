@@ -1,9 +1,11 @@
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <div
     :style="storeModule.styleAttr"
     class="motto"
     v-html="storeModule.text"
   />
+  <!--eslint-enable-->
 </template>
 
 <script lang="ts">
