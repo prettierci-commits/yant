@@ -30,13 +30,15 @@ export default class Color extends Vue {
   label!: string
 
   get colors (): string[] {
-    return [].concat(
-      ...Object.values(vuetifyColors).map(({ base }) => base ? [base] : []),
-      '#000000',
-      '#303030',
-      '#888888',
+    return [
+      '#ffffff',
       '#cdcdcd',
-      '#ffffff'
+      '#888888',
+      '#303030',
+      '#000000'
+    ].concat(
+      ...Object.values(vuetifyColors)
+        .map(({ base }) => base ? [base] : [])
     )
   }
 }

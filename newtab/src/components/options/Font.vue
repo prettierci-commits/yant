@@ -102,10 +102,10 @@ export default class Motto extends Vue {
     })
   }
 
-  get color (): number {
+  get color (): string {
     return this.value.color
   }
-  set color (v: number) {
+  set color (v: string) {
     this.$emit('input', {
       ...this.value,
       color: v
