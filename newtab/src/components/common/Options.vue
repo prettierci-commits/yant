@@ -5,12 +5,9 @@
       wrap
     >
       <v-flex xs12>
-        <FontOptions v-model="font" />
-      </v-flex>
-      <v-flex xs12>
-        <Color
-          v-model="background"
-          label="Background"
+        <Styling
+          v-model="styling"
+          absolute
         />
       </v-flex>
     </v-layout>
@@ -18,34 +15,25 @@
 </template>
 
 <script lang="ts">
-import CommonModule, { getModule, IFont } from '@/store/Common'
-import FontOptions from '@/components/options/Font.vue'
 import Color from '@/components/options/Color.vue'
+import Styling from '@/components/options/Styling.vue'
 import { Component, Vue } from 'vue-property-decorator'
+import { commonModule, IStyling } from '@/store'
 
 @Component({
   components: {
     Color,
-    FontOptions
+    Styling
   }
 })
 export default class CommonOptions extends Vue {
-  get storeModule (): CommonModule {
-    return getModule(CommonModule, this.$store)
-  }
+  storeModule = commonModule
 
-  get font (): IFont {
-    return this.storeModule.font
+  get styling (): IStyling {
+    return this.storeModule.styling
   }
-  set font (v: IFont) {
-    this.storeModule.setFont(v)
-  }
-
-  get background (): string {
-    return this.storeModule.background
-  }
-  set background (v: string) {
-    this.storeModule.setBackground(v)
+  set styling (v: IStyling) {
+    this.storeModule.setStyling(v)
   }
 }
 </script>

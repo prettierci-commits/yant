@@ -1,7 +1,7 @@
 <template>
   <div
     class="clock"
-    :style="style"
+    :style="storeModule.styleAttr"
   >
     <div class="time">
       <span class="hours">{{ hours }}</span>
@@ -20,27 +20,17 @@
 </template>
 
 <script lang="ts">
-import ClockModule, { getModule } from '@/store/Clock'
 import formatDate from 'date-fns/format'
 import { Component, Vue } from 'vue-property-decorator'
+import { clockModule } from '@/store'
 
 @Component
 export default class Clock extends Vue {
+  storeModule = clockModule
+
   clockInterval: number | undefined = undefined
   date: Date = new Date()
   sepparator: string = ':'
-
-  get storeModule (): ClockModule {
-    return getModule(ClockModule, this.$store)
-  }
-
-  get style () {
-    return {
-      fontSize: this.storeModule.fontScale != null
-        ? `${this.storeModule.fontScale}em`
-        : null
-    }
-  }
 
   mounted () {
     this.clockInterval = window.setInterval(this.updateClock, 1000)

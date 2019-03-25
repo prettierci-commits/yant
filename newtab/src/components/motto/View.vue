@@ -1,32 +1,18 @@
 <template>
   <div
-    :style="style"
+    :style="storeModule.styleAttr"
     class="motto"
-    v-text="text"
+    v-html="storeModule.text"
   />
 </template>
 
 <script lang="ts">
-import MottoModule, { getModule } from '@/store/Motto'
+import { mottoModule } from '@/store'
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Motto extends Vue {
-  get storeModule (): MottoModule {
-    return getModule(MottoModule, this.$store)
-  }
-
-  get style () {
-    return {
-      fontSize: this.storeModule.fontScale != null
-        ? `${this.storeModule.fontScale}em`
-        : null
-    }
-  }
-
-  get text (): string {
-    return this.storeModule.text
-  }
+export default class MottoView extends Vue {
+  storeModule = mottoModule
 }
 </script>
 

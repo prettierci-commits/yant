@@ -5,35 +5,30 @@
       wrap
     >
       <v-flex xs12>
-        <v-text-field
-          v-model="fontScale"
-          clearable
-          label="Font scale"
-          min="0.1"
-          step="0.1"
-          type="number"
-        />
+        <Styling v-model="styling" />
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script lang="ts">
-import ClockModule from '@/store/Clock'
+import Styling from '@/components/options/Styling.vue'
 import { Component, Vue } from 'vue-property-decorator'
-import { getModule } from 'vuex-module-decorators'
+import { clockModule, IStyling } from '@/store'
 
-@Component
+@Component({
+  components: {
+    Styling
+  }
+})
 export default class Motto extends Vue {
-  get storeModule (): ClockModule {
-    return getModule(ClockModule, this.$store)
-  }
+  storeModule = clockModule
 
-  get fontScale (): number {
-    return this.storeModule.fontScale
+  get styling (): IStyling {
+    return this.storeModule.styling
   }
-  set fontScale (value: number) {
-    this.storeModule.setFontSize(value)
+  set styling (v: IStyling) {
+    this.storeModule.setStyling(v)
   }
 }
 </script>

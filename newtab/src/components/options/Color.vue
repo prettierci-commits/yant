@@ -1,12 +1,25 @@
 <template>
-  <div>
-    <div class="title text-sm-center pa-2">
+  <div
+    class="color-picker"
+    style="width: 200px;"
+  >
+    <div
+      class="title pa-2 white--text"
+    >
+      <v-switch
+        :disabled="clearable === false"
+        :input-value="value != null"
+        style="display: inline-block;"
+        @change="v => $emit('input', v ? '#ffffff' : null)"
+      />
       {{ label }}
     </div>
+
     <Sketch
-      :value="{ hex: value }"
-      class="color-picker"
+      v-show="value != null"
+      :disable-alpha="alpha === false"
       :preset-colors="colors"
+      :value="{ hex: value }"
       @input="v => $emit('input', v.hex)"
     />
   </div>
@@ -28,6 +41,12 @@ export default class Color extends Vue {
 
   @Prop({ required: true })
   label!: string
+
+  @Prop({ default: false })
+  clearable!: boolean
+
+  @Prop({ default: false })
+  alpha!: boolean
 
   get colors (): string[] {
     return [

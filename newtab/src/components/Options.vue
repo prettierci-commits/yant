@@ -64,8 +64,8 @@
 </template>
 
 <script lang="ts">
-import CommonModule, { getModule } from '@/store/Common'
 import { Component, Vue } from 'vue-property-decorator'
+import { commonModule } from '@/store'
 import { routes } from '@/router'
 
 import CommonWrapper from '@/components/common/Wrapper.vue'
@@ -85,13 +85,9 @@ export default class Root extends Vue {
     route: typeof routes[0]
   }[] = []
 
-  get storeModule (): CommonModule {
-    return getModule(CommonModule, this.$store)
-  }
-
   get previewStyle () {
     return {
-      backgroundColor: this.storeModule.background
+      backgroundColor: commonModule.styling.backgroundColor
     }
   }
 

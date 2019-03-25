@@ -1,30 +1,23 @@
-import { Module, VuexModule, Mutation, getModule } from 'vuex-module-decorators'
-export { getModule }
-
-export interface IFont {
-  color: string,
-  lineHeight: number,
-  size: number,
-  weight: number
-}
+import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
+import { generateStyleAttr, IStyling } from './lib'
 
 @Module({ namespaced: true, name: 'common' })
-export default class Motto extends VuexModule {
-  font: IFont = {
+export default class Common extends VuexModule {
+  styling: IStyling = {
+    backgroundColor: '#282828',
     color: '#ffffff',
-    lineHeight: 1.2,
-    size: 30,
-    weight: 500
-  }
-  background: string = '#303030'
-
-  @Mutation
-  setFont (font: IFont) {
-    this.font = font
+    fontFamily: 'Source Serif Pro',
+    fontSize: 15,
+    fontWeight: 100,
+    lineHeight: 1.5
   }
 
+  get styleAttr () {
+    return generateStyleAttr(this.styling)
+  }
+
   @Mutation
-  setBackground (color: string) {
-    this.background = color
+  setStyling (v: IStyling) {
+    this.styling = v
   }
 }

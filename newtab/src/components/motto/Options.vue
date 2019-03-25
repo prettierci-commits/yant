@@ -13,41 +13,37 @@
       </v-flex>
 
       <v-flex xs12>
-        <v-text-field
-          v-model="fontScale"
-          clearable
-          label="Font scale"
-          min="0.1"
-          step="0.1"
-          type="number"
-        />
+        <Styling v-model="styling" />
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script lang="ts">
-import MottoModule, { getModule } from '@/store/Motto'
+import Styling from '@/components/options/Styling.vue'
 import { Component, Vue } from 'vue-property-decorator'
+import { mottoModule, IStyling } from '@/store'
 
-@Component
-export default class Motto extends Vue {
-  get storeModule (): MottoModule {
-    return getModule(MottoModule, this.$store)
+@Component({
+  components: {
+    Styling
   }
+})
+export default class MottoOptions extends Vue {
+  storeModule = mottoModule
 
   get text (): string {
     return this.storeModule.text
   }
-  set text (value: string) {
-    this.storeModule.setText(value)
+  set text (v: string) {
+    this.storeModule.setText(v)
   }
 
-  get fontScale (): number | null {
-    return this.storeModule.fontScale
+  get styling (): IStyling {
+    return this.storeModule.styling
   }
-  set fontScale (value: number | null) {
-    this.storeModule.setFontSize(value)
+  set styling (v: IStyling) {
+    this.storeModule.setStyling(v)
   }
 }
 </script>
