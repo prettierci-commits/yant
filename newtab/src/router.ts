@@ -3,14 +3,16 @@ import Vue from 'vue'
 
 import RootView from '@/components/RootView.vue'
 
-import ClockOptions from '@/components/clock/Options.vue'
-import ClockPreview from '@/components/clock/View.vue'
-import CommonOptions from '@/components/common/Options.vue'
-import CommonPreview from '@/components/common/View.vue'
-import MottoOptions from '@/components/motto/Options.vue'
-import MottoPreview from '@/components/motto/View.vue'
-import OrderOptions from '@/components/order/Options.vue'
-import OrderPreview from '@/components/order/View.vue'
+const Options = () => import(/* webpackChunkName: "options" */ '@/components/Options.vue')
+
+const ClockOptions = () => import(/* webpackChunkName: "options" */ '@/components/clock/Options.vue')
+const ClockPreview = () => import(/* webpackChunkName: "options" */ '@/components/clock/View.vue')
+const CommonOptions = () => import(/* webpackChunkName: "options" */ '@/components/common/Options.vue')
+const CommonPreview = () => import(/* webpackChunkName: "options" */ '@/components/common/View.vue')
+const MottoOptions = () => import(/* webpackChunkName: "options" */ '@/components/motto/Options.vue')
+const MottoPreview = () => import(/* webpackChunkName: "options" */ '@/components/motto/View.vue')
+const OrderOptions = () => import(/* webpackChunkName: "options" */ '@/components/order/Options.vue')
+const OrderPreview = () => import(/* webpackChunkName: "options" */ '@/components/order/View.vue')
 
 Vue.use(Router)
 
@@ -24,9 +26,7 @@ const routes: RouteConfig[] = [{
   redirect: {
     name: 'options-common'
   },
-  component: () => import(
-    /* webpackChunkName: "options" */ '@/components/Options.vue'
-  ),
+  component: Options,
   children: [{
     path: '/options/common',
     name: 'options-common',
