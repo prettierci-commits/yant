@@ -1,5 +1,6 @@
 import './plugins/vuetify'
 import '@mdi/font/css/materialdesignicons.css'
+import 'source-serif-pro/source-serif-variable.css'
 import App from './App.vue'
 import Vue from 'vue'
 import router from './router'
