@@ -9,6 +9,8 @@ import CommonOptions from '@/components/common/Options.vue'
 import CommonPreview from '@/components/common/View.vue'
 import MottoOptions from '@/components/motto/Options.vue'
 import MottoPreview from '@/components/motto/View.vue'
+import OrderOptions from '@/components/order/Options.vue'
+import OrderPreview from '@/components/order/View.vue'
 
 Vue.use(Router)
 
@@ -60,6 +62,18 @@ const routes: RouteConfig[] = [{
       drawer: true,
       menuName: 'Clock',
       icon: 'mdi-clock'
+    }
+  }, {
+    path: '/options/order',
+    name: 'options-order',
+    components: {
+      options: OrderOptions,
+      preview: OrderPreview
+    },
+    meta: {
+      drawer: true,
+      menuName: 'Order',
+      icon: 'mdi-reorder-horizontal'
     }
   }]
 }]

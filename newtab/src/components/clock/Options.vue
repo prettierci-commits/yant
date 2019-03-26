@@ -21,7 +21,7 @@ import { clockModule, IStyling } from '@/store'
     Styling
   }
 })
-export default class Motto extends Vue {
+export default class ClockOptions extends Vue {
   storeModule = clockModule
 
   get styling (): IStyling {

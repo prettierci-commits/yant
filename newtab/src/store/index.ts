@@ -6,6 +6,7 @@ import { getModule } from 'vuex-module-decorators'
 import Clock from './Clock'
 import Common from './Common'
 import Motto from './Motto'
+import Order from './Order'
 
 Vue.use(Vuex)
 
@@ -15,7 +16,8 @@ const store = new Vuex.Store({
   modules: {
     clock: Clock,
     common: Common,
-    motto: Motto
+    motto: Motto,
+    order: Order
   },
 
   plugins: [persist.plugin],
@@ -34,11 +36,13 @@ const store = new Vuex.Store({
 const clockModule = getModule(Clock, store)
 const commonModule = getModule(Common, store)
 const mottoModule = getModule(Motto, store)
+const orderModule = getModule(Order, store)
 
 export * from './types'
 export default store
 export {
   clockModule,
   commonModule,
-  mottoModule
+  mottoModule,
+  orderModule
 }

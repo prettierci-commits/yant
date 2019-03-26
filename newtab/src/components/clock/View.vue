@@ -25,7 +25,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { clockModule } from '@/store'
 
 @Component
-export default class Clock extends Vue {
+export default class ClockView extends Vue {
   storeModule = clockModule
 
   clockInterval: number | undefined = undefined

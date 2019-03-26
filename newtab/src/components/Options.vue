@@ -44,7 +44,6 @@
     <v-content>
       <v-container
         fluid
-        class="preview-container"
         :style="previewStyle"
       >
         <CommonWrapper>
@@ -75,7 +74,7 @@ import CommonWrapper from '@/components/common/Wrapper.vue'
     CommonWrapper
   }
 })
-export default class Root extends Vue {
+export default class Options extends Vue {
   drawer: boolean = true
   source: string = 'test'
   activeComponent: string = 'Home'
@@ -125,9 +124,3 @@ export default class Root extends Vue {
   }
 }
 </script>
-
-<style scoped>
-.preview-container {
-  min-height: 30vh;
-}
-</style>
