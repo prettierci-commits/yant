@@ -3,11 +3,6 @@ module.exports = {
   env: {
     node: true
   },
-  // 'extends': [
-  //   'plugin:vue/essential',
-  //   '@vue/standard',
-  //   '@vue/typescript'
-  // ],
   extends: [
     'plugin:vue-libs/recommended',
     'plugin:vue/recommended',
@@ -21,7 +16,7 @@ module.exports = {
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   },
   'overrides': [{
-    'files': ['*.ts'],
+    'files': ['*.ts', '*.vue'],
     'rules': {
       // bug workaround: used types are reported as unused
       'no-unused-vars': 'off'
