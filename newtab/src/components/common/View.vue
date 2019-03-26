@@ -1,13 +1,11 @@
 <template>
   <div class="main-container">
     <div
-      v-for="(tag, i) in tags"
+      v-for="(text, i) in texts"
       :key="i"
       class="text-container"
     >
-      <span
-        :is="tag"
-      >{{ testText }}</span>
+      {{ text }}
     </div>
   </div>
 </template>
@@ -17,8 +15,12 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class CommonView extends Vue {
-  testText: string = 'Nechť již hříšné saxofony ďáblů rozezvučí síň úděsnými tóny waltzu, tanga a quickstepu.'
-  tags: string[] = ['span', 'b', 'i', 's', 'u', 'sub', 'sup', 'samp']
+  texts: string[] = [
+    'Nechť již hříšné saxofony ďáblů rozezvučí síň úděsnými tóny waltzu, tanga a quickstepu.',
+    'Kŕdeľ šťastných ďatľov učí pri ústí Váhu mĺkveho koňa obhrýzať kôru a žrať čerstvé mäso.',
+    'A quick movement of the enemy will jeopardize six gunboats.',
+    'Xaver schreibt für Wikipedia zum Spaß quälend lang über Yoga, Soja und Öko.'
+  ]
 }
 </script>
 
