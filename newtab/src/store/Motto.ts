@@ -3,7 +3,7 @@ import { generateStyleAttr, IStyling } from './lib'
 
 @Module({ namespaced: true, name: 'motto' })
 export default class MottoModule extends VuexModule {
-  text = 'So what are you waiting for?\nLive your life in a way that makes traveling light years just to hang out with you worth it.'
+  text = '<strong>So what are you waiting for?</strong>\nLive your life in a way that makes traveling light years just to hang out with you worth it.'
   styling: IStyling = {
     fontScale: 1.5
   }
