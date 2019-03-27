@@ -5,9 +5,9 @@
   >
     <div class="time">
       <span class="hours">{{ hours }}</span>
-      <span class="sepparator">{{ sepparator }}</span>
+      <span class="sepparator between-hours-and-minutes">{{ sepparator }}</span>
       <span class="minutes">{{ minutes }}</span>
-      <span class="sepparator">{{ sepparator }}</span>
+      <span class="sepparator between-minutes-and-seconds">{{ sepparator }}</span>
       <span class="seconds">{{ seconds }}</span>
     </div>
     <div class="date">
