@@ -1,5 +1,8 @@
 <template>
-  <div :class="classes">
+  <div
+    class="flex-container newtab"
+    :class="classes"
+  >
     <div
       :is="component"
       v-for="(component, i) in componentOrder"
@@ -31,7 +34,6 @@ export default class RootView extends Vue {
 
   get classes () {
     return {
-      'flex-container': true,
       shrink: this.shrink !== false
     }
   }
