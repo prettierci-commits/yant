@@ -11,6 +11,7 @@ export default class Common extends VuexModule {
     fontWeight: 100,
     lineHeight: 1.5
   }
+  style: string = ''
 
   get styleAttr () {
     return generateStyleAttr(this.styling)
@@ -19,5 +20,10 @@ export default class Common extends VuexModule {
   @Mutation
   setStyling (v: IStyling) {
     this.styling = v
+  }
+
+  @Mutation
+  setStyle (v: string) {
+    this.style = v
   }
 }

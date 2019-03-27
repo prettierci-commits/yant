@@ -13,6 +13,8 @@ import MottoOptions from '@/components/motto/Options.vue'
 import MottoPreview from '@/components/motto/View.vue'
 import OrderOptions from '@/components/order/Options.vue'
 import OrderPreview from '@/components/order/View.vue'
+import StyleOptions from '@/components/style/Options.vue'
+import StylePreview from '@/components/style/View.vue'
 
 Vue.use(Router)
 
@@ -70,6 +72,18 @@ const routes: RouteConfig[] = [{
       drawer: true,
       menuName: 'Order',
       icon: 'mdi-reorder-horizontal'
+    }
+  }, {
+    path: 'style',
+    name: 'options-style',
+    components: {
+      options: StyleOptions,
+      preview: StylePreview
+    },
+    meta: {
+      drawer: true,
+      menuName: 'Style (custom CSS)',
+      icon: 'mdi-language-css3'
     }
   }]
 }, {

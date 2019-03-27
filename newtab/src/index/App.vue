@@ -1,6 +1,13 @@
 <template>
   <div id="app">
-    <RootView />
+    <CommonWrapper>
+      <RootView />
+
+      <SettingsIcon
+        class="options-button"
+        @click="openOptions"
+      />
+    </CommonWrapper>
   </div>
 </template>
 
@@ -8,12 +15,20 @@
 import RootView from '@/components/RootView.vue'
 import { Component, Vue } from 'vue-property-decorator'
 
+import CommonWrapper from '@/components/common/Wrapper.vue'
+import SettingsIcon from '@/assets/settings.svg'
+
 @Component({
   components: {
-    RootView
+    CommonWrapper,
+    RootView,
+    SettingsIcon
   }
 })
 export default class App extends Vue {
+  openOptions () {
+    window.location.href = './options.html'
+  }
 }
 </script>
 
@@ -25,5 +40,27 @@ body {
 html {
   overflow-y: auto;
   overflow-x: hidden;
+}
+</style>
+
+<style scoped>
+.options-button {
+  cursor: pointer;
+  height: 40px;
+  margin: 0px;
+  opacity: 0;
+  padding: 40px;
+  position: fixed;
+  right: 0px;
+  top: 0px;
+  width: 40px;
+  z-index: 5;
+}
+.options-button:hover {
+  opacity: 1;
+}
+
+svg {
+  fill: currentColor;
 }
 </style>
