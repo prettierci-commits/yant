@@ -83,6 +83,7 @@ export default class ClockView extends Vue {
 
 <style scoped>
 .clock {
+  font-variant-numeric: tabular-nums;
   text-align: center;
   width: 100%;
 }
