@@ -5,15 +5,36 @@
   >
     <div class="time">
       <span class="hours">{{ hours }}</span>
-      <span class="separator between-hours-and-minutes">{{ separator }}</span>
+
+      <span
+        class="separator between-minutes-and-seconds"
+        :class="{ dim: storeModule.dimSeparators }"
+      >{{ storeModule.separator }}</span>
+
       <span class="minutes">{{ minutes }}</span>
-      <span class="separator between-minutes-and-seconds">{{ separator }}</span>
-      <span class="seconds">{{ seconds }}</span>
+
+      <template v-if="storeModule.showSeconds">
+        <span
+          class="separator between-minutes-and-seconds"
+          :class="{ dim: storeModule.dimSeparators }"
+        >{{ storeModule.separator }}</span>
+
+        <span
+          class="seconds"
+          :class="{ dim: storeModule.dimSeconds }"
+        >{{ seconds }}</span>
+      </template>
     </div>
-    <div class="date">
+    <div
+      v-if="storeModule.showDate"
+      class="date"
+    >
       <span class="full-date">{{ fullDate }}</span>
     </div>
-    <div class="week">
+    <div
+      v-if="storeModule.showWeek"
+      class="week"
+    >
       <span class="full-week">Week {{ week }}</span>
     </div>
   </div>
@@ -30,7 +51,6 @@ export default class ClockView extends Vue {
 
   clockInterval: number | undefined = undefined
   date: Date = new Date()
-  separator: string = ':'
 
   mounted () {
     this.clockInterval = window.setInterval(this.updateClock, 1000)
@@ -66,10 +86,7 @@ export default class ClockView extends Vue {
   text-align: center;
   width: 100%;
 }
-.seconds {
-  opacity: 0.5;
-}
-.separator {
+.dim {
   opacity: 0.5;
 }
 .time {
