@@ -8,7 +8,7 @@ export default class Common extends VuexModule {
     color: '#ffffff',
     fontFamily: 'Source Serif Pro',
     fontSize: 15,
-    fontWeight: 100,
+    fontWeight: 300,
     lineHeight: 1.5
   }
   style: string = ''
