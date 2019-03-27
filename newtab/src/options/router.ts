@@ -3,32 +3,28 @@ import Vue from 'vue'
 
 import RootView from '@/components/RootView.vue'
 
-const Options = () => import(/* webpackChunkName: "options" */ '@/components/Options.vue')
+import Options from '@/components/Options.vue'
 
-const ClockOptions = () => import(/* webpackChunkName: "options" */ '@/components/clock/Options.vue')
-const ClockPreview = () => import(/* webpackChunkName: "options" */ '@/components/clock/View.vue')
-const CommonOptions = () => import(/* webpackChunkName: "options" */ '@/components/common/Options.vue')
-const CommonPreview = () => import(/* webpackChunkName: "options" */ '@/components/common/View.vue')
-const MottoOptions = () => import(/* webpackChunkName: "options" */ '@/components/motto/Options.vue')
-const MottoPreview = () => import(/* webpackChunkName: "options" */ '@/components/motto/View.vue')
-const OrderOptions = () => import(/* webpackChunkName: "options" */ '@/components/order/Options.vue')
-const OrderPreview = () => import(/* webpackChunkName: "options" */ '@/components/order/View.vue')
+import ClockOptions from '@/components/clock/Options.vue'
+import ClockPreview from '@/components/clock/View.vue'
+import CommonOptions from '@/components/common/Options.vue'
+import CommonPreview from '@/components/common/View.vue'
+import MottoOptions from '@/components/motto/Options.vue'
+import MottoPreview from '@/components/motto/View.vue'
+import OrderOptions from '@/components/order/Options.vue'
+import OrderPreview from '@/components/order/View.vue'
 
 Vue.use(Router)
 
 const routes: RouteConfig[] = [{
   path: '/',
-  name: 'newtab',
-  component: RootView
-}, {
-  path: '/options',
   name: 'options',
   redirect: {
     name: 'options-common'
   },
   component: Options,
   children: [{
-    path: '/options/common',
+    path: 'common',
     name: 'options-common',
     components: {
       options: CommonOptions,
@@ -40,7 +36,7 @@ const routes: RouteConfig[] = [{
       icon: 'mdi-domain'
     }
   }, {
-    path: '/options/motto',
+    path: 'motto',
     name: 'options-motto',
     components: {
       options: MottoOptions,
@@ -52,7 +48,7 @@ const routes: RouteConfig[] = [{
       icon: 'mdi-text'
     }
   }, {
-    path: '/options/clock',
+    path: 'clock',
     name: 'options-clock',
     components: {
       options: ClockOptions,
@@ -64,7 +60,7 @@ const routes: RouteConfig[] = [{
       icon: 'mdi-clock'
     }
   }, {
-    path: '/options/order',
+    path: 'order',
     name: 'options-order',
     components: {
       options: OrderOptions,
@@ -76,9 +72,15 @@ const routes: RouteConfig[] = [{
       icon: 'mdi-reorder-horizontal'
     }
   }]
+}, {
+  path: '*',
+  redirect: {
+    name: 'options'
+  }
 }]
 
 export default new Router({
+  mode: 'hash',
   routes
 })
 export { routes }

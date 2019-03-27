@@ -1,10 +1,10 @@
-import './plugins/vuetify'
+import '@/plugins/vuetify'
 import '@mdi/font/css/materialdesignicons.css'
 import 'source-serif-pro/source-serif-variable.css'
 import App from './App.vue'
 import Vue from 'vue'
 import router from './router'
-import store from './store'
+import store from '@/store'
 
 Vue.config.productionTip = false
 

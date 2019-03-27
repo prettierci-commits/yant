@@ -6,8 +6,8 @@
       :key="i"
     />
 
-    <div
-      class="options-button mdi mdi-settings"
+    <SettingsIcon
+      class="options-button"
       @click="openOptions"
     />
   </CommonWrapper>
@@ -18,6 +18,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 import { orderModule } from '@/store'
 
 import CommonWrapper from '@/components/common/Wrapper.vue'
+import SettingsIcon from '@/assets/settings.svg'
 
 import Clock from '@/components/clock/View.vue'
 import Motto from '@/components/motto/View.vue'
@@ -25,6 +26,7 @@ import Motto from '@/components/motto/View.vue'
 @Component({
   components: {
     CommonWrapper,
+    SettingsIcon,
 
     Clock,
     Motto
@@ -50,9 +52,7 @@ export default class RootView extends Vue {
   }
 
   openOptions () {
-    this.$router.push({
-      name: 'options'
-    })
+    window.location.href = './options.html'
   }
 }
 </script>
@@ -69,13 +69,14 @@ export default class RootView extends Vue {
 
 .options-button {
   cursor: pointer;
-  font-size: 40px;
+  height: 40px;
   margin: 0px;
   opacity: 0;
-  padding: 1ex;
+  padding: 40px;
   position: fixed;
   right: 0px;
   top: 0px;
+  width: 40px;
   z-index: 5;
 }
 .options-button:hover {
@@ -83,5 +84,9 @@ export default class RootView extends Vue {
 }
 .noopts > .options-button {
   display: none;
+}
+
+svg {
+  fill: currentColor;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <router-view />
+    <RootView />
   </div>
 </template>
 
@@ -8,13 +8,8 @@
 import RootView from '@/components/RootView.vue'
 import { Component, Vue } from 'vue-property-decorator'
 
-const Options = () => import(
-  /* webpackChunkName: "options" */ '@/components/Options.vue'
-)
-
 @Component({
   components: {
-    Options,
     RootView
   }
 })

@@ -65,7 +65,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { commonModule } from '@/store'
-import { routes } from '@/router'
+import { routes } from '@/options/router'
 
 import CommonWrapper from '@/components/common/Wrapper.vue'
 
@@ -118,9 +118,7 @@ export default class Options extends Vue {
   }
 
   close () {
-    this.$router.push({
-      name: 'newtab'
-    })
+    window.location.href = './index.html'
   }
 }
 </script>
