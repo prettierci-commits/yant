@@ -5,9 +5,9 @@
   >
     <div class="time">
       <span class="hours">{{ hours }}</span>
-      <span class="sepparator between-hours-and-minutes">{{ sepparator }}</span>
+      <span class="separator between-hours-and-minutes">{{ separator }}</span>
       <span class="minutes">{{ minutes }}</span>
-      <span class="sepparator between-minutes-and-seconds">{{ sepparator }}</span>
+      <span class="separator between-minutes-and-seconds">{{ separator }}</span>
       <span class="seconds">{{ seconds }}</span>
     </div>
     <div class="date">
@@ -30,7 +30,7 @@ export default class ClockView extends Vue {
 
   clockInterval: number | undefined = undefined
   date: Date = new Date()
-  sepparator: string = ':'
+  separator: string = ':'
 
   mounted () {
     this.clockInterval = window.setInterval(this.updateClock, 1000)
@@ -69,7 +69,7 @@ export default class ClockView extends Vue {
 .seconds {
   opacity: 0.5;
 }
-.sepparator {
+.separator {
   opacity: 0.5;
 }
 .time {
