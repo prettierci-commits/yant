@@ -5,70 +5,121 @@
       wrap
     >
       <v-flex
-        v-for="(list, i) in lists"
-        :key="i"
         xs12
         sm6
       >
-        <v-list two-line>
-          <v-subheader>
-            {{ list.title }}
-          </v-subheader>
-          <draggable
-            group="modules"
-            :list="list.items"
-          >
-            <v-list-tile
-              v-for="({ name, icon, id }) in list.items"
-              :key="id"
-              class="draggable"
-              avatar
-            >
-              <v-list-tile-avatar>
-                <v-icon>
-                  {{ icon }}
-                </v-icon>
-              </v-list-tile-avatar>
-              <v-list-tile-content>
-                <v-list-tile-title v-text="name" />
-              </v-list-tile-content>
-            </v-list-tile>
-          </draggable>
-        </v-list>
+        <DraggableWidgetList
+          header="Available"
+          :widgets="[...available]"
+        />
+      </v-flex>
+
+      <v-flex
+        xs12
+        sm6
+      >
+        <DraggableWidgetList
+          header="Active"
+          :widgets="[...active]"
+          @change="updateActive"
+        />
       </v-flex>
     </v-layout>
   </v-container>
 </template>
 
 <script lang="ts">
+import DraggableWidgetList from './DraggableWidgetList.vue'
 import draggable from 'vuedraggable'
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { orderModule } from '@/store'
+import { widgetsModule } from '@/store'
+
+interface IListItem {
+  icon: string
+  id: number
+  key: string
+  name: string
+  type: string
+}
+
+const widgetProps = new Map<string, {
+  name: string
+  icon: string
+}>([
+  ['motto', {
+    name: 'Motto',
+    icon: 'mdi-text'
+  }],
+  ['clock', {
+    name: 'Clock',
+    icon: 'mdi-clock'
+  }]
+])
 
 @Component({
   components: {
+    DraggableWidgetList,
     draggable
   }
 })
 export default class OrderOptions extends Vue {
-  storeModule = orderModule
-  lists = [{
-    title: 'Inactive',
-    items: orderModule.inactiveList
-  }, {
-    title: 'Active',
-    items: orderModule.activeList
-  }]
-
-  get order (): string[] {
-    return this.lists[1].items.map(
-      ({ type }) => type
-    )
+  get active (): IListItem[] {
+    return widgetsModule.active.map(({ type, id }, i) => ({
+      id,
+      key: `a${i}`,
+      type,
+      ...widgetProps.get(type)!
+    }))
   }
 
-  @Watch('order')
-  updateOrder () {
-    orderModule.setOrder(this.order)
+  get available (): IListItem[] {
+    return widgetsModule.available.map(({ type, id }, i) => ({
+      id,
+      key: `b${i}`,
+      type,
+      ...widgetProps.get(type)!
+    }))
+  }
+
+  updateActive ({ added, removed, moved }: {
+    added?: {
+      element: IListItem
+      newIndex: number
+    }
+    removed?: {
+      element: IListItem
+      oldIndex: number
+    }
+    moved?: {
+      element: IListItem
+      newIndex: number
+      oldIndex: number
+    }
+  }) {
+    if (added) {
+      widgetsModule.addToActive({
+        index: added.newIndex,
+        widget: {
+          type: added.element.type,
+          id: added.element.id
+        }
+      })
+    }
+    if (removed) {
+      widgetsModule.removeFromActive({
+        index: removed.oldIndex,
+        widget: {
+          type: removed.element.type,
+          id: removed.element.id
+        }
+      })
+    }
+    if (moved) {
+      widgetsModule.reorderActive({
+        oldIndex: moved.oldIndex,
+        newIndex: moved.newIndex
+      })
+    }
   }
 }
 </script>

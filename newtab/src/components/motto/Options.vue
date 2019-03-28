@@ -21,8 +21,8 @@
 
 <script lang="ts">
 import Styling from '@/components/options/Styling.vue'
-import { Component, Vue } from 'vue-property-decorator'
-import { mottoModule, IStyling } from '@/store'
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { widgetsModule, IMottoConfig, IStyling } from '@/store'
 
 @Component({
   components: {
@@ -30,20 +30,37 @@ import { mottoModule, IStyling } from '@/store'
   }
 })
 export default class MottoOptions extends Vue {
-  storeModule = mottoModule
+  @Prop({ required: true })
+  widgetId!: number
+
+  get config (): IMottoConfig {
+    return widgetsModule.mottos[this.widgetId]
+  }
 
   get text (): string {
-    return this.storeModule.text
+    return this.config.text
   }
   set text (v: string) {
-    this.storeModule.setText(v)
+    widgetsModule.setMotto({
+      id: this.widgetId,
+      value: {
+        ...this.config,
+        text: v
+      }
+    })
   }
 
   get styling (): IStyling {
-    return this.storeModule.styling
+    return this.config.styling
   }
   set styling (v: IStyling) {
-    this.storeModule.setStyling(v)
+    widgetsModule.setMotto({
+      id: this.widgetId,
+      value: {
+        ...this.config,
+        styling: v
+      }
+    })
   }
 }
 </script>

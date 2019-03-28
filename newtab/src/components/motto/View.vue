@@ -1,20 +1,29 @@
 <template>
   <!-- eslint-disable vue/no-v-html -->
   <div
-    :style="storeModule.styleAttr"
+    :style="styleAttr"
     class="motto"
-    v-html="storeModule.text"
+    v-html="config.text"
   />
   <!--eslint-enable-->
 </template>
 
 <script lang="ts">
-import { mottoModule } from '@/store'
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { widgetsModule, IMottoConfig } from '@/store'
 
 @Component
 export default class MottoView extends Vue {
-  storeModule = mottoModule
+  @Prop({ required: true })
+  widgetId!: number
+
+  get config (): IMottoConfig {
+    return widgetsModule.mottos[this.widgetId]
+  }
+
+  get styleAttr () {
+    return widgetsModule.generateStyleAttr(this.config.styling)
+  }
 }
 </script>
 

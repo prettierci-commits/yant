@@ -7,6 +7,7 @@ import Clock from './Clock'
 import Common from './Common'
 import Motto from './Motto'
 import Order from './Order'
+import Widgets from './Widgets'
 
 Vue.use(Vuex)
 
@@ -17,7 +18,8 @@ const store = new Vuex.Store({
     clock: Clock,
     common: Common,
     motto: Motto,
-    order: Order
+    order: Order,
+    widgets: Widgets
   },
 
   plugins: [persist.plugin],
@@ -37,6 +39,7 @@ const clockModule = getModule(Clock, store)
 const commonModule = getModule(Common, store)
 const mottoModule = getModule(Motto, store)
 const orderModule = getModule(Order, store)
+const widgetsModule = getModule(Widgets, store)
 
 export * from './types'
 export default store
@@ -44,5 +47,6 @@ export {
   clockModule,
   commonModule,
   mottoModule,
-  orderModule
+  orderModule,
+  widgetsModule
 }

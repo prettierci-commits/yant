@@ -31,35 +31,20 @@ const routes: RouteConfig[] = [{
     components: {
       options: CommonOptions,
       preview: CommonPreview
-    },
-    meta: {
-      drawer: true,
-      menuName: 'Common',
-      icon: 'mdi-domain'
     }
   }, {
-    path: 'motto',
+    path: 'motto/:id',
     name: 'options-motto',
     components: {
       options: MottoOptions,
       preview: MottoPreview
-    },
-    meta: {
-      drawer: true,
-      menuName: 'Motto',
-      icon: 'mdi-text'
     }
   }, {
-    path: 'clock',
+    path: 'clock/:id',
     name: 'options-clock',
     components: {
       options: ClockOptions,
       preview: ClockPreview
-    },
-    meta: {
-      drawer: true,
-      menuName: 'Clock',
-      icon: 'mdi-clock'
     }
   }, {
     path: 'order',
@@ -67,11 +52,6 @@ const routes: RouteConfig[] = [{
     components: {
       options: OrderOptions,
       preview: OrderPreview
-    },
-    meta: {
-      drawer: true,
-      menuName: 'Order',
-      icon: 'mdi-reorder-horizontal'
     }
   }, {
     path: 'style',
@@ -79,11 +59,6 @@ const routes: RouteConfig[] = [{
     components: {
       options: StyleOptions,
       preview: StylePreview
-    },
-    meta: {
-      drawer: true,
-      menuName: 'Style (custom CSS)',
-      icon: 'mdi-language-css3'
     }
   }]
 }, {

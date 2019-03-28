@@ -8,7 +8,7 @@
     >
       <v-list dense>
         <v-list-tile
-          v-for="({icon, text, route}, i) in menuItems"
+          v-for="({icon, text, route, id}, i) in drawerItems"
           :key="i"
           :to="route"
           @click.stop
@@ -17,7 +17,10 @@
             <v-icon>{{ icon }}</v-icon>
           </v-list-tile-action>
           <v-list-tile-content>
-            <v-list-tile-title>{{ text }}</v-list-tile-title>
+            <v-list-tile-title>
+              {{ text }}
+              <sup v-if="id">{{ id }}</sup>
+            </v-list-tile-title>
           </v-list-tile-content>
         </v-list-tile>
       </v-list>
@@ -50,6 +53,7 @@
           <router-view
             class="router-preview"
             name="preview"
+            :widget-id="$route.params.id"
           />
         </CommonWrapper>
       </v-container>
@@ -57,6 +61,7 @@
       <router-view
         class="router-options"
         name="options"
+        :widget-id="$route.params.id"
       />
     </v-content>
   </v-app>
@@ -64,10 +69,55 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { commonModule } from '@/store'
-import { routes } from '@/options/router'
+import { Location } from 'vue-router'
+import { commonModule, widgetsModule } from '@/store'
 
 import CommonWrapper from '@/components/common/Wrapper.vue'
+
+interface IDrawerItem {
+  icon: string
+  id?: number
+  route: Location
+  text: string
+}
+
+const drawerMap = new Map<string, IDrawerItem>([
+  ['motto', {
+    icon: 'mdi-text',
+    text: 'Motto',
+    route: {
+      name: 'options-motto'
+    }
+  }],
+  ['clock', {
+    icon: 'mdi-clock',
+    text: 'Clock',
+    route: {
+      name: 'options-clock'
+    }
+  }],
+  ['common', {
+    icon: 'mdi-domain',
+    text: 'Common',
+    route: {
+      name: 'options-common'
+    }
+  }],
+  ['order', {
+    icon: 'mdi-reorder-horizontal',
+    text: 'Order',
+    route: {
+      name: 'options-order'
+    }
+  }],
+  ['style', {
+    icon: 'mdi-language-css3',
+    text: 'Style (custom CSS)',
+    route: {
+      name: 'options-style'
+    }
+  }]
+])
 
 @Component({
   components: {
@@ -78,42 +128,32 @@ export default class Options extends Vue {
   drawer: boolean = true
   source: string = 'test'
   activeComponent: string = 'Home'
-  menuItems: {
-    icon: string,
-    text: string,
-    route: typeof routes[0]
-  }[] = []
+
+  get drawerItems (): IDrawerItem[] {
+    return [
+      drawerMap.get('common')!,
+      drawerMap.get('order')!,
+      drawerMap.get('style')!,
+      ...widgetsModule.active.map(({ type, id }) => {
+        const template = drawerMap.get(type)!
+
+        return {
+          ...template,
+          id,
+          route: {
+            ...template.route,
+            params: {
+              id: `${id}`
+            }
+          }
+        }
+      })
+    ]
+  }
 
   get previewStyle () {
     return {
       backgroundColor: commonModule.styling.backgroundColor
-    }
-  }
-
-  created () {
-    routes.forEach(this.addRoute)
-  }
-
-  addRoute (route: typeof routes[0]) {
-    if (
-      route &&
-        route.children
-    ) {
-      route.children.forEach(this.addRoute)
-    }
-
-    if (
-      route &&
-        route.meta &&
-        route.meta.drawer &&
-        route.meta.menuName &&
-        route.name
-    ) {
-      this.menuItems.push({
-        icon: route.meta.icon,
-        text: route.meta.menuName,
-        route
-      })
     }
   }
 

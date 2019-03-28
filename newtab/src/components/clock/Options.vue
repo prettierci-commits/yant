@@ -80,8 +80,8 @@
 
 <script lang="ts">
 import Styling from '@/components/options/Styling.vue'
-import { Component, Vue } from 'vue-property-decorator'
-import { clockModule, IStyling } from '@/store'
+import { Component, Vue, Prop } from 'vue-property-decorator'
+import { widgetsModule, IClockConfig, IStyling } from '@/store'
 
 @Component({
   components: {
@@ -89,55 +89,70 @@ import { clockModule, IStyling } from '@/store'
   }
 })
 export default class ClockOptions extends Vue {
-  storeModule = clockModule
+  @Prop({ required: true })
+  widgetId!: number
+
+  get config (): IClockConfig {
+    return widgetsModule.clocks[this.widgetId]
+  }
 
   get styling (): IStyling {
-    return this.storeModule.styling
+    return this.config.styling
   }
   set styling (v: IStyling) {
-    this.storeModule.setStyling(v)
+    this.save('styling', v)
   }
 
   get separator (): string {
-    return this.storeModule.separator
+    return this.config.separator
   }
   set separator (v: string) {
-    this.storeModule.setSeparator(v)
+    this.save('separator', v)
   }
 
   get showDate (): boolean {
-    return this.storeModule.showDate
+    return this.config.showDate
   }
   set showDate (v: boolean) {
-    this.storeModule.setShowDate(v)
+    this.save('showDate', v)
   }
 
   get showWeek (): boolean {
-    return this.storeModule.showWeek
+    return this.config.showWeek
   }
   set showWeek (v: boolean) {
-    this.storeModule.setShowWeek(v)
+    this.save('showWeek', v)
   }
 
   get showSeconds (): boolean {
-    return this.storeModule.showSeconds
+    return this.config.showSeconds
   }
   set showSeconds (v: boolean) {
-    this.storeModule.setShowSeconds(v)
+    this.save('showSeconds', v)
   }
 
   get dimSeconds (): boolean {
-    return this.storeModule.dimSeconds
+    return this.config.dimSeconds
   }
   set dimSeconds (v: boolean) {
-    this.storeModule.setDimSeconds(v)
+    this.save('dimSeconds', v)
   }
 
   get dimSeparators (): boolean {
-    return this.storeModule.dimSeparators
+    return this.config.dimSeparators
   }
   set dimSeparators (v: boolean) {
-    this.storeModule.setDimSeparators(v)
+    this.save('dimSeparators', v)
+  }
+
+  save (key: string, value: any): void {
+    widgetsModule.setClock({
+      id: this.widgetId,
+      value: {
+        ...this.config,
+        [key]: value
+      }
+    })
   }
 }
 </script>

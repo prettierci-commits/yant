@@ -5,18 +5,24 @@
   >
     <div
       :is="component"
-      v-for="(component, i) in componentOrder"
+      v-for="({ component, id }, i) in widgets"
       :key="i"
+      :widget-id="id"
     />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { orderModule } from '@/store'
+import { widgetsModule } from '@/store'
 
 import Clock from '@/components/clock/View.vue'
 import Motto from '@/components/motto/View.vue'
+
+const widgetComponentMap = new Map<string, string>([
+  ['motto', 'Motto'],
+  ['clock', 'Clock']
+])
 
 @Component({
   components: {
@@ -28,8 +34,13 @@ export default class RootView extends Vue {
   @Prop({ default: false })
   shrink!: boolean
 
-  get componentOrder () {
-    return orderModule.componentOrder
+  widgetsModule = widgetsModule
+
+  get widgets () {
+    return widgetsModule.active.map(({ type, id }) => ({
+      component: widgetComponentMap.get(type)!,
+      id
+    }))
   }
 
   get classes () {
