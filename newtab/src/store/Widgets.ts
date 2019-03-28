@@ -1,9 +1,14 @@
 import Vue from 'vue'
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
-import { generateStyleAttr, IStyling, IClockConfig, IMottoConfig } from './lib'
+import {
+  generateStyleAttr, IStyling,
+  IClockConfig, IDateConfig, IMottoConfig,
+  DateUpdateRate
+} from './lib'
 
 const defaults: {
   clock: IClockConfig
+  date: IDateConfig
   motto: IMottoConfig
 } = {
   clock: {
@@ -12,10 +17,15 @@ const defaults: {
     },
     separator: ':',
     showSeconds: true,
-    showDate: true,
-    showWeek: true,
     dimSeconds: true,
     dimSeparators: true
+  },
+  date: {
+    styling: {
+      fontScale: 2.5
+    },
+    formatString: 'dddd, MMMM D, YYYY',
+    updateRate: DateUpdateRate.Days
   },
   motto: {
     styling: {
@@ -33,6 +43,7 @@ interface IWidget {
 @Module({ namespaced: true, name: 'widgets' })
 export default class WidgetsModule extends VuexModule {
   clocks: { [key: string]: IClockConfig } = { 1: defaults.clock }
+  dates: { [key: string]: IDateConfig } = { 1: defaults.date }
   mottos: { [key: string]: IMottoConfig } = { 1: defaults.motto }
 
   active: IWidget[] = [{
@@ -41,10 +52,13 @@ export default class WidgetsModule extends VuexModule {
   }, {
     type: 'clock',
     id: 1
+  }, {
+    type: 'date',
+    id: 1
   }]
 
   get available (): IWidget[] {
-    return ['clock', 'motto'].map(newType => ({
+    return ['clock', 'date', 'motto'].map(newType => ({
       type: newType,
       id: this.active
         .filter(({ type }) => type === newType)
@@ -64,6 +78,9 @@ export default class WidgetsModule extends VuexModule {
       case 'clock':
         Vue.set(this.clocks, widget.id, defaults.clock)
         break
+      case 'date':
+        Vue.set(this.dates, widget.id, defaults.date)
+        break
       case 'motto':
         Vue.set(this.mottos, widget.id, defaults.motto)
         break
@@ -79,6 +96,9 @@ export default class WidgetsModule extends VuexModule {
     switch (widget.type) {
       case 'clock':
         Vue.delete(this.clocks, widget.id)
+        break
+      case 'date':
+        Vue.delete(this.dates, widget.id)
         break
       case 'motto':
         Vue.delete(this.mottos, widget.id)
@@ -97,6 +117,11 @@ export default class WidgetsModule extends VuexModule {
   @Mutation
   setClock ({ id, value }: { id: number, value: IClockConfig }) {
     Vue.set(this.clocks, id, value)
+  }
+
+  @Mutation
+  setDate ({ id, value }: { id: number, value: IDateConfig }) {
+    Vue.set(this.dates, id, value)
   }
 
   @Mutation

@@ -9,6 +9,8 @@ import ClockOptions from '@/components/clock/Options.vue'
 import ClockPreview from '@/components/clock/View.vue'
 import CommonOptions from '@/components/common/Options.vue'
 import CommonPreview from '@/components/common/View.vue'
+import DateOptions from '@/components/date/Options.vue'
+import DatePreview from '@/components/date/View.vue'
 import MottoOptions from '@/components/motto/Options.vue'
 import MottoPreview from '@/components/motto/View.vue'
 import StyleOptions from '@/components/style/Options.vue'
@@ -33,18 +35,25 @@ const routes: RouteConfig[] = [{
       preview: CommonPreview
     }
   }, {
-    path: 'motto/:id',
-    name: 'options-motto',
-    components: {
-      options: MottoOptions,
-      preview: MottoPreview
-    }
-  }, {
     path: 'clock/:id',
     name: 'options-clock',
     components: {
       options: ClockOptions,
       preview: ClockPreview
+    }
+  }, {
+    path: 'date/:id',
+    name: 'options-date',
+    components: {
+      options: DateOptions,
+      preview: DatePreview
+    }
+  }, {
+    path: 'motto/:id',
+    name: 'options-motto',
+    components: {
+      options: MottoOptions,
+      preview: MottoPreview
     }
   }, {
     path: 'widgets',

@@ -46,13 +46,17 @@ const widgetProps = new Map<string, {
   name: string
   icon: string
 }>([
-  ['motto', {
-    name: 'Motto',
-    icon: 'mdi-text'
-  }],
   ['clock', {
     name: 'Clock',
     icon: 'mdi-clock'
+  }],
+  ['date', {
+    name: 'Date',
+    icon: 'mdi-calendar'
+  }],
+  ['motto', {
+    name: 'Motto',
+    icon: 'mdi-text'
   }]
 ])
 

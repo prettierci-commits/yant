@@ -16,18 +16,21 @@
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { widgetsModule } from '@/store'
 
-import Clock from '@/components/clock/View.vue'
-import Motto from '@/components/motto/View.vue'
+import ClockView from '@/components/clock/View.vue'
+import DateView from '@/components/date/View.vue'
+import MottoView from '@/components/motto/View.vue'
 
 const widgetComponentMap = new Map<string, string>([
-  ['motto', 'Motto'],
-  ['clock', 'Clock']
+  ['clock', 'ClockView'],
+  ['date', 'DateView'],
+  ['motto', 'MottoView']
 ])
 
 @Component({
   components: {
-    Clock,
-    Motto
+    ClockView,
+    DateView,
+    MottoView
   }
 })
 export default class RootView extends Vue {

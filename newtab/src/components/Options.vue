@@ -82,20 +82,6 @@ interface IDrawerItem {
 }
 
 const drawerMap = new Map<string, IDrawerItem>([
-  ['motto', {
-    icon: 'mdi-text',
-    text: 'Motto',
-    route: {
-      name: 'options-motto'
-    }
-  }],
-  ['clock', {
-    icon: 'mdi-clock',
-    text: 'Clock',
-    route: {
-      name: 'options-clock'
-    }
-  }],
   ['common', {
     icon: 'mdi-domain',
     text: 'Common',
@@ -115,6 +101,28 @@ const drawerMap = new Map<string, IDrawerItem>([
     text: 'Style (custom CSS)',
     route: {
       name: 'options-style'
+    }
+  }],
+
+  ['clock', {
+    icon: 'mdi-clock',
+    text: 'Clock',
+    route: {
+      name: 'options-clock'
+    }
+  }],
+  ['date', {
+    icon: 'mdi-calendar',
+    text: 'Date',
+    route: {
+      name: 'options-date'
+    }
+  }],
+  ['motto', {
+    icon: 'mdi-text',
+    text: 'Motto',
+    route: {
+      name: 'options-motto'
     }
   }]
 ])

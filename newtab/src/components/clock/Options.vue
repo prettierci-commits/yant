@@ -7,8 +7,7 @@
       <v-flex
         xs12
         sm6
-        md4
-        xl2
+        md3
       >
         <v-text-field
           v-model="separator"
@@ -18,30 +17,7 @@
       <v-flex
         xs12
         sm6
-        md4
-        xl2
-      >
-        <v-switch
-          v-model="showDate"
-          label="Date"
-        />
-      </v-flex>
-      <v-flex
-        xs12
-        sm6
-        md4
-        xl2
-      >
-        <v-switch
-          v-model="showWeek"
-          label="Week"
-        />
-      </v-flex>
-      <v-flex
-        xs12
-        sm6
-        md4
-        xl2
+        md3
       >
         <v-switch
           v-model="showSeconds"
@@ -51,8 +27,7 @@
       <v-flex
         xs12
         sm6
-        md4
-        xl2
+        md3
       >
         <v-switch
           v-model="dimSeconds"
@@ -62,8 +37,7 @@
       <v-flex
         xs12
         sm6
-        md4
-        xl2
+        md3
       >
         <v-switch
           v-model="dimSeparators"
@@ -108,20 +82,6 @@ export default class ClockOptions extends Vue {
   }
   set separator (v: string) {
     this.save('separator', v)
-  }
-
-  get showDate (): boolean {
-    return this.config.showDate
-  }
-  set showDate (v: boolean) {
-    this.save('showDate', v)
-  }
-
-  get showWeek (): boolean {
-    return this.config.showWeek
-  }
-  set showWeek (v: boolean) {
-    this.save('showWeek', v)
   }
 
   get showSeconds (): boolean {

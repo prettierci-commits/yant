@@ -3,40 +3,26 @@
     class="clock"
     :style="styleAttr"
   >
-    <div class="time">
-      <span class="hours">{{ hours }}</span>
+    <span class="hours">{{ hours }}</span>
 
+    <span
+      class="separator between-minutes-and-seconds"
+      :class="{ dim: config.dimSeparators }"
+    >{{ config.separator }}</span>
+
+    <span class="minutes">{{ minutes }}</span>
+
+    <template v-if="config.showSeconds">
       <span
         class="separator between-minutes-and-seconds"
         :class="{ dim: config.dimSeparators }"
       >{{ config.separator }}</span>
 
-      <span class="minutes">{{ minutes }}</span>
-
-      <template v-if="config.showSeconds">
-        <span
-          class="separator between-minutes-and-seconds"
-          :class="{ dim: config.dimSeparators }"
-        >{{ config.separator }}</span>
-
-        <span
-          class="seconds"
-          :class="{ dim: config.dimSeconds }"
-        >{{ seconds }}</span>
-      </template>
-    </div>
-    <div
-      v-if="config.showDate"
-      class="date"
-    >
-      <span class="full-date">{{ fullDate }}</span>
-    </div>
-    <div
-      v-if="config.showWeek"
-      class="week"
-    >
-      <span class="full-week">Week {{ week }}</span>
-    </div>
+      <span
+        class="seconds"
+        :class="{ dim: config.dimSeconds }"
+      >{{ seconds }}</span>
+    </template>
   </div>
 </template>
 
@@ -77,12 +63,6 @@ export default class ClockView extends Vue {
   get seconds () {
     return this.date.getSeconds().toString().padStart(2, '0')
   }
-  get fullDate () {
-    return formatDate(this.date, 'dddd, MMMM D, YYYY')
-  }
-  get week () {
-    return formatDate(this.date, 'W')
-  }
 
   updateClock () {
     this.date = new Date()
@@ -98,14 +78,5 @@ export default class ClockView extends Vue {
 }
 .dim {
   opacity: 0.5;
-}
-.time {
-  font-size: 1em;
-}
-.date {
-  font-size: 0.25em;
-}
-.week {
-  font-size: 0.2em;
 }
 </style>

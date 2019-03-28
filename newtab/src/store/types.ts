@@ -23,10 +23,24 @@ export interface IClockConfig {
   styling: IStyling
   separator: string
   showSeconds: boolean
-  showDate: boolean
-  showWeek: boolean
   dimSeconds: boolean
   dimSeparators: boolean
+}
+
+export enum DateUpdateRate {
+  Milliseconds = 0,
+  Centiseconds = 1,
+  Deciseconds = 2,
+  Seconds = 3,
+  Minutes = 4,
+  Hours = 5,
+  Days = 6
+}
+
+export interface IDateConfig {
+  styling: IStyling
+  formatString: string
+  updateRate: DateUpdateRate
 }
 
 export interface IMottoConfig {
