@@ -32,6 +32,7 @@
 import DraggableWidgetList from './DraggableWidgetList.vue'
 import draggable from 'vuedraggable'
 import { Component, Vue, Watch } from 'vue-property-decorator'
+import { drawerMap } from '@/options/widgetMetadata'
 import { widgetsModule } from '@/store'
 
 interface IListItem {
@@ -41,24 +42,6 @@ interface IListItem {
   name: string
   type: string
 }
-
-const widgetProps = new Map<string, {
-  name: string
-  icon: string
-}>([
-  ['clock', {
-    name: 'Clock',
-    icon: 'mdi-clock'
-  }],
-  ['date', {
-    name: 'Date',
-    icon: 'mdi-calendar'
-  }],
-  ['motto', {
-    name: 'Motto',
-    icon: 'mdi-text'
-  }]
-])
 
 @Component({
   components: {
@@ -72,7 +55,7 @@ export default class WidgetsOptions extends Vue {
       id,
       key: `a${i}`,
       type,
-      ...widgetProps.get(type)!
+      ...drawerMap.get(type)!
     }))
   }
 
@@ -81,7 +64,7 @@ export default class WidgetsOptions extends Vue {
       id,
       key: `b${i}`,
       type,
-      ...widgetProps.get(type)!
+      ...drawerMap.get(type)!
     }))
   }
 

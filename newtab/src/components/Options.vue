@@ -8,7 +8,7 @@
     >
       <v-list dense>
         <v-list-tile
-          v-for="({icon, text, route, id}, i) in drawerItems"
+          v-for="({icon, name, route, id}, i) in drawerItems"
           :key="i"
           :to="route"
           @click.stop
@@ -18,7 +18,7 @@
           </v-list-tile-action>
           <v-list-tile-content>
             <v-list-tile-title>
-              {{ text }}
+              {{ name }}
               <sup v-if="id">{{ id }}</sup>
             </v-list-tile-title>
           </v-list-tile-content>
@@ -71,61 +71,16 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { Location } from 'vue-router'
 import { commonModule, widgetsModule } from '@/store'
+import { drawerMap } from '@/options/widgetMetadata'
 
 import CommonWrapper from '@/components/common/Wrapper.vue'
 
 interface IDrawerItem {
   icon: string
   id?: number
+  name: string
   route: Location
-  text: string
 }
-
-const drawerMap = new Map<string, IDrawerItem>([
-  ['common', {
-    icon: 'mdi-domain',
-    text: 'Common',
-    route: {
-      name: 'options-common'
-    }
-  }],
-  ['widgets', {
-    icon: 'mdi-reorder-horizontal',
-    text: 'Widgets',
-    route: {
-      name: 'options-widgets'
-    }
-  }],
-  ['style', {
-    icon: 'mdi-language-css3',
-    text: 'Style (custom CSS)',
-    route: {
-      name: 'options-style'
-    }
-  }],
-
-  ['clock', {
-    icon: 'mdi-clock',
-    text: 'Clock',
-    route: {
-      name: 'options-clock'
-    }
-  }],
-  ['date', {
-    icon: 'mdi-calendar',
-    text: 'Date',
-    route: {
-      name: 'options-date'
-    }
-  }],
-  ['motto', {
-    icon: 'mdi-text',
-    text: 'Motto',
-    route: {
-      name: 'options-motto'
-    }
-  }]
-])
 
 @Component({
   components: {
