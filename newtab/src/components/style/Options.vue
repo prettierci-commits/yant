@@ -21,7 +21,7 @@ import { Component, Vue, Watch } from 'vue-property-decorator'
 import { commonModule } from '@/store'
 
 @Component
-export default class OrderOptions extends Vue {
+export default class StyleOptions extends Vue {
   get style (): string {
     return commonModule.style
   }

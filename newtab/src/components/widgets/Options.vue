@@ -62,7 +62,7 @@ const widgetProps = new Map<string, {
     draggable
   }
 })
-export default class OrderOptions extends Vue {
+export default class WidgetsOptions extends Vue {
   get active (): IListItem[] {
     return widgetsModule.active.map(({ type, id }, i) => ({
       id,

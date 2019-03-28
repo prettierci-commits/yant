@@ -11,6 +11,6 @@ import { Component, Vue } from 'vue-property-decorator'
     RootView
   }
 })
-export default class OrderView extends Vue {
+export default class WidgetsView extends Vue {
 }
 </script>

@@ -103,11 +103,11 @@ const drawerMap = new Map<string, IDrawerItem>([
       name: 'options-common'
     }
   }],
-  ['order', {
+  ['widgets', {
     icon: 'mdi-reorder-horizontal',
-    text: 'Order',
+    text: 'Widgets',
     route: {
-      name: 'options-order'
+      name: 'options-widgets'
     }
   }],
   ['style', {
@@ -132,7 +132,7 @@ export default class Options extends Vue {
   get drawerItems (): IDrawerItem[] {
     return [
       drawerMap.get('common')!,
-      drawerMap.get('order')!,
+      drawerMap.get('widgets')!,
       drawerMap.get('style')!,
       ...widgetsModule.active.map(({ type, id }) => {
         const template = drawerMap.get(type)!
