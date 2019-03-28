@@ -67,6 +67,8 @@ export default class WidgetsModule extends VuexModule {
       case 'motto':
         Vue.set(this.mottos, widget.id, defaults.motto)
         break
+      default:
+        throw new TypeError(`Unknown widget: ${widget.type}`)
     }
     this.active.splice(index, 0, widget)
   }
@@ -81,6 +83,8 @@ export default class WidgetsModule extends VuexModule {
       case 'motto':
         Vue.delete(this.mottos, widget.id)
         break
+      default:
+        throw new TypeError(`Unknown widget: ${widget.type}`)
     }
   }
 
