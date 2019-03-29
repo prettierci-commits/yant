@@ -1,13 +1,11 @@
 <template>
   <div id="app">
-    <CommonWrapper>
-      <RootView :widgets="widgetsModule.active" />
-
+    <RootView :widgets="widgetsModule.active">
       <SettingsIcon
         class="options-button"
         @click="openOptions"
       />
-    </CommonWrapper>
+    </RootView>
   </div>
 </template>
 
@@ -16,12 +14,10 @@ import RootView from '@/components/RootView.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { widgetsModule } from '@/store'
 
-import CommonWrapper from '@/components/common/Wrapper.vue'
 import SettingsIcon from '@/assets/settings.svg'
 
 @Component({
   components: {
-    CommonWrapper,
     RootView,
     SettingsIcon
   }

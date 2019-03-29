@@ -1,4 +1,4 @@
-.newtab {
+.newtab-colors {
   --color-transition-delay: 0s;
   animation: color-transition 600s infinite var(--color-transition-delay) linear;
 }

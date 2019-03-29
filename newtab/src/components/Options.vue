@@ -47,12 +47,10 @@
     </v-toolbar>
 
     <v-content>
-      <CommonWrapper>
-        <RootView
-          :widgets="widgets"
-          shrink
-        />
-      </CommonWrapper>
+      <RootView
+        :widgets="widgets"
+        shrink
+      />
 
       <v-divider />
 
@@ -71,8 +69,6 @@ import { Location } from 'vue-router'
 import { commonModule, widgetsModule } from '@/store'
 import { drawerMap } from '@/options/widgetMetadata'
 
-import CommonWrapper from '@/components/common/Wrapper.vue'
-
 interface IDrawerItem {
   icon: string
   id?: number
@@ -82,7 +78,6 @@ interface IDrawerItem {
 
 @Component({
   components: {
-    CommonWrapper,
     RootView
   }
 })

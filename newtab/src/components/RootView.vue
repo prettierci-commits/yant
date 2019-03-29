@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex-container newtab"
     :class="classes"
-    :style="containerStyle"
+    :style="styleAttr"
+    class="flex-container"
   >
     <div
       :is="component"
@@ -10,11 +10,14 @@
       :key="i"
       :widget-id="id"
     />
+
+    <slot />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { commonModule } from '@/store'
 import { widgetMap } from '@/options/widgetMetadata'
 
 import ClockView from '@/components/clock/View.vue'
@@ -40,6 +43,24 @@ export default class RootView extends Vue {
     id: number
   }[]
 
+  styleElement = document.createElement('style')
+
+  get styleAttrVars () {
+    return {
+      '--color-transition-delay': `${-Math.floor(Math.random() * 600)}s`
+    }
+  }
+  get styleAttr () {
+    return {
+      ...commonModule.styleAttr,
+      ...this.styleAttrVars
+    }
+  }
+
+  get style (): string {
+    return commonModule.style
+  }
+
   get widgetsDOM () {
     return this.widgets.map(({ type, id }) => ({
       component: widgetMap.get(type)!.componentName,
@@ -49,14 +70,26 @@ export default class RootView extends Vue {
 
   get classes () {
     return {
-      shrink: this.shrink !== false
+      shrink: this.shrink !== false,
+      'newtab-colors': (
+        !commonModule.styling.backgroundColor &&
+        !commonModule.styling.color
+      )
     }
   }
 
-  get containerStyle () {
-    return {
-      '--color-transition-delay': `${-Math.floor(Math.random() * 600)}s`
-    }
+  @Watch('style')
+  updateStyle () {
+    this.styleElement.innerHTML = this.style
+  }
+
+  mounted () {
+    this.updateStyle()
+    document.body.appendChild(this.styleElement)
+  }
+
+  beforeDestroy () {
+    this.styleElement!.parentNode!.removeChild(this.styleElement)
   }
 }
 </script>
