@@ -7,7 +7,15 @@
       <v-flex xs12>
         <v-text-field
           v-model="formatString"
+          clearable
           label="Format"
+        />
+      </v-flex>
+      <v-flex xs12>
+        <v-autocomplete
+          :items="formatStringItems"
+          label="Append to format"
+          @change="v => formatString += v"
         />
       </v-flex>
 
@@ -47,9 +55,175 @@ export default class DateOptions extends Vue {
   get formatString (): string {
     return this.config.formatString
   }
-  set formatString (v: string) {
+  set formatString (vRaw: string) {
+    const v = vRaw || ' '
     this.save('formatString', v)
     this.save('updateRate', this.computeUpdateRate(v))
+  }
+  get formatStringItems (): { text: string, value: string }[] {
+    return [{
+      text: 'Date and time',
+      value: 'dddd, MMMM D, YYYY - HH:mm:ss'
+    }, {
+      text: 'Date',
+      value: 'dddd, MMMM D, YYYY'
+    }, {
+      text: 'Date',
+      value: 'YYYY/MM/DD'
+    }, {
+      text: 'Date',
+      value: 'D. M. YYYY'
+    }, {
+      text: 'Time',
+      value: 'H:mm'
+    }, {
+      text: 'Time',
+      value: 'HH:mm'
+    }, {
+      text: 'Time',
+      value: 'H:mm:ss'
+    }, {
+      text: 'Time',
+      value: 'HH:mm:ss'
+    }, {
+      text: 'Week',
+      value: '[Week] W'
+    }, {
+      text: 'Month',
+      value: 'M'
+    }, {
+      text: 'Month',
+      value: 'Mo'
+    }, {
+      text: 'Month',
+      value: 'MM'
+    }, {
+      text: 'Month',
+      value: 'MMM'
+    }, {
+      text: 'Month',
+      value: 'MMMM'
+    }, {
+      text: 'Quarter',
+      value: 'Q'
+    }, {
+      text: 'Quarter',
+      value: 'Qo'
+    }, {
+      text: 'Day of month',
+      value: 'D'
+    }, {
+      text: 'Day of month',
+      value: 'Do'
+    }, {
+      text: 'Day of month',
+      value: 'DD'
+    }, {
+      text: 'Day of year',
+      value: 'DDD'
+    }, {
+      text: 'Day of year',
+      value: 'DDDo'
+    }, {
+      text: 'Day of year',
+      value: 'DDDD'
+    }, {
+      text: 'Day of week',
+      value: 'd'
+    }, {
+      text: 'Day of week',
+      value: 'do'
+    }, {
+      text: 'Day of week',
+      value: 'dd'
+    }, {
+      text: 'Day of week',
+      value: 'ddd'
+    }, {
+      text: 'Day of week',
+      value: 'dddd'
+    }, {
+      text: 'Day of ISO week',
+      value: 'E'
+    }, {
+      text: 'ISO week',
+      value: 'W'
+    }, {
+      text: 'ISO week',
+      value: 'Wo'
+    }, {
+      text: 'ISO week',
+      value: 'WW'
+    }, {
+      text: 'Year',
+      value: 'YY'
+    }, {
+      text: 'Year',
+      value: 'YYYY'
+    }, {
+      text: 'ISO week-numbering year',
+      value: 'GG'
+    }, {
+      text: 'ISO week-numbering year',
+      value: 'GGGG'
+    }, {
+      text: 'AM/PM',
+      value: 'A'
+    }, {
+      text: 'AM/PM',
+      value: 'a'
+    }, {
+      text: 'AM/PM',
+      value: 'aa'
+    }, {
+      text: 'Hour',
+      value: 'H'
+    }, {
+      text: 'Hour',
+      value: 'HH'
+    }, {
+      text: 'Hour',
+      value: 'h'
+    }, {
+      text: 'Hour',
+      value: 'hh'
+    }, {
+      text: 'Minute',
+      value: 'm'
+    }, {
+      text: 'Minute',
+      value: 'mm'
+    }, {
+      text: 'Second',
+      value: 's'
+    }, {
+      text: 'Second',
+      value: 'ss'
+    }, {
+      text: '1/10 of second',
+      value: 'S'
+    }, {
+      text: '1/100 of second',
+      value: 'SS'
+    }, {
+      text: 'Millisecond',
+      value: 'SSS'
+    }, {
+      text: 'Timezone',
+      value: 'Z'
+    }, {
+      text: 'Timezone',
+      value: 'ZZ'
+    }, {
+      text: 'Seconds timestamp',
+      value: 'X'
+    }, {
+      text: 'Milliseconds timestamp',
+      value: 'x'
+    }].map(({ text, value }) => ({
+      text: `${text}: ${formatDate(1111, value)}`,
+      value
+    }))
   }
 
   computeUpdateRate (format: string): DateUpdateRate {
