@@ -1,7 +1,7 @@
 <template>
   <div
     :style="styleAttr"
-    class="separator"
+    class="widget separator"
   />
 </template>
 

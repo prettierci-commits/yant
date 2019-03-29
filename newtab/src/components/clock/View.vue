@@ -1,6 +1,6 @@
 <template>
   <div
-    class="clock"
+    class="widget clock"
     :style="styleAttr"
   >
     <span class="hours">{{ hours }}</span>
