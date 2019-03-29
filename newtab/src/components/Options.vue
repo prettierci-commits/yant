@@ -47,9 +47,10 @@
     <v-content>
       <v-container
         fluid
+        pa-0
         :style="previewStyle"
       >
-        <CommonWrapper>
+        <CommonWrapper class="flex-root">
           <router-view
             class="router-preview"
             name="preview"
@@ -129,5 +130,10 @@ export default class Options extends Vue {
 <style scoped>
 .router-preview {
   margin: 0px auto;
+}
+.flex-root {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 </style>
