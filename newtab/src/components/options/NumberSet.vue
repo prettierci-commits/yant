@@ -1,30 +1,25 @@
 <template>
-  <v-container
-    grid-list-md
-    pa-0
+  <v-layout
+    row
+    wrap
   >
-    <v-layout
-      row
-      wrap
+    <v-flex
+      v-for="(value, i) in value"
+      :key="i"
+      v-bind="flexSizing"
     >
-      <v-flex
-        v-for="(value, i) in value"
-        :key="i"
-        v-bind="flexSizing"
-      >
-        <v-text-field
-          :label="labels[i]"
-          :max="max"
-          :min="min"
-          :step="step"
-          :value="value"
-          clearable
-          type="number"
-          @input="v => emitUpdate(i, parseFloat(v))"
-        />
-      </v-flex>
-    </v-layout>
-  </v-container>
+      <v-text-field
+        :label="labels[i]"
+        :max="max"
+        :min="min"
+        :step="step"
+        :value="value"
+        clearable
+        type="number"
+        @input="v => emitUpdate(i, parseFloat(v))"
+      />
+    </v-flex>
+  </v-layout>
 </template>
 
 <script lang="ts">

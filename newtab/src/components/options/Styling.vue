@@ -7,206 +7,172 @@
       row
       wrap
     >
-      <v-flex xs12>
-        <v-container
-          grid-list-md
-          pa-0
-        >
-          <v-layout
-            row
-            wrap
-          >
-            <v-flex
-              xs12
-              title
-              pt-5
-            >
-              Dimensions
-            </v-flex>
-            <v-flex
-              xs12
-            >
-              <NumberSet
-                v-model="dimensions"
-                :labels="['Width', 'Height', 'Top', 'Right', 'Bottom', 'Left']"
-                :min="0"
-                :step="1"
-              />
-            </v-flex>
-          </v-layout>
-        </v-container>
+      <v-flex
+        xs12
+        title
+        pt-5
+      >
+        Dimensions
       </v-flex>
+      <v-flex
+        xs12
+      >
+        <NumberSet
+          v-model="dimensions"
+          :labels="['Width', 'Height', 'Top', 'Right', 'Bottom', 'Left']"
+          :min="0"
+          :step="1"
+        />
+      </v-flex>
+    </v-layout>
 
+    <template
+      v-if="nofont === false"
+      xs12
+    >
+      <v-layout
+        row
+        wrap
+      >
+        <v-flex
+          xs12
+          title
+          pt-5
+        >
+          Font
+        </v-flex>
+        <v-flex
+          xs12
+          lg6
+        >
+          <v-text-field
+            v-model.number="fontFamily"
+            label="Font family"
+            clearable
+          />
+        </v-flex>
+
+        <v-flex
+          xs12
+          sm4
+          lg2
+        >
+          <v-text-field
+            v-if="absolute !== false"
+            v-model.number="fontSize"
+            clearable
+            label="Font size"
+            min="1"
+            step="1"
+            type="number"
+          />
+          <v-text-field
+            v-else
+            v-model.number="fontScale"
+            clearable
+            label="Font scale"
+            min="0.1"
+            step="0.1"
+            type="number"
+          />
+        </v-flex>
+
+        <v-flex
+          xs12
+          sm4
+          lg2
+        >
+          <v-text-field
+            v-model.number="lineHeight"
+            label="Line height"
+            min="0"
+            step="0.1"
+            type="number"
+            clearable
+          />
+        </v-flex>
+
+        <v-flex
+          xs12
+          sm4
+          lg2
+        >
+          <v-text-field
+            v-model.number="fontWeight"
+            label="Font weight"
+            max="1000"
+            min="100"
+            step="100"
+            type="number"
+            clearable
+          />
+        </v-flex>
+      </v-layout>
+
+      <v-layout
+        row
+        wrap
+      >
+        <v-flex
+          xs12
+          md6
+        >
+          <v-select
+            v-model="fontVariantCaps"
+            :items="items.fontVariantCaps"
+            clearable
+            label="Caps"
+          />
+        </v-flex>
+
+        <v-flex
+          xs12
+          md6
+        >
+          <v-select
+            v-model="fontStyle"
+            :items="items.fontStyle"
+            clearable
+            label="Font style"
+          />
+        </v-flex>
+      </v-layout>
+    </template>
+
+    <v-layout
+      row
+      wrap
+    >
+      <v-flex
+        xs12
+        title
+        pt-5
+      >
+        Color
+      </v-flex>
       <v-flex
         v-if="nofont === false"
         xs12
+        md6
       >
-        <v-container
-          grid-list-md
-          pa-0
-        >
-          <v-layout
-            row
-            wrap
-          >
-            <v-flex
-              xs12
-              title
-              pt-5
-            >
-              Font
-            </v-flex>
-            <v-flex
-              xs12
-              lg6
-            >
-              <v-text-field
-                v-model.number="fontFamily"
-                label="Font family"
-                clearable
-              />
-            </v-flex>
-
-            <v-flex
-              xs12
-              sm4
-              lg2
-            >
-              <v-text-field
-                v-if="absolute !== false"
-                v-model.number="fontSize"
-                clearable
-                label="Font size"
-                min="1"
-                step="1"
-                type="number"
-              />
-              <v-text-field
-                v-else
-                v-model.number="fontScale"
-                clearable
-                label="Font scale"
-                min="0.1"
-                step="0.1"
-                type="number"
-              />
-            </v-flex>
-
-            <v-flex
-              xs12
-              sm4
-              lg2
-            >
-              <v-text-field
-                v-model.number="lineHeight"
-                label="Line height"
-                min="0"
-                step="0.1"
-                type="number"
-                clearable
-              />
-            </v-flex>
-
-            <v-flex
-              xs12
-              sm4
-              lg2
-            >
-              <v-text-field
-                v-model.number="fontWeight"
-                label="Font weight"
-                max="1000"
-                min="100"
-                step="100"
-                type="number"
-                clearable
-              />
-            </v-flex>
-          </v-layout>
-        </v-container>
+        <Color
+          v-model="color"
+          alpha
+          clearable
+          label="Font color"
+        />
       </v-flex>
 
       <v-flex
-        v-if="nofont === false"
         xs12
+        :md6="nofont === false"
       >
-        <v-container
-          grid-list-md
-          pa-0
-        >
-          <v-layout
-            row
-            wrap
-          >
-            <v-flex
-              xs12
-              md6
-            >
-              <v-select
-                v-model="fontVariantCaps"
-                :items="items.fontVariantCaps"
-                clearable
-                label="Caps"
-              />
-            </v-flex>
-
-            <v-flex
-              xs12
-              md6
-            >
-              <v-select
-                v-model="fontStyle"
-                :items="items.fontStyle"
-                clearable
-                label="Font style"
-              />
-            </v-flex>
-          </v-layout>
-        </v-container>
-      </v-flex>
-
-      <v-flex xs12>
-        <v-container
-          grid-list-md
-          pa-0
-        >
-          <v-layout
-            row
-            wrap
-          >
-            <v-flex
-              xs12
-              title
-              pt-5
-            >
-              Color
-            </v-flex>
-            <v-flex
-              v-if="nofont === false"
-              xs12
-              md6
-            >
-              <Color
-                v-model="color"
-                alpha
-                clearable
-                label="Font color"
-              />
-            </v-flex>
-
-            <v-flex
-              xs12
-              :md6="nofont === false"
-            >
-              <Color
-                v-model="backgroundColor"
-                alpha
-                clearable
-                label="Background"
-              />
-            </v-flex>
-          </v-layout>
-        </v-container>
+        <Color
+          v-model="backgroundColor"
+          alpha
+          clearable
+          label="Background"
+        />
       </v-flex>
     </v-layout>
   </v-container>
