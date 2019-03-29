@@ -32,6 +32,3 @@ export default class CommonWrapper extends Vue {
   }
 }
 </script>
-
-<style scoped>
-</style>

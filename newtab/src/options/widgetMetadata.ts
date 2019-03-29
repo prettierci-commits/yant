@@ -2,12 +2,17 @@ import { Location } from 'vue-router'
 
 export interface IDrawerItem {
   icon: string
-  id?: number
+  name: string
+  route: Location
+}
+export interface IDrawerWidget extends IDrawerItem {
+  componentName: string
+  icon: string
   name: string
   route: Location
 }
 
-const drawerMap: ReadonlyMap<string, IDrawerItem> = new Map([
+const items: [string, IDrawerItem][] = [
   ['common', {
     icon: 'mdi-domain',
     name: 'Common',
@@ -28,11 +33,13 @@ const drawerMap: ReadonlyMap<string, IDrawerItem> = new Map([
     route: {
       name: 'options-style'
     }
-  }],
-
+  }]
+]
+const widgets: [string, IDrawerWidget][] = [
   ['clock', {
     icon: 'mdi-clock',
     name: 'Clock',
+    componentName: 'ClockView',
     route: {
       name: 'options-clock'
     }
@@ -40,6 +47,7 @@ const drawerMap: ReadonlyMap<string, IDrawerItem> = new Map([
   ['date', {
     icon: 'mdi-calendar',
     name: 'Date',
+    componentName: 'DateView',
     route: {
       name: 'options-date'
     }
@@ -47,10 +55,26 @@ const drawerMap: ReadonlyMap<string, IDrawerItem> = new Map([
   ['motto', {
     icon: 'mdi-text',
     name: 'Motto',
+    componentName: 'MottoView',
     route: {
       name: 'options-motto'
     }
+  }],
+  ['separator', {
+    icon: 'mdi-minus',
+    name: 'Separator',
+    componentName: 'SeparatorView',
+    route: {
+      name: 'options-separator'
+    }
   }]
+]
+
+const widgetMap: ReadonlyMap<string, IDrawerWidget> = new Map(widgets)
+const drawerMap: ReadonlyMap<string, IDrawerItem> = new Map([
+  ...items,
+  ...widgets
 ])
 
 export { drawerMap }
+export { widgetMap }

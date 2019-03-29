@@ -14,23 +14,20 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
+import { widgetMap } from '@/options/widgetMetadata'
 import { widgetsModule } from '@/store'
 
 import ClockView from '@/components/clock/View.vue'
 import DateView from '@/components/date/View.vue'
 import MottoView from '@/components/motto/View.vue'
-
-const widgetComponentMap = new Map<string, string>([
-  ['clock', 'ClockView'],
-  ['date', 'DateView'],
-  ['motto', 'MottoView']
-])
+import SeparatorView from '@/components/separator/View.vue'
 
 @Component({
   components: {
     ClockView,
     DateView,
-    MottoView
+    MottoView,
+    SeparatorView
   }
 })
 export default class RootView extends Vue {
@@ -41,7 +38,7 @@ export default class RootView extends Vue {
 
   get widgets () {
     return widgetsModule.active.map(({ type, id }) => ({
-      component: widgetComponentMap.get(type)!,
+      component: widgetMap.get(type)!.componentName,
       id
     }))
   }
@@ -56,9 +53,9 @@ export default class RootView extends Vue {
 
 <style scoped>
 .flex-container {
+  align-items: center;
   display: flex;
   flex-direction: column;
-  justify-content: space-around;
 }
 .flex-container:not(.shrink) {
   min-height: 100vh;

@@ -13,6 +13,8 @@ import DateOptions from '@/components/date/Options.vue'
 import DatePreview from '@/components/date/View.vue'
 import MottoOptions from '@/components/motto/Options.vue'
 import MottoPreview from '@/components/motto/View.vue'
+import SeparatorOptions from '@/components/separator/Options.vue'
+import SeparatorPreview from '@/components/separator/View.vue'
 import StyleOptions from '@/components/style/Options.vue'
 import StylePreview from '@/components/style/View.vue'
 import WidgetsOptions from '@/components/widgets/Options.vue'
@@ -54,6 +56,13 @@ const routes: RouteConfig[] = [{
     components: {
       options: MottoOptions,
       preview: MottoPreview
+    }
+  }, {
+    path: 'separator/:id',
+    name: 'options-separator',
+    components: {
+      options: SeparatorOptions,
+      preview: SeparatorPreview
     }
   }, {
     path: 'widgets',

@@ -125,3 +125,9 @@ export default class Options extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.router-preview {
+  margin: 0px auto;
+}
+</style>

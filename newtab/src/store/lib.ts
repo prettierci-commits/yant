@@ -6,6 +6,7 @@ export function generateStyleAttr (styling: IStyling) {
     backgroundColor: styling.backgroundColor != null
       ? styling.backgroundColor
       : null,
+
     color: styling.color != null
       ? styling.color
       : null,
@@ -28,6 +29,25 @@ export function generateStyleAttr (styling: IStyling) {
       : null,
     lineHeight: styling.lineHeight != null
       ? `${styling.lineHeight}`
+      : null,
+
+    width: styling.width != null
+      ? `${styling.width}px`
+      : null,
+    height: styling.height != null
+      ? `${styling.height}px`
+      : null,
+    paddingTop: styling.paddingTop != null
+      ? `${styling.paddingTop}px`
+      : null,
+    paddingRight: styling.paddingRight != null
+      ? `${styling.paddingRight}px`
+      : null,
+    paddingBottom: styling.paddingBottom != null
+      ? `${styling.paddingBottom}px`
+      : null,
+    paddingLeft: styling.paddingLeft != null
+      ? `${styling.paddingLeft}px`
       : null
   }
 }

@@ -7,6 +7,7 @@ export interface IFont {
 
 export interface IStyling {
   backgroundColor?: string
+
   color?: string
   fontFamily?: string
   fontScale?: number
@@ -15,12 +16,20 @@ export interface IStyling {
   fontVariantCaps?: string
   fontWeight?: number
   lineHeight?: number
-  margin?: number
-  padding?: number
+
+  width?: number
+  height?: number
+  paddingTop?: number
+  paddingRight?: number
+  paddingBottom?: number
+  paddingLeft?: number
 }
 
-export interface IClockConfig {
+export interface IWidget {
   styling: IStyling
+}
+
+export interface IClockConfig extends IWidget {
   separator: string
   showSeconds: boolean
   dimSeconds: boolean
@@ -37,13 +46,15 @@ export enum DateUpdateRate {
   Days = 6
 }
 
-export interface IDateConfig {
-  styling: IStyling
+export interface IDateConfig extends IWidget {
   formatString: string
   updateRate: DateUpdateRate
 }
 
-export interface IMottoConfig {
-  styling: IStyling
+export interface IMottoConfig extends IWidget {
   text: string
+}
+
+export interface ISeparatorConfig extends IWidget {
+  flexGrow: number
 }
