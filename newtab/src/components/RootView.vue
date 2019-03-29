@@ -2,10 +2,11 @@
   <div
     class="flex-container newtab"
     :class="classes"
+    :style="containerStyle"
   >
     <div
       :is="component"
-      v-for="({ component, id }, i) in widgets"
+      v-for="({ component, id }, i) in widgetsDOM"
       :key="i"
       :widget-id="id"
     />
@@ -15,7 +16,6 @@
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { widgetMap } from '@/options/widgetMetadata'
-import { widgetsModule } from '@/store'
 
 import ClockView from '@/components/clock/View.vue'
 import DateView from '@/components/date/View.vue'
@@ -34,10 +34,14 @@ export default class RootView extends Vue {
   @Prop({ default: false })
   shrink!: boolean
 
-  widgetsModule = widgetsModule
+  @Prop({ required: true })
+  widgets!: {
+    type: string
+    id: number
+  }[]
 
-  get widgets () {
-    return widgetsModule.active.map(({ type, id }) => ({
+  get widgetsDOM () {
+    return this.widgets.map(({ type, id }) => ({
       component: widgetMap.get(type)!.componentName,
       id
     }))
@@ -46,6 +50,12 @@ export default class RootView extends Vue {
   get classes () {
     return {
       shrink: this.shrink !== false
+    }
+  }
+
+  get containerStyle () {
+    return {
+      '--color-transition-delay': `${-Math.floor(Math.random() * 600)}s`
     }
   }
 }

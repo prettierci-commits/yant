@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <CommonWrapper>
-      <RootView />
+      <RootView :widgets="widgetsModule.active" />
 
       <SettingsIcon
         class="options-button"
@@ -14,6 +14,7 @@
 <script lang="ts">
 import RootView from '@/components/RootView.vue'
 import { Component, Vue } from 'vue-property-decorator'
+import { widgetsModule } from '@/store'
 
 import CommonWrapper from '@/components/common/Wrapper.vue'
 import SettingsIcon from '@/assets/settings.svg'
@@ -26,6 +27,8 @@ import SettingsIcon from '@/assets/settings.svg'
   }
 })
 export default class App extends Vue {
+  widgetsModule = widgetsModule
+
   openOptions () {
     window.location.href = './options.html'
   }
@@ -36,10 +39,6 @@ export default class App extends Vue {
 body {
   margin: 0px;
   padding: 0px;
-}
-html {
-  overflow-y: auto;
-  overflow-x: hidden;
 }
 </style>
 

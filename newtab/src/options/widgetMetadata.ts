@@ -10,6 +10,7 @@ export interface IDrawerWidget extends IDrawerItem {
   icon: string
   name: string
   route: Location
+  type: string
 }
 
 const items: [string, IDrawerItem][] = [
@@ -39,6 +40,7 @@ const widgets: [string, IDrawerWidget][] = [
   ['clock', {
     icon: 'mdi-clock',
     name: 'Clock',
+    type: 'clock',
     componentName: 'ClockView',
     route: {
       name: 'options-clock'
@@ -47,6 +49,7 @@ const widgets: [string, IDrawerWidget][] = [
   ['date', {
     icon: 'mdi-calendar',
     name: 'Date',
+    type: 'date',
     componentName: 'DateView',
     route: {
       name: 'options-date'
@@ -55,6 +58,7 @@ const widgets: [string, IDrawerWidget][] = [
   ['motto', {
     icon: 'mdi-text',
     name: 'Motto',
+    type: 'motto',
     componentName: 'MottoView',
     route: {
       name: 'options-motto'
@@ -63,6 +67,7 @@ const widgets: [string, IDrawerWidget][] = [
   ['separator', {
     icon: 'mdi-minus',
     name: 'Separator',
+    type: 'separator',
     componentName: 'SeparatorView',
     route: {
       name: 'options-separator'

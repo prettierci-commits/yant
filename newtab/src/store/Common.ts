@@ -4,8 +4,6 @@ import { generateStyleAttr, IStyling } from './lib'
 @Module({ namespaced: true, name: 'common' })
 export default class Common extends VuexModule {
   styling: IStyling = {
-    backgroundColor: '#282828',
-    color: '#ffffff',
     fontFamily: 'Source Serif Pro',
     fontSize: 15,
     fontWeight: 300,

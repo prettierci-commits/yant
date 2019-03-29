@@ -17,8 +17,4 @@ body {
   margin: 0px;
   padding: 0px;
 }
-html {
-  overflow-y: auto;
-  overflow-x: hidden;
-}
 </style>

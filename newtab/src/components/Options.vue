@@ -25,6 +25,7 @@
         </v-list-tile>
       </v-list>
     </v-navigation-drawer>
+
     <v-toolbar
       app
       clipped-left
@@ -44,24 +45,19 @@
         <v-icon>mdi-close</v-icon>
       </v-btn>
     </v-toolbar>
+
     <v-content>
-      <v-container
-        fluid
-        pa-0
-        :style="previewStyle"
-      >
-        <CommonWrapper class="flex-root">
-          <router-view
-            class="router-preview"
-            name="preview"
-            :widget-id="$route.params.id"
-          />
-        </CommonWrapper>
-      </v-container>
+      <CommonWrapper>
+        <RootView
+          :widgets="widgets"
+          shrink
+        />
+      </CommonWrapper>
+
       <v-divider />
+
       <router-view
         class="router-options"
-        name="options"
         :widget-id="$route.params.id"
       />
     </v-content>
@@ -69,6 +65,7 @@
 </template>
 
 <script lang="ts">
+import RootView from './RootView.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { Location } from 'vue-router'
 import { commonModule, widgetsModule } from '@/store'
@@ -85,7 +82,8 @@ interface IDrawerItem {
 
 @Component({
   components: {
-    CommonWrapper
+    CommonWrapper,
+    RootView
   }
 })
 export default class Options extends Vue {
@@ -115,6 +113,17 @@ export default class Options extends Vue {
     ]
   }
 
+  get widgets () {
+    if (this.$route.meta && this.$route.meta.type) {
+      return [{
+        type: this.$route.meta.type,
+        id: +this.$route.params.id
+      }]
+    } else {
+      return widgetsModule.active
+    }
+  }
+
   get previewStyle () {
     return {
       backgroundColor: commonModule.styling.backgroundColor
@@ -126,14 +135,3 @@ export default class Options extends Vue {
   }
 }
 </script>
-
-<style scoped>
-.router-preview {
-  margin: 0px auto;
-}
-.flex-root {
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-}
-</style>
