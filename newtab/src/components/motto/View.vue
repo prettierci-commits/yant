@@ -31,6 +31,5 @@ export default class MottoView extends Vue {
 .motto {
   text-align: center;
   white-space: pre-wrap;
-  width: 100%;
 }
 </style>

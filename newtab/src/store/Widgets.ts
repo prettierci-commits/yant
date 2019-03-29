@@ -36,6 +36,7 @@ const defaults: {
   },
   separator: {
     styling: {
+      height: 40
     },
     flexGrow: 1
   }

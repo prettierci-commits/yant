@@ -26,3 +26,9 @@ export default class SeparatorView extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.separator {
+  width: 100%;
+}
+</style>
