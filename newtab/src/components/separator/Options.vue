@@ -18,6 +18,7 @@
         <Styling
           v-model="styling"
           nofont
+          nopadding
         />
       </v-flex>
     </v-layout>

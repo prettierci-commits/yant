@@ -4,6 +4,7 @@
     pa-0
   >
     <v-layout
+      v-if="nosize === false || nopadding === false"
       row
       wrap
     >
@@ -18,11 +19,28 @@
         xs12
       >
         <NumberSet
-          v-model="dimensions"
+          v-if="nosize === false && nopadding === false"
+          v-model="dimensionsFull"
           :labels="['Width', 'Height', 'Top', 'Right', 'Bottom', 'Left']"
           :min="0"
           :step="1"
           :units="['px', 'px', 'px', 'px', 'px', 'px']"
+        />
+        <NumberSet
+          v-if="nosize !== false && nopadding === false"
+          v-model="dimensionsPadding"
+          :labels="['Top', 'Right', 'Bottom', 'Left']"
+          :min="0"
+          :step="1"
+          :units="['px', 'px', 'px', 'px']"
+        />
+        <NumberSet
+          v-if="nosize === false && nopadding !== false"
+          v-model="dimensionsSize"
+          :labels="['Width', 'Height']"
+          :min="0"
+          :step="1"
+          :units="['px', 'px']"
         />
       </v-flex>
     </v-layout>
@@ -186,8 +204,6 @@ import NumberSet from './NumberSet.vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IStyling } from '@/store'
 
-type dimensions = [number | undefined, ...(number | undefined)[]] & { length: 6 }
-
 @Component({
   components: {
     Color,
@@ -203,6 +219,12 @@ export default class Styling extends Vue {
 
   @Prop({ default: false })
   nofont!: boolean
+
+  @Prop({ default: false })
+  nosize!: boolean
+
+  @Prop({ default: false })
+  nopadding!: boolean
 
   items = {
     fontStyle: [{
@@ -290,17 +312,17 @@ export default class Styling extends Vue {
     this.emitStylingChange('backgroundColor', v)
   }
 
-  get dimensions (): dimensions {
+  get dimensionsFull (): (number | undefined)[] {
+    console.log('get', [
+      ...this.dimensionsSize,
+      ...this.dimensionsPadding
+    ])
     return [
-      this.value.width,
-      this.value.height,
-      this.value.paddingTop,
-      this.value.paddingRight,
-      this.value.paddingBottom,
-      this.value.paddingLeft
+      ...this.dimensionsSize,
+      ...this.dimensionsPadding
     ]
   }
-  set dimensions (v: dimensions) {
+  set dimensionsFull (v: (number | undefined)[]) {
     this.emitStylingChanges([
       { key: 'width', value: v[0] },
       { key: 'height', value: v[1] },
@@ -308,6 +330,36 @@ export default class Styling extends Vue {
       { key: 'paddingRight', value: v[3] },
       { key: 'paddingBottom', value: v[4] },
       { key: 'paddingLeft', value: v[5] }
+    ])
+  }
+
+  get dimensionsSize (): (number | undefined)[] {
+    return [
+      this.value.width,
+      this.value.height
+    ]
+  }
+  set dimensionsSize (v: (number | undefined)[]) {
+    this.emitStylingChanges([
+      { key: 'width', value: v[0] },
+      { key: 'height', value: v[1] }
+    ])
+  }
+
+  get dimensionsPadding (): (number | undefined)[] {
+    return [
+      this.value.paddingTop,
+      this.value.paddingRight,
+      this.value.paddingBottom,
+      this.value.paddingLeft
+    ]
+  }
+  set dimensionsPadding (v: (number | undefined)[]) {
+    this.emitStylingChanges([
+      { key: 'paddingTop', value: v[0] },
+      { key: 'paddingRight', value: v[1] },
+      { key: 'paddingBottom', value: v[2] },
+      { key: 'paddingLeft', value: v[3] }
     ])
   }
 

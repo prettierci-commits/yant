@@ -8,6 +8,7 @@
         <Styling
           v-model="styling"
           absolute
+          nosize
         />
       </v-flex>
     </v-layout>
