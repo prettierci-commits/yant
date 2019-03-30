@@ -313,10 +313,6 @@ export default class Styling extends Vue {
   }
 
   get dimensionsFull (): (number | undefined)[] {
-    console.log('get', [
-      ...this.dimensionsSize,
-      ...this.dimensionsPadding
-    ])
     return [
       ...this.dimensionsSize,
       ...this.dimensionsPadding
