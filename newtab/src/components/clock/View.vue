@@ -27,8 +27,9 @@
 </template>
 
 <script lang="ts">
+import Updater, { nextMinute, nextSecond } from '@/lib/Updater'
 import formatDate from 'date-fns/format'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { widgetsModule, IClockConfig } from '@/store'
 
 @Component
@@ -36,14 +37,17 @@ export default class ClockView extends Vue {
   @Prop({ required: true })
   widgetId!: number
 
-  clockInterval: number | undefined = undefined
+  updater!: Updater
   date: Date = new Date()
 
+  created () {
+    this.updater = new Updater(this.updateDate)
+  }
   mounted () {
-    this.clockInterval = window.setInterval(this.updateClock, 1000)
+    this.resetTimeout()
   }
   beforeDestroy () {
-    window.clearInterval(this.clockInterval)
+    this.updater.stop()
   }
 
   get config (): IClockConfig {
@@ -64,7 +68,18 @@ export default class ClockView extends Vue {
     return this.date.getSeconds().toString().padStart(2, '0')
   }
 
-  updateClock () {
+  @Watch('config.showSeconds')
+  resetTimeout () {
+    this.updateDate()
+
+    if (this.config.showSeconds) {
+      this.updater.start(nextSecond)
+    } else {
+      this.updater.start(nextMinute)
+    }
+  }
+
+  updateDate () {
     this.date = new Date()
   }
 }
