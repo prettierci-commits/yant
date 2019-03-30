@@ -104,4 +104,8 @@ export default class RootView extends Vue {
 .flex-container:not(.shrink) {
   min-height: 100vh;
 }
+
+.flex-container > .widget {
+  overflow: hidden;
+}
 </style>
