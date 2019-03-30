@@ -2,7 +2,7 @@
   <!-- eslint-disable vue/no-v-html -->
   <div
     :style="styleAttr"
-    class="widget motto"
+    class="motto"
     v-html="config.text"
   />
   <!--eslint-enable-->

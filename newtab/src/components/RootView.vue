@@ -9,6 +9,7 @@
       v-for="({ component, id }, i) in widgetsDOM"
       :key="i"
       :widget-id="id"
+      class="widget"
     />
 
     <slot />

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="widget date"
+    class="date"
     :style="styleAttr"
   >
     {{ textDate }}
