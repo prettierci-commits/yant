@@ -22,6 +22,7 @@
           :labels="['Width', 'Height', 'Top', 'Right', 'Bottom', 'Left']"
           :min="0"
           :step="1"
+          :units="['px', 'px', 'px', 'px', 'px', 'px']"
         />
       </v-flex>
     </v-layout>
@@ -64,6 +65,7 @@
             label="Font size"
             min="1"
             step="1"
+            suffix="px"
             type="number"
           />
           <v-text-field

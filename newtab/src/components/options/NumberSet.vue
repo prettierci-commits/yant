@@ -13,6 +13,7 @@
         :max="max"
         :min="min"
         :step="step"
+        :suffix="units[i]"
         :value="value"
         clearable
         type="number"
@@ -32,6 +33,9 @@ export default class NumberSet extends Vue {
 
   @Prop({ required: true })
   labels!: string[]
+
+  @Prop({ default: () => [] })
+  units!: string[]
 
   @Prop({ default: undefined })
   max!: number | undefined
