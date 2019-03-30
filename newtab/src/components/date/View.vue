@@ -45,7 +45,7 @@ export default class DateView extends Vue {
 
   @Watch('config.updateRate')
   resetTimeout () {
-    this.updateDate()
+    this.updateDate(Date.now())
 
     let setNextDateAndReturnMsToWait: (date: Date) => number
     switch (this.config.updateRate) {
