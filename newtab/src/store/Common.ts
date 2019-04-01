@@ -9,6 +9,7 @@ export default class Common extends VuexModule {
     fontWeight: 300,
     lineHeight: 1.5
   }
+  fadeIn: boolean = true
   style: string = ''
 
   get styleAttr () {
@@ -18,6 +19,11 @@ export default class Common extends VuexModule {
   @Mutation
   setStyling (v: IStyling) {
     this.styling = v
+  }
+
+  @Mutation
+  setFadeIn (v: boolean) {
+    this.fadeIn = v
   }
 
   @Mutation

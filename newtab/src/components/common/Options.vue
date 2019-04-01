@@ -5,6 +5,13 @@
       wrap
     >
       <v-flex xs12>
+        <v-switch
+          v-model="fadeIn"
+          label="Fade in"
+        />
+      </v-flex>
+
+      <v-flex xs12>
         <Styling
           v-model="styling"
           absolute
@@ -35,6 +42,13 @@ export default class CommonOptions extends Vue {
   }
   set styling (v: IStyling) {
     this.storeModule.setStyling(v)
+  }
+
+  get fadeIn (): boolean {
+    return this.storeModule.fadeIn
+  }
+  set fadeIn (v: boolean) {
+    this.storeModule.setFadeIn(v)
   }
 }
 </script>

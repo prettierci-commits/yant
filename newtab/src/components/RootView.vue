@@ -75,7 +75,8 @@ export default class RootView extends Vue {
       'newtab-colors': (
         !commonModule.styling.backgroundColor &&
         !commonModule.styling.color
-      )
+      ),
+      [commonModule.fadeIn ? 'fade-in' : 'show-immediatelly']: true
     }
   }
 
@@ -100,6 +101,7 @@ export default class RootView extends Vue {
   align-items: center;
   display: flex;
   flex-direction: column;
+  opacity: 0;
 }
 .flex-container:not(.shrink) {
   min-height: 100vh;
@@ -107,5 +109,63 @@ export default class RootView extends Vue {
 
 .flex-container > .widget {
   overflow: hidden;
+}
+
+.show-immediatelly {
+  opacity: 1;
+}
+.fade-in {
+  animation: fade-in 2s forwards;
+}
+
+.fade-in.newtab-colors {
+  animation:
+    fade-in 2s forwards,
+    color-transition 600s infinite var(--color-transition-delay) linear;
+}
+
+.newtab-colors {
+  --color-transition-delay: 0s;
+  animation: color-transition 600s infinite var(--color-transition-delay) linear;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes color-transition {
+  from, to { background-color: #ffffff; color: #000000; }
+      2.4% {                            color: #000000; }
+      2.6% {                            color: #ffffff; }
+      5.0% { background-color: #000000;                 }
+     10.0% { background-color: #f44336;                 }
+     15.0% { background-color: #e91e63;                 }
+     20.0% { background-color: #9c27b0;                 }
+     25.0% { background-color: #673ab7;                 }
+     30.0% { background-color: #3f51b5;                 }
+     32.4% {                            color: #ffffff; }
+     32.6% {                            color: #000000; }
+     35.0% { background-color: #2196f3;                 }
+     40.0% { background-color: #03a9f4;                 }
+     45.0% { background-color: #00bcd4;                 }
+     47.4% {                            color: #000000; }
+     47.6% {                            color: #ffffff; }
+     50.0% { background-color: #009688;                 }
+     52.4% {                            color: #ffffff; }
+     52.6% {                            color: #000000; }
+     55.0% { background-color: #4caf50;                 }
+     60.0% { background-color: #8bc34a;                 }
+     65.0% { background-color: #cddc39;                 }
+     70.0% { background-color: #ffeb3b;                 }
+     75.0% { background-color: #ffc107;                 }
+     80.0% { background-color: #ff9800;                 }
+     85.0% { background-color: #ff5722;                 }
+     87.4% {                            color: #000000; }
+     87.6% {                            color: #ffffff; }
+     90.0% { background-color: #795548;                 }
+     95.0% { background-color: #607d8b;                 }
+     97.4% {                            color: #ffffff; }
+     97.6% {                            color: #000000; }
 }
 </style>
