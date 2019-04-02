@@ -8,7 +8,7 @@ export default class Common extends VuexModule {
     fontSize: 15,
     fontWeight: 300,
     lineHeight: 1.5,
-    keyframeColors: [
+    animationColors: [
       { 'fg': '#000000', 'bg': '#f44336' },
       { 'fg': '#000000', 'bg': '#ff5722' },
       { 'fg': '#000000', 'bg': '#ff9800' },
@@ -31,7 +31,7 @@ export default class Common extends VuexModule {
   style: string = ''
 
   get animation () {
-    return generateAnimation(this.styling.keyframeColors || [])
+    return generateAnimation(this.styling.animationColors || [], this.styling.animationDuration)
   }
 
   get styleAttr () {

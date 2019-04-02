@@ -1,26 +1,28 @@
-import { keyframeColors } from './types'
+import { animationColors } from './types'
 
 let id = 0
-const animationDuration = 60
-const fgTransitionDuration = 2 / animationDuration
 
 function toPrcStr (fraction: number) {
   return `${(fraction * 100).toFixed(6)}%`
 }
 
-export function generateAnimation (keyframeColors: keyframeColors[]) {
+export function generateAnimation (animationColors: animationColors[], animationDuration: number = 60) {
   ++id
-  if (!keyframeColors.length) {
+  if (!animationColors.length) {
     return {
       animation: '',
       css: ''
     }
   }
 
-  const halfStepOffset = 1 / 2 / keyframeColors.length
+  const animationDelay = -Math.floor(animationDuration * Math.random())
+
+  const fgTransitionDuration = 2 / animationDuration
+  const halfStepOffset = 1 / 2 / animationColors.length
   const fgTransitionOffset = Math.min(fgTransitionDuration, halfStepOffset / 2)
+
   const keyframes = ([] as string[]).concat(
-    ...keyframeColors.map((curr, i, arr) => {
+    ...animationColors.map((curr, i, arr) => {
       const prev = arr[i - 1] || {}
       const offset = i / arr.length
 
@@ -42,7 +44,6 @@ export function generateAnimation (keyframeColors: keyframeColors[]) {
     })
   )
   const keyframesStr = keyframes.map(line => `  ${line}`).join('\n')
-  const animationDelay = -Math.floor(animationDuration * Math.random())
 
   return {
     animation: `custom-color-keyframes-${id} ${animationDuration}s infinite ${animationDelay}s linear`,

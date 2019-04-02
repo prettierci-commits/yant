@@ -211,7 +211,19 @@
       </v-flex>
 
       <v-flex xs12>
-        <ColorList v-model="colors" />
+        <v-text-field
+          v-model="animationDuration"
+          clearable
+          label="Animation duration"
+          min="1"
+          step="1"
+          suffix="s"
+          type="number"
+        />
+      </v-flex>
+
+      <v-flex xs12>
+        <ColorList v-model="animationColors" />
       </v-flex>
     </v-layout>
   </v-container>
@@ -221,9 +233,8 @@
 import Color from './Color.vue'
 import ColorList from './ColorList.vue'
 import NumberSet from './NumberSet.vue'
-import materialColors from 'vuetify/es5/util/colors'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { IStyling, keyframeColors } from '@/store'
+import { IStyling, animationColors } from '@/store'
 
 @Component({
   components: {
@@ -274,11 +285,18 @@ export default class Styling extends Vue {
     }]
   }
 
-  get colors (): keyframeColors[] | undefined {
-    return this.value.keyframeColors
+  get animationColors (): animationColors[] | undefined {
+    return this.value.animationColors
   }
-  set colors (v: keyframeColors[] | undefined) {
-    this.emitStylingChange('keyframeColors', v)
+  set animationColors (v: animationColors[] | undefined) {
+    this.emitStylingChange('animationColors', v)
+  }
+
+  get animationDuration (): number | undefined {
+    return this.value.animationDuration
+  }
+  set animationDuration (v: number | undefined) {
+    this.emitStylingChange('animationDuration', v)
   }
 
   get fontStyle (): string | undefined {

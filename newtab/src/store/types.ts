@@ -5,7 +5,7 @@ export interface IFont {
   weight: number
 }
 
-export type keyframeColors = {
+export type animationColors = {
   fg: string
   bg: string
 }
@@ -29,7 +29,8 @@ export interface IStyling {
   paddingBottom?: number
   paddingLeft?: number
 
-  keyframeColors?: keyframeColors[]
+  animationColors?: animationColors[]
+  animationDuration?: number
 }
 
 export interface IWidget {
