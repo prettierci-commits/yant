@@ -5,6 +5,11 @@ export interface IFont {
   weight: number
 }
 
+export type keyframeColors = {
+  fg: string
+  bg: string
+}
+
 export interface IStyling {
   backgroundColor?: string
 
@@ -23,6 +28,8 @@ export interface IStyling {
   paddingRight?: number
   paddingBottom?: number
   paddingLeft?: number
+
+  keyframeColors?: keyframeColors[]
 }
 
 export interface IWidget {

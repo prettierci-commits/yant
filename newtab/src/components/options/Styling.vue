@@ -160,6 +160,7 @@
     </template>
 
     <v-layout
+      v-if="animatedColors === false"
       row
       wrap
     >
@@ -195,18 +196,39 @@
         />
       </v-flex>
     </v-layout>
+
+    <v-layout
+      v-if="animatedColors !== false"
+      row
+      wrap
+    >
+      <v-flex
+        xs12
+        title
+        pt-5
+      >
+        Colors
+      </v-flex>
+
+      <v-flex xs12>
+        <ColorList v-model="colors" />
+      </v-flex>
+    </v-layout>
   </v-container>
 </template>
 
 <script lang="ts">
 import Color from './Color.vue'
+import ColorList from './ColorList.vue'
 import NumberSet from './NumberSet.vue'
+import materialColors from 'vuetify/es5/util/colors'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { IStyling } from '@/store'
+import { IStyling, keyframeColors } from '@/store'
 
 @Component({
   components: {
     Color,
+    ColorList,
     NumberSet
   }
 })
@@ -225,6 +247,9 @@ export default class Styling extends Vue {
 
   @Prop({ default: false })
   nopadding!: boolean
+
+  @Prop({ default: false })
+  animatedColors!: boolean
 
   items = {
     fontStyle: [{
@@ -247,6 +272,13 @@ export default class Styling extends Vue {
       text: 'All small caps',
       value: 'all-small-caps'
     }]
+  }
+
+  get colors (): keyframeColors[] | undefined {
+    return this.value.keyframeColors
+  }
+  set colors (v: keyframeColors[] | undefined) {
+    this.emitStylingChange('keyframeColors', v)
   }
 
   get fontStyle (): string | undefined {

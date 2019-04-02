@@ -15,6 +15,7 @@
         <Styling
           v-model="styling"
           absolute
+          animated-colors
           nosize
         />
       </v-flex>
