@@ -19,7 +19,9 @@
       :style="style"
       class="color-tile"
       @click.stop="openPicker"
-    />
+    >
+      <slot />
+    </div>
 
     <div
       v-show="showPicker"
@@ -100,13 +102,16 @@ export default class Color extends Vue {
   width: 100%;
 }
 .color-tile {
-  border-radius: 4px;
-  bottom: 0px;
-  left: 0px;
-  margin: 4px;
   position: absolute;
-  right: 0px;
   top: 0px;
+  left: 0px;
+  bottom: 0px;
+  right: 0px;
+
+  margin: 4px;
+
+  border-radius: 4px;
+  cursor: pointer;
   z-index: 0;
 }
 .open .color-tile {

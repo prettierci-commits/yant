@@ -3,7 +3,15 @@
     <ColorTile
       v-model="fg"
       title="Foreground"
-    />
+    >
+      <div
+        v-show="fg !== recommendedFg"
+        :style="{ backgroundColor: recommendedFg }"
+        class="fg-hint"
+        title="Recommended color"
+        @click.stop="fg = recommendedFg"
+      />
+    </ColorTile>
     <ColorTile
       v-model="bg"
       title="Background"
@@ -47,6 +55,26 @@ export default class Color extends Vue {
       bg: v
     })
   }
+
+  get recommendedFg () {
+    return this.isColorLight(this.bg)
+      ? '#000000'
+      : '#ffffff'
+  }
+
+  isColorLight (hexColor: string): boolean {
+    const r = parseInt(hexColor.slice(1, 3), 16)
+    const g = parseInt(hexColor.slice(3, 5), 16)
+    const b = parseInt(hexColor.slice(5, 7), 16)
+
+    const hsp = Math.sqrt(
+      0.299 * (r * r) +
+      0.587 * (g * g) +
+      0.114 * (b * b)
+    )
+
+    return hsp > 127.5
+  }
 }
 </script>
 
@@ -57,5 +85,26 @@ export default class Color extends Vue {
 }
 .color-fg-bg-container > * {
   flex-grow: 1;
+}
+.fg-hint {
+  border-radius: 0px 4px;
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+
+  width: 1em;
+  max-width: 50%;
+  height: 1em;
+  max-height: 50%;
+}
+.open .fg-hint {
+  visibility: hidden;
+}
+.fg-hint.light {
+  background-color: #000000;
+}
+.fg-hint.dark {
+  background-color: #ffffff;
 }
 </style>
