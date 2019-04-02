@@ -16,7 +16,7 @@
     />
 
     <div
-      :style="style"
+      :style="tileStyle"
       class="color-tile"
       @click.stop="openPicker"
     >
@@ -46,12 +46,16 @@ export default class Color extends Vue {
   value!: string
 
   showPicker = false
-  pickerStyle: {
-    left?: string
-    right?: string
-  } = {}
+  pickerWidth = 220 // seems constant
+  pickerLeft = 0
 
-  get style () {
+  get pickerStyle () {
+    return {
+      left: `${this.pickerLeft}px`
+    }
+  }
+
+  get tileStyle () {
     return {
       backgroundColor: this.value
     }
@@ -78,18 +82,21 @@ export default class Color extends Vue {
 
   openPicker () {
     const container = this.$refs.container as HTMLElement
-    const root = container.parentElement!
+    const margin = 40
 
-    if (container.offsetLeft + container.offsetWidth / 2 < root.offsetWidth / 2) {
-      this.pickerStyle = {
-        left: '0px'
-      }
-    } else {
-      this.pickerStyle = {
-        right: '0px'
-      }
+    const bcr = container.getBoundingClientRect()
+
+    let offset = bcr.width / 2 - this.pickerWidth / 2
+    const leftOverflow = 0 - (bcr.left + offset - margin)
+    const rightOverflow = (bcr.left + offset + this.pickerWidth + margin) - document.body.offsetWidth
+
+    if (leftOverflow > 0 && rightOverflow <= 0) {
+      offset += leftOverflow
+    } else if (rightOverflow > 0 && leftOverflow <= 0) {
+      offset -= rightOverflow
     }
 
+    this.pickerLeft = offset
     this.showPicker = true
   }
 }
