@@ -210,9 +210,12 @@
         Colors
       </v-flex>
 
-      <v-flex xs12>
+      <v-flex
+        xs12
+        sm6
+      >
         <v-text-field
-          v-model="animationDuration"
+          v-model.number="animationDuration"
           :messages="[animationDurationMessage]"
           clearable
           label="Animation duration"
@@ -223,7 +226,26 @@
         />
       </v-flex>
 
-      <v-flex xs12>
+      <v-flex
+        xs12
+        sm6
+      >
+        <v-text-field
+          v-model.number="animationDelay"
+          :messages="[animationDelayMessage]"
+          clearable
+          label="Animation delay"
+          min="0"
+          step="1"
+          suffix="s"
+          type="number"
+        />
+      </v-flex>
+
+      <v-flex
+        xs12
+        pt-3
+      >
         <ColorList v-model="animationColors" />
       </v-flex>
     </v-layout>
@@ -236,6 +258,7 @@ import ColorList from './ColorList.vue'
 import NumberSet from './NumberSet.vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IStyling, animationColors } from '@/store'
+import { generateAnimation } from '@/store/lib'
 
 @Component({
   components: {
@@ -327,6 +350,26 @@ export default class Styling extends Vue {
     }
 
     return msg.join(', ')
+  }
+
+  get animationDelay (): number | undefined {
+    return this.value.animationDelay
+  }
+  set animationDelay (v: number | undefined) {
+    this.emitStylingChange('animationDelay', v)
+  }
+  get animationDelayMessage () {
+    return `Last start: ${this.animationLastStart.toLocaleString()}`
+  }
+
+  get animationLastStart (): Date {
+    const animation = generateAnimation(
+      this.value.animationColors || [],
+      this.value.animationDelay,
+      this.value.animationDuration
+    )
+
+    return new Date(animation.lastStart)
   }
 
   get fontStyle (): string | undefined {

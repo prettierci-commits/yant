@@ -31,7 +31,10 @@ export default class Common extends VuexModule {
   style: string = ''
 
   get animation () {
-    return generateAnimation(this.styling.animationColors || [], this.styling.animationDuration)
+    return generateAnimation(
+      this.styling.animationColors || [],
+      this.styling.animationDelay,
+      this.styling.animationDuration)
   }
 
   get styleAttr () {

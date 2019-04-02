@@ -6,16 +6,18 @@ function toPrcStr (fraction: number) {
   return `${(fraction * 100).toFixed(6)}%`
 }
 
-export function generateAnimation (animationColors: animationColors[], animationDuration: number = 60) {
+export function generateAnimation (animationColors: animationColors[], animationDelay: number = 0, animationDuration: number = 60) {
   ++id
   if (!animationColors.length) {
     return {
       animation: '',
-      css: ''
+      css: '',
+      lastStart: 0
     }
   }
 
-  const animationDelay = -Math.floor(animationDuration * Math.random())
+  const lastStart = Math.floor(Date.now() / 1000 / animationDuration) * animationDuration + animationDelay % animationDuration
+  const animationDelayCurrent = Math.floor(lastStart - Date.now() / 1000)
 
   const fgTransitionDuration = 2 / animationDuration
   const halfStepOffset = 1 / 2 / animationColors.length
@@ -46,7 +48,8 @@ export function generateAnimation (animationColors: animationColors[], animation
   const keyframesStr = keyframes.map(line => `  ${line}`).join('\n')
 
   return {
-    animation: `custom-color-keyframes-${id} ${animationDuration}s infinite ${animationDelay}s linear`,
-    css: `@keyframes custom-color-keyframes-${id} {\n${keyframesStr}\n}`
+    animation: `custom-color-keyframes-${id} ${animationDuration}s infinite ${animationDelayCurrent}s linear`,
+    css: `@keyframes custom-color-keyframes-${id} {\n${keyframesStr}\n}`,
+    lastStart: lastStart * 1000
   }
 }
