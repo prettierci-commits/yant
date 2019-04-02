@@ -213,6 +213,7 @@
       <v-flex xs12>
         <v-text-field
           v-model="animationDuration"
+          :messages="[animationDurationMessage]"
           clearable
           label="Animation duration"
           min="1"
@@ -297,6 +298,35 @@ export default class Styling extends Vue {
   }
   set animationDuration (v: number | undefined) {
     this.emitStylingChange('animationDuration', v)
+  }
+  get animationDurationMessage () {
+    if (!this.value.animationDuration) {
+      return ''
+    }
+
+    const msg = []
+
+    const d = Math.floor(this.value.animationDuration / 60 / 60 / 24)
+    if (d > 0) {
+      msg.push(`${d}&nbsp;d`)
+    }
+
+    const h = Math.floor((this.value.animationDuration / 60 / 60) % 24)
+    if (h > 0) {
+      msg.push(`${h}&nbsp;h`)
+    }
+
+    const m = Math.floor((this.value.animationDuration / 60) % 60)
+    if (m > 0) {
+      msg.push(`${m}&nbsp;m`)
+    }
+
+    const s = Math.floor(this.value.animationDuration % 60)
+    if (s > 0) {
+      msg.push(`${s}&nbsp;s`)
+    }
+
+    return msg.join(', ')
   }
 
   get fontStyle (): string | undefined {
