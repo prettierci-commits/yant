@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts">
-import Updater, { next } from '@/lib/Updater'
+import Updater, { next, getNextDate } from '@/lib/Updater'
 import formatDate from 'date-fns/format'
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { widgetsModule, IDateConfig, DateUpdateRate } from '@/store'
@@ -47,7 +47,7 @@ export default class DateView extends Vue {
   resetTimeout () {
     this.updateDate(Date.now())
 
-    let setNextDateAndReturnMsToWait: (date: Date) => number
+    let setNextDateAndReturnMsToWait: getNextDate
     switch (this.config.updateRate) {
       case DateUpdateRate.Days:
         setNextDateAndReturnMsToWait = next.day

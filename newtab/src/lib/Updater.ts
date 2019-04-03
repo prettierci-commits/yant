@@ -1,41 +1,46 @@
-function nextDay (date: Date): number {
-  const now = date.setTime(Date.now())
+import { plan } from './Planner'
+
+export type callback = (timestamp: number) => void
+export type getNextDate = (date: Date) => Date
+
+function nextDay (date: Date): Date {
+  date.setTime(Date.now())
   date.setHours(24, 0, 0, 0)
-  return +date - now
+  return date
 }
-function nextHour (date: Date): number {
-  const now = date.setTime(Date.now())
+function nextHour (date: Date): Date {
+  date.setTime(Date.now())
   date.setMinutes(60, 0, 0)
-  return +date - now
+  return date
 }
-function nextMinute (date: Date): number {
-  const now = date.setTime(Date.now())
+function nextMinute (date: Date): Date {
+  date.setTime(Date.now())
   date.setSeconds(60, 0)
-  return +date - now
+  return date
 }
-function nextSecond (date: Date): number {
-  const now = date.setTime(Date.now())
+function nextSecond (date: Date): Date {
+  date.setTime(Date.now())
   date.setMilliseconds(1000)
-  return +date - now
+  return date
 }
-function nextDecisecond (date: Date): number {
-  const now = date.setTime(Date.now())
+function nextDecisecond (date: Date): Date {
+  date.setTime(Date.now())
   date.setMilliseconds(Math.floor(date.getMilliseconds() / 100 + 1) * 100)
-  return +date - now
+  return date
 }
-function nextCentisecond (date: Date): number {
-  const now = date.setTime(Date.now())
+function nextCentisecond (date: Date): Date {
+  date.setTime(Date.now())
   date.setMilliseconds(Math.floor(date.getMilliseconds() / 10 + 1) * 10)
-  return +date - now
+  return date
 }
-function nextMillisecond (date: Date): number {
-  const now = date.setTime(Date.now())
+function nextMillisecond (date: Date): Date {
+  date.setTime(Date.now())
   date.setMilliseconds(date.getMilliseconds() + 1)
-  return +date - now
+  return date
 }
 
 const next: {
-  [key: string]: (date: Date) => number
+  [key: string]: getNextDate
 } = {
   day: nextDay,
   hour: nextHour,
@@ -47,32 +52,36 @@ const next: {
 }
 
 export default class Updater {
-  private callback: (timestamp: number) => void
-  private date: Date
-  private setNextDateAndReturnMsToWait: (date: Date) => number
-  private timeout: number | undefined
+  private callback: callback
+  private clearTimeout: () => void = () => {}
+  private date: Date = new Date()
+  private getNextDate: getNextDate
 
-  constructor (callback: (timestamp: number) => void) {
+  constructor (
+    callback: callback,
+    getNextDate: getNextDate = nextDay
+  ) {
     this.callback = callback
-    this.date = new Date()
-    this.setNextDateAndReturnMsToWait = nextDay
+    this.getNextDate = getNextDate
   }
 
-  private _setTimeout () {
-    this.timeout = window.setTimeout(() => {
-      this._setTimeout()
-      this.callback(+this.date)
-    }, this.setNextDateAndReturnMsToWait(this.date))
+  private setTimeout () {
+    this.date = this.getNextDate(this.date)
+    const timestamp = +this.date
+    this.clearTimeout = plan(() => {
+      this.callback(timestamp)
+      this.setTimeout()
+    }, timestamp)
   }
-  start (setNextDateAndReturnMsToWait?: (date: Date) => number) {
+  start (getNextDate?: getNextDate) {
     this.stop()
-    if (setNextDateAndReturnMsToWait) {
-      this.setNextDateAndReturnMsToWait = setNextDateAndReturnMsToWait
+    if (getNextDate) {
+      this.getNextDate = getNextDate
     }
-    this._setTimeout()
+    this.setTimeout()
   }
   stop () {
-    window.clearTimeout(this.timeout)
+    this.clearTimeout()
   }
 }
 
