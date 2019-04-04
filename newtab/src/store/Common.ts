@@ -1,5 +1,5 @@
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
-import { generateStyleAttr, generateAnimation, IStyling } from './lib'
+import { generateStyleAttr, IStyling } from './lib'
 
 @Module({ namespaced: true, name: 'common' })
 export default class Common extends VuexModule {
@@ -30,17 +30,9 @@ export default class Common extends VuexModule {
   fadeIn: boolean = true
   style: string = ''
 
-  get animation () {
-    return generateAnimation(
-      this.styling.animationColors || [],
-      this.styling.animationDelay,
-      this.styling.animationDuration)
-  }
-
   get styleAttr () {
     const animations = [
-      ...(this.fadeIn ? ['fade-in 2s forwards'] : []),
-      ...(this.animation.animation ? [this.animation.animation] : [])
+      ...(this.fadeIn ? ['fade-in 2s forwards'] : [])
     ]
 
     return {

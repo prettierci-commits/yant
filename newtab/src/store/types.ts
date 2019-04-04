@@ -30,8 +30,8 @@ export interface IStyling {
   paddingLeft?: number
 
   animationColors?: animationColors[]
-  animationDelay?: number
   animationDuration?: number
+  animationStart?: number
 }
 
 export interface IWidget {

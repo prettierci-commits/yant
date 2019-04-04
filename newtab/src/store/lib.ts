@@ -1,6 +1,5 @@
 import { IStyling } from './types'
 
-export * from './customAnimation'
 export * from './types'
 
 export function generateStyleAttr (styling: IStyling) {

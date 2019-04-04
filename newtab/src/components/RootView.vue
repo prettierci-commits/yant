@@ -1,5 +1,6 @@
 <template>
   <div
+    ref="container"
     :class="classes"
     :style="styleAttr"
     class="flex-container"
@@ -15,11 +16,11 @@
     <slot />
 
     <CSS :value="customCSS" />
-    <CSS :value="animationCSS" />
   </div>
 </template>
 
 <script lang="ts">
+import AnimationManager from '@/lib/AnimationManager'
 import CSS from './CSS.vue'
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { commonModule } from '@/store'
@@ -49,14 +50,13 @@ export default class RootView extends Vue {
     id: number
   }[]
 
+  animationManager: AnimationManager | undefined
+
   get styleAttr () {
     return commonModule.styleAttr
   }
   get customCSS (): string {
     return commonModule.style
-  }
-  get animationCSS (): string {
-    return commonModule.animation.css
   }
 
   get widgetsDOM () {
@@ -71,6 +71,37 @@ export default class RootView extends Vue {
       shrink: this.shrink !== false,
       [commonModule.fadeIn ? 'fade-in' : 'show-immediatelly']: true
     }
+  }
+
+  get animation () {
+    return {
+      colors: commonModule.styling.animationColors,
+      duration: commonModule.styling.animationDuration,
+      start: commonModule.styling.animationStart
+    }
+  }
+
+  mounted () {
+    this.setUpAnimation()
+  }
+  beforeDestroy () {
+    if (this.animationManager) {
+      this.animationManager.stop()
+    }
+  }
+
+  @Watch('animation')
+  setUpAnimation () {
+    if (this.animationManager) {
+      this.animationManager.stop()
+    }
+
+    this.animationManager = new AnimationManager(
+      this.$refs.container as HTMLElement,
+      this.animation
+    )
+
+    this.animationManager.start()
   }
 }
 </script>

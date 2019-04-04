@@ -230,15 +230,10 @@
         xs12
         sm6
       >
-        <v-text-field
-          v-model.number="animationDelay"
-          :messages="[animationDelayMessage]"
+        <DateTime
+          v-model="animationStart"
           clearable
-          label="Animation delay"
-          min="0"
-          step="1"
-          suffix="s"
-          type="number"
+          label="Animation start"
         />
       </v-flex>
 
@@ -255,15 +250,16 @@
 <script lang="ts">
 import Color from './Color.vue'
 import ColorList from './ColorList.vue'
+import DateTime from '@/components/DateTime.vue'
 import NumberSet from './NumberSet.vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IStyling, animationColors } from '@/store'
-import { generateAnimation } from '@/store/lib'
 
 @Component({
   components: {
     Color,
     ColorList,
+    DateTime,
     NumberSet
   }
 })
@@ -316,11 +312,13 @@ export default class Styling extends Vue {
     this.emitStylingChange('animationColors', v)
   }
 
-  get animationDuration (): number | undefined {
-    return this.value.animationDuration
+  get animationDuration (): number | null {
+    return this.value.animationDuration != null
+      ? this.value.animationDuration / 1000
+      : null
   }
-  set animationDuration (v: number | undefined) {
-    this.emitStylingChange('animationDuration', v)
+  set animationDuration (v: number | null) {
+    this.emitStylingChange('animationDuration', v != null ? v * 1000 : undefined)
   }
   get animationDurationMessage () {
     if (!this.value.animationDuration) {
@@ -329,47 +327,39 @@ export default class Styling extends Vue {
 
     const msg = []
 
-    const d = Math.floor(this.value.animationDuration / 60 / 60 / 24)
+    const d = Math.floor(this.value.animationDuration / 1000 / 60 / 60 / 24)
     if (d > 0) {
       msg.push(`${d}&nbsp;d`)
     }
 
-    const h = Math.floor((this.value.animationDuration / 60 / 60) % 24)
+    const h = Math.floor((this.value.animationDuration / 1000 / 60 / 60) % 24)
     if (h > 0) {
       msg.push(`${h}&nbsp;h`)
     }
 
-    const m = Math.floor((this.value.animationDuration / 60) % 60)
+    const m = Math.floor((this.value.animationDuration / 1000 / 60) % 60)
     if (m > 0) {
       msg.push(`${m}&nbsp;m`)
     }
 
-    const s = Math.floor(this.value.animationDuration % 60)
+    const s = Math.floor((this.value.animationDuration / 1000) % 60)
     if (s > 0) {
       msg.push(`${s}&nbsp;s`)
+    }
+
+    const ms = Math.floor(this.value.animationDuration % 1000)
+    if (ms > 0) {
+      msg.push(`${ms}&nbsp;ms`)
     }
 
     return msg.join(', ')
   }
 
-  get animationDelay (): number | undefined {
-    return this.value.animationDelay
+  get animationStart (): number | undefined {
+    return this.value.animationStart
   }
-  set animationDelay (v: number | undefined) {
-    this.emitStylingChange('animationDelay', v)
-  }
-  get animationDelayMessage () {
-    return `Last start: ${this.animationLastStart.toLocaleString()}`
-  }
-
-  get animationLastStart (): Date {
-    const animation = generateAnimation(
-      this.value.animationColors || [],
-      this.value.animationDelay,
-      this.value.animationDuration
-    )
-
-    return new Date(animation.lastStart)
+  set animationStart (v: number | undefined) {
+    this.emitStylingChange('animationStart', v)
   }
 
   get fontStyle (): string | undefined {
