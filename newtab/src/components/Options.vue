@@ -46,7 +46,7 @@
       </v-btn>
     </v-toolbar>
 
-    <v-content>
+    <v-content class="body-1">
       <RootView
         :widgets="widgets"
         shrink

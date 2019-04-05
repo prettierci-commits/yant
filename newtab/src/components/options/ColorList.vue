@@ -183,7 +183,6 @@ export default class ColorList extends Vue {
   white-space: nowrap;
 }
 .header, .label, .index {
-  line-height: 1;
   padding: 0px 1ex;
 }
 </style>
