@@ -1,4 +1,5 @@
 import { animationColors } from '@/store'
+import { plan } from '@/lib/Planner'
 
 type keyframe = {
   offset: number
@@ -56,23 +57,23 @@ function computeLastStart (duration: number, now: number = Date.now()): number {
 }
 
 export type options = {
-  colors?: animationColors[]
-  delay?: number
-  duration?: number
-  start?: number
-  sync?: boolean
+  readonly colors?: animationColors[]
+  readonly delay?: number
+  readonly duration?: number
+  readonly start?: number
+  readonly sync?: boolean
 }
 
 export default class AnimationManager {
-  private delay: number
-  private duration: number
-  private element: HTMLElement
-  private keyframes: keyframe[]
-  private startTimestamp: number
-  private sync: boolean
+  private readonly delay: number
+  private readonly duration: number
+  private readonly element: HTMLElement
+  private readonly keyframes: keyframe[]
+  private readonly startTimestamp: number
+  private readonly sync: boolean
 
   private animation: Animation | undefined
-  private interval: number | undefined
+  private cancelPlan: () => void = () => {}
 
   constructor (element: HTMLElement, options: options = {}) {
     this.element = element
@@ -103,7 +104,7 @@ export default class AnimationManager {
     this.animation = animation
 
     if (this.sync) {
-      this.interval = window.setInterval(() => {
+      this.cancelPlan = plan(() => {
         const now = Date.now()
 
         const expected = now - this.startTimestamp
@@ -128,14 +129,11 @@ export default class AnimationManager {
             animation.playbackRate = 1.001
           }
         }
-      }, 5000)
+      }, Date.now(), 5000)
     }
   }
   stop () {
-    if (this.interval != null) {
-      window.clearInterval(this.interval)
-      this.interval = undefined
-    }
+    this.cancelPlan()
 
     if (this.animation != null) {
       this.animation.cancel()
