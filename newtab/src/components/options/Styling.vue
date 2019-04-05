@@ -241,7 +241,10 @@
         xs12
         pt-3
       >
-        <ColorList v-model="animationColors" />
+        <ColorList
+          v-model="animationColors"
+          :labels="animationStepLabels"
+        />
       </v-flex>
     </v-layout>
   </v-container>
@@ -252,6 +255,7 @@ import Color from './Color.vue'
 import ColorList from './ColorList.vue'
 import DateTime from '@/components/DateTime.vue'
 import NumberSet from './NumberSet.vue'
+import formatDate from 'date-fns/format'
 import { Component, Vue, Prop } from 'vue-property-decorator'
 import { IStyling, animationColors } from '@/store'
 
@@ -360,6 +364,50 @@ export default class Styling extends Vue {
   }
   set animationStart (v: number | undefined) {
     this.emitStylingChange('animationStart', v)
+  }
+
+  get animationStepLabels (): {
+    text: string
+    title: string
+  }[] {
+    const colors = this.value.animationColors || []
+    const duration = this.value.animationDuration
+    const start = this.value.animationStart
+
+    if (duration != null && start != null) {
+      const step = duration / colors.length
+      return colors.map((_, i) => {
+        const timestamp = Math.round(start + i * step)
+        return {
+          text: formatDate(
+            timestamp,
+            this.animationStepLabelFormat
+          ),
+          title: new Date(timestamp).toLocaleString()
+        }
+      })
+    } else {
+      return colors.map(() => ({
+        text: '',
+        title: ''
+      }))
+    }
+  }
+  get animationStepLabelFormat (): string {
+    const duration = this.value.animationDuration
+    if (duration == null) {
+      return '[]' // generates empty string in date-fns format
+    } else if (duration <= 60 * 1000) {
+      return 'ss.SSS'
+    } else if (duration <= 60 * 60 * 1000) {
+      return 'HH:mm:ss.SSS'
+    } else if (duration <= 24 * 60 * 60 * 1000) {
+      return 'HH:mm:ss'
+    } else if (duration <= 365 * 24 * 60 * 60 * 1000) {
+      return 'MM/DD - HH:mm:ss'
+    } else {
+      return 'YYYY/MM/DD - HH:mm:ss.SSS'
+    }
   }
 
   get fontStyle (): string | undefined {
