@@ -39,8 +39,8 @@
       <v-toolbar-title>YANT</v-toolbar-title>
       <v-spacer />
       <v-btn
+        :href="newtabLink"
         icon
-        @click.stop="close"
       >
         <v-icon>mdi-close</v-icon>
       </v-btn>
@@ -125,8 +125,8 @@ export default class Options extends Vue {
     }
   }
 
-  close () {
-    window.location.href = './index.html'
+  get newtabLink () {
+    return `./index.html#${this.$route.path}`
   }
 }
 </script>

@@ -1,10 +1,12 @@
 <template>
   <div id="app">
     <RootView :widgets="widgetsModule.active">
-      <SettingsIcon
+      <a
         class="options-button"
-        @click="openOptions"
-      />
+        :href="optionsLink"
+      >
+        <SettingsIcon />
+      </a>
     </RootView>
   </div>
 </template>
@@ -25,8 +27,8 @@ import SettingsIcon from '@/assets/settings.svg'
 export default class App extends Vue {
   widgetsModule = widgetsModule
 
-  openOptions () {
-    window.location.href = './options.html'
+  get optionsLink (): string {
+    return `./options.html#${location.hash.slice(1)}`
   }
 }
 </script>
@@ -40,6 +42,7 @@ body {
 
 <style scoped>
 .options-button {
+  color: inherit;
   cursor: pointer;
   height: 40px;
   margin: 0px;
