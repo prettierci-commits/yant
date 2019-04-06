@@ -66,7 +66,12 @@
 import ColorTile from './ColorTile.vue'
 import ColorTileWithHint from './ColorTileWithHint.vue'
 import vuetifyColors from 'vuetify/es5/util/colors'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+
+type value = {
+  fg: string
+  bg: string
+}[]
 
 @Component({
   components: {
@@ -76,10 +81,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 })
 export default class ColorList extends Vue {
   @Prop({ required: true })
-  value!: {
-    fg: string
-    bg: string
-  }[]
+  value!: value
 
   @Prop({ default: () => [] })
   labels!: {
@@ -125,26 +127,29 @@ export default class ColorList extends Vue {
       .flat(1)
   }
 
-  add () {
+  @Emit('input')
+  add (): value {
     const bg = this.colorPool[Math.floor(this.colorPool.length * Math.random())]
     const fg = this.getFgHint(bg)
 
-    this.$emit('input', [
+    return [
       ...this.value,
       { fg, bg }
-    ])
+    ]
   }
 
-  remove () {
-    this.$emit('input', this.value.slice(0, -1))
+  @Emit('input')
+  remove (): value {
+    return this.value.slice(0, -1)
   }
 
-  emitInput (index: number, property: string, color: string) {
-    this.$emit('input', [
+  @Emit('input')
+  emitInput (index: number, property: string, color: string): value {
+    return [
       ...this.value.slice(0, index),
       { ...this.value[index], [property]: color },
       ...this.value.slice(index + 1)
-    ])
+    ]
   }
 }
 </script>

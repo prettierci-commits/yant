@@ -256,8 +256,10 @@ import ColorList from './ColorList.vue'
 import DateTime from '@/components/DateTime.vue'
 import NumberSet from './NumberSet.vue'
 import formatDate from 'date-fns/format'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 import { IStyling, animationColors } from '@/store'
+
+type value = IStyling
 
 @Component({
   components: {
@@ -269,7 +271,7 @@ import { IStyling, animationColors } from '@/store'
 })
 export default class Styling extends Vue {
   @Prop({ required: true })
-  value!: IStyling
+  value!: value
 
   @Prop({ default: false })
   absolute!: boolean
@@ -521,19 +523,17 @@ export default class Styling extends Vue {
   }
 
   emitStylingChange (key: string, value: any) {
-    this.$emit('input', {
-      ...this.value,
-      [key]: value
-    })
+    this.emitStylingChanges([{ key, value }])
   }
-  emitStylingChanges (changes: { key: string, value: any }[]) {
+  @Emit('input')
+  emitStylingChanges (changes: { key: string, value: any }[]): value {
     const styling: IStyling & { [key: string]: any } = {
       ...this.value
     }
     changes.forEach(({ key, value }) => {
       styling[key] = value
     })
-    this.$emit('input', styling)
+    return styling
   }
 }
 </script>

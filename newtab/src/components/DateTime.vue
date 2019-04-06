@@ -88,7 +88,9 @@
 
 <script lang="ts">
 import formatDate from 'date-fns/format'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+
+type value = number | null
 
 @Component
 export default class DateTime extends Vue {
@@ -96,7 +98,7 @@ export default class DateTime extends Vue {
   label!: string
 
   @Prop({ required: true })
-  value!: number | null
+  value!: value
 
   showDate = false
   showTime = false
@@ -114,7 +116,7 @@ export default class DateTime extends Vue {
     const [year, month, day] = v.split('-')
     d.setFullYear(+year, +month - 1, +day)
 
-    this.$emit('input', +d)
+    this.input(+d)
   }
 
   get time (): string {
@@ -130,7 +132,7 @@ export default class DateTime extends Vue {
     const [hours, minutes] = v.split(':')
     d.setHours(+hours, +minutes)
 
-    this.$emit('input', +d)
+    this.input(+d)
   }
 
   get seconds (): number | null {
@@ -145,9 +147,9 @@ export default class DateTime extends Vue {
     if (v != null) {
       const d = this.newDate()
       d.setSeconds(v)
-      this.$emit('input', +d)
+      this.input(+d)
     } else {
-      this.$emit('input', null)
+      this.input(null)
     }
   }
 
@@ -159,6 +161,11 @@ export default class DateTime extends Vue {
       d.setHours(0, 0, 0, 0)
       return d
     }
+  }
+
+  @Emit()
+  input (v: value): value {
+    return v
   }
 }
 </script>

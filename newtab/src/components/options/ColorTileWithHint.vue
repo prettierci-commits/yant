@@ -17,7 +17,9 @@
 <script lang="ts">
 import ColorTile from './ColorTile.vue'
 import vuetifyColors from 'vuetify/es5/util/colors'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+
+type value = string
 
 @Component({
   components: {
@@ -26,7 +28,7 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 })
 export default class Color extends Vue {
   @Prop({ required: true })
-  value!: string
+  value!: value
 
   @Prop({ required: true })
   hint!: string
@@ -35,7 +37,12 @@ export default class Color extends Vue {
     return this.value
   }
   set color (v: string) {
-    this.$emit('input', v)
+    this.input(v)
+  }
+
+  @Emit()
+  input (v: value): value {
+    return v
   }
 }
 </script>

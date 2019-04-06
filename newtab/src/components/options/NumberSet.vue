@@ -24,12 +24,14 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+
+type value = (null | number)[]
 
 @Component
 export default class NumberSet extends Vue {
   @Prop({ required: true })
-  value!: number[]
+  value!: value
 
   @Prop({ required: true })
   labels!: string[]
@@ -86,12 +88,13 @@ export default class NumberSet extends Vue {
     }
   }
 
-  emitUpdate (i: number, v: number) {
-    this.$emit('input', [
+  @Emit('input')
+  emitUpdate (i: number, v: number): value {
+    return [
       ...this.value.slice(0, i),
       isNaN(v) ? null : v,
       ...this.value.slice(i + 1)
-    ])
+    ]
   }
 }
 </script>
