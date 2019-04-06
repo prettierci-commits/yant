@@ -1,16 +1,16 @@
 import Vue from 'vue'
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
 import {
-  generateStyleAttr, IStyling,
-  IClockConfig, IDateConfig, IMottoConfig, ISeparatorConfig,
+  generateStyleAttr, StylingConfig, StyleObject,
+  ClockConfig, DateConfig, MottoConfig, SeparatorConfig,
   DateUpdateRate
 } from './lib'
 
 const defaults: {
-  clock: IClockConfig
-  date: IDateConfig
-  motto: IMottoConfig
-  separator: ISeparatorConfig
+  clock: ClockConfig
+  date: DateConfig
+  motto: MottoConfig
+  separator: SeparatorConfig
 } = {
   clock: {
     styling: {
@@ -42,19 +42,19 @@ const defaults: {
   }
 }
 
-interface IWidget {
+interface Widget {
   type: string
   id: number
 }
 
 @Module({ namespaced: true, name: 'widgets' })
 export default class WidgetsModule extends VuexModule {
-  clocks: { [key: string]: IClockConfig } = { 1: defaults.clock }
-  dates: { [key: string]: IDateConfig } = { 1: defaults.date }
-  mottos: { [key: string]: IMottoConfig } = { 1: defaults.motto }
-  separators: { [key: string]: ISeparatorConfig } = { 1: defaults.separator, 2: defaults.separator, 3: defaults.separator }
+  public clocks: { [key: string]: ClockConfig } = { 1: defaults.clock }
+  public dates: { [key: string]: DateConfig } = { 1: defaults.date }
+  public mottos: { [key: string]: MottoConfig } = { 1: defaults.motto }
+  public separators: { [key: string]: SeparatorConfig } = { 1: defaults.separator, 2: defaults.separator, 3: defaults.separator }
 
-  active: IWidget[] = [{
+  public active: Widget[] = [{
     type: 'separator',
     id: 1
   }, {
@@ -74,23 +74,23 @@ export default class WidgetsModule extends VuexModule {
     id: 3
   }]
 
-  get available (): IWidget[] {
-    return ['clock', 'date', 'motto', 'separator'].map(newType => ({
+  public get available (): Widget[] {
+    return ['clock', 'date', 'motto', 'separator'].map((newType): Widget => ({
       type: newType,
       id: this.active
-        .filter(({ type }) => type === newType)
-        .reduce((newId, { id: oldId }) => newId <= oldId ? oldId + 1 : newId, 1)
+        .filter(({ type }): boolean => type === newType)
+        .reduce((newId, { id: oldId }): number => newId <= oldId ? oldId + 1 : newId, 1)
     }))
   }
 
-  get generateStyleAttr () {
-    return function (styling: IStyling) {
+  public get generateStyleAttr (): (styling: StylingConfig) => StyleObject {
+    return (styling: StylingConfig): StyleObject => {
       return generateStyleAttr(styling)
     }
   }
 
   @Mutation
-  addToActive ({ index, widget }: { index: number, widget: IWidget }) {
+  public addToActive ({ index, widget }: { index: number; widget: Widget }): void {
     switch (widget.type) {
       case 'clock':
         Vue.set(this.clocks, widget.id, defaults.clock)
@@ -111,7 +111,7 @@ export default class WidgetsModule extends VuexModule {
   }
 
   @Mutation
-  removeFromActive ({ index, widget }: { index: number, widget: IWidget }) {
+  public removeFromActive ({ index, widget }: { index: number; widget: Widget }): void {
     this.active.splice(index, 1)
     switch (widget.type) {
       case 'clock':
@@ -132,28 +132,28 @@ export default class WidgetsModule extends VuexModule {
   }
 
   @Mutation
-  reorderActive ({ oldIndex, newIndex }: { oldIndex: number, newIndex: number }) {
+  public reorderActive ({ oldIndex, newIndex }: { oldIndex: number; newIndex: number }): void {
     const [widget] = this.active.splice(oldIndex, 1)
     this.active.splice(newIndex, 0, widget)
   }
 
   @Mutation
-  setClock ({ id, value }: { id: number, value: IClockConfig }) {
+  public setClock ({ id, value }: { id: number; value: ClockConfig }): void {
     Vue.set(this.clocks, id, value)
   }
 
   @Mutation
-  setDate ({ id, value }: { id: number, value: IDateConfig }) {
+  public setDate ({ id, value }: { id: number; value: DateConfig }): void {
     Vue.set(this.dates, id, value)
   }
 
   @Mutation
-  setMotto ({ id, value }: { id: number, value: IMottoConfig }) {
+  public setMotto ({ id, value }: { id: number; value: MottoConfig }): void {
     Vue.set(this.mottos, id, value)
   }
 
   @Mutation
-  setSeparator ({ id, value }: { id: number, value: ISeparatorConfig }) {
+  public setSeparator ({ id, value }: { id: number; value: SeparatorConfig }): void {
     Vue.set(this.separators, id, value)
   }
 }

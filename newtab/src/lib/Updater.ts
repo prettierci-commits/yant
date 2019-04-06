@@ -53,11 +53,11 @@ const next: {
 
 export default class Updater {
   private callback: callback
-  private clearTimeout: () => void = () => {}
+  private clearTimeout = (): void => {}
   private date: Date = new Date()
   private getNextDate: getNextDate
 
-  constructor (
+  public constructor (
     callback: callback,
     getNextDate: getNextDate = nextDay
   ) {
@@ -65,22 +65,22 @@ export default class Updater {
     this.getNextDate = getNextDate
   }
 
-  private setTimeout () {
+  private setTimeout (): void {
     this.date = this.getNextDate(this.date)
     const timestamp = +this.date
-    this.clearTimeout = plan(() => {
+    this.clearTimeout = plan((): void => {
       this.callback(timestamp)
       this.setTimeout()
     }, timestamp)
   }
-  start (getNextDate?: getNextDate) {
+  public start (getNextDate?: getNextDate): void {
     this.stop()
     if (getNextDate) {
       this.getNextDate = getNextDate
     }
     this.setTimeout()
   }
-  stop () {
+  public stop (): void {
     this.clearTimeout()
   }
 }

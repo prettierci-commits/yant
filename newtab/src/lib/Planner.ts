@@ -1,4 +1,4 @@
-type unit = {
+interface Unit {
   readonly func: () => void
   readonly repeat?: number
 
@@ -7,19 +7,19 @@ type unit = {
 
 export default class Planner {
   private readonly precision: number
-  private readonly queue: unit[] = []
+  private readonly queue: Unit[] = []
 
   private interval: number | null = null
-  private removeVisibilityChangeListener: () => void = () => {}
+  private removeVisibilityChangeListener = (): void => {}
 
-  constructor (precision: number = 1000) {
+  public constructor (precision: number = 1000) {
     this.precision = precision
   }
 
-  private start () {
+  private start (): void {
     this.stop()
 
-    const listener = () => {
+    const listener = (): void => {
       if (document.hidden) {
         this.pause()
       } else {
@@ -28,19 +28,19 @@ export default class Planner {
     }
     document.addEventListener('visibilitychange', listener)
     this.removeVisibilityChangeListener =
-      () => document.removeEventListener('visibilitychange', listener)
+      (): void => document.removeEventListener('visibilitychange', listener)
 
     this.resume()
   }
-  private stop () {
+  private stop (): void {
     this.pause()
     this.removeVisibilityChangeListener()
   }
 
-  private resume () {
+  private resume (): void {
     this.pause()
 
-    this.interval = window.setInterval(() => {
+    this.interval = window.setInterval((): void => {
       const now = Date.now()
       const scheduleTimestamp = now + this.precision
 
@@ -63,23 +63,23 @@ export default class Planner {
       }
     }, this.precision)
   }
-  private pause () {
+  private pause (): void {
     if (this.interval != null) {
       window.clearInterval(this.interval)
       this.interval = null
     }
   }
 
-  private generateRemoveFunction (unit: unit) {
-    return () => {
+  private generateRemoveFunction (unit: Unit): () => void {
+    return (): void => {
       const index = this.queue.indexOf(unit)
       if (index >= 0) {
         this.queue.splice(index, 1)
       }
     }
   }
-  private planUnit (unit: unit) {
-    const nextUnitIndex = this.queue.findIndex(({ timestamp }) => timestamp < unit.timestamp)
+  private planUnit (unit: Unit): void {
+    const nextUnitIndex = this.queue.findIndex(({ timestamp }): boolean => timestamp < unit.timestamp)
     this.queue.splice(
       nextUnitIndex < 0 ? this.queue.length : nextUnitIndex,
       0,
@@ -87,7 +87,7 @@ export default class Planner {
     )
   }
 
-  plan (func: () => void, timestamp: number, repeat?: number): () => void {
+  public plan (func: () => void, timestamp: number, repeat?: number): () => void {
     const unit = { timestamp, func, repeat }
 
     this.planUnit(unit)
@@ -101,6 +101,6 @@ export default class Planner {
 }
 
 const planner = new Planner()
-const plan = (func: () => void, timestamp: number, repeat?: number) =>
+const plan = (func: () => void, timestamp: number, repeat?: number): () => void =>
   planner.plan(func, timestamp, repeat)
 export { plan }

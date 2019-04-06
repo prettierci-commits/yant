@@ -22,7 +22,7 @@
 <script lang="ts">
 import Styling from '@/components/options/Styling.vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, IMottoConfig, IStyling } from '@/store'
+import { widgetsModule, MottoConfig, StylingConfig } from '@/store'
 
 @Component({
   components: {
@@ -33,7 +33,7 @@ export default class MottoOptions extends Vue {
   @Prop({ required: true })
   widgetId!: number
 
-  get config (): IMottoConfig {
+  get config (): MottoConfig {
     return widgetsModule.mottos[this.widgetId]
   }
 
@@ -50,10 +50,10 @@ export default class MottoOptions extends Vue {
     })
   }
 
-  get styling (): IStyling {
+  get styling (): StylingConfig {
     return this.config.styling
   }
-  set styling (v: IStyling) {
+  set styling (v: StylingConfig) {
     widgetsModule.setMotto({
       id: this.widgetId,
       value: {

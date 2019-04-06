@@ -1,9 +1,9 @@
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
-import { generateStyleAttr, IStyling } from './lib'
+import { generateStyleAttr, StylingConfig, StyleObject } from './lib'
 
 @Module({ namespaced: true, name: 'common' })
 export default class Common extends VuexModule {
-  styling: IStyling = {
+  public styling: StylingConfig = {
     fontFamily: 'Source Serif Pro',
     fontSize: 15,
     fontWeight: 300,
@@ -27,10 +27,10 @@ export default class Common extends VuexModule {
       { 'fg': '#000000', 'bg': '#e91e63' }
     ]
   }
-  fadeIn: boolean = true
-  style: string = ''
+  public fadeIn: boolean = true
+  public style: string = ''
 
-  get styleAttr () {
+  public get styleAttr (): StyleObject {
     const animations = [
       ...(this.fadeIn ? ['fade-in 2s forwards'] : [])
     ]
@@ -42,17 +42,17 @@ export default class Common extends VuexModule {
   }
 
   @Mutation
-  setStyling (v: IStyling) {
+  public setStyling (v: StylingConfig): void {
     this.styling = v
   }
 
   @Mutation
-  setFadeIn (v: boolean) {
+  public setFadeIn (v: boolean): void {
     this.fadeIn = v
   }
 
   @Mutation
-  setStyle (v: string) {
+  public setStyle (v: string): void {
     this.style = v
   }
 }

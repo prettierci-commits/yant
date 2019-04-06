@@ -185,8 +185,8 @@
       </v-flex>
 
       <v-flex
-        xs12
         :md6="nofont === false"
+        xs12
       >
         <Color
           v-model="backgroundColor"
@@ -257,9 +257,9 @@ import DateTime from '@/components/DateTime.vue'
 import NumberSet from './NumberSet.vue'
 import formatDate from 'date-fns/format'
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
-import { IStyling, animationColors } from '@/store'
+import { StylingConfig, AnimationColors } from '@/store'
 
-type value = IStyling
+type value = StylingConfig
 
 @Component({
   components: {
@@ -311,10 +311,10 @@ export default class Styling extends Vue {
     }]
   }
 
-  get animationColors (): animationColors[] | undefined {
+  get animationColors (): AnimationColors[] | undefined {
     return this.value.animationColors
   }
-  set animationColors (v: animationColors[] | undefined) {
+  set animationColors (v: AnimationColors[] | undefined) {
     this.emitStylingChange('animationColors', v)
   }
 
@@ -526,8 +526,8 @@ export default class Styling extends Vue {
     this.emitStylingChanges([{ key, value }])
   }
   @Emit('input')
-  emitStylingChanges (changes: { key: string, value: any }[]): value {
-    const styling: IStyling & { [key: string]: any } = {
+  emitStylingChanges (changes: { key: string; value: any }[]): value {
+    const styling: StylingConfig & { [key: string]: any } = {
       ...this.value
     }
     changes.forEach(({ key, value }) => {

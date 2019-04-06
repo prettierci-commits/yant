@@ -1,11 +1,11 @@
 import { Location } from 'vue-router'
 
-export interface IDrawerItem {
+export interface DrawerItem {
   icon: string
   name: string
   route: Location
 }
-export interface IDrawerWidget extends IDrawerItem {
+export interface DrawerWidget extends DrawerItem {
   componentName: string
   icon: string
   name: string
@@ -13,7 +13,7 @@ export interface IDrawerWidget extends IDrawerItem {
   type: string
 }
 
-const items: [string, IDrawerItem][] = [
+const items: [string, DrawerItem][] = [
   ['common', {
     icon: 'mdi-domain',
     name: 'Common',
@@ -36,7 +36,7 @@ const items: [string, IDrawerItem][] = [
     }
   }]
 ]
-const widgets: [string, IDrawerWidget][] = [
+const widgets: [string, DrawerWidget][] = [
   ['clock', {
     icon: 'mdi-clock',
     name: 'Clock',
@@ -75,8 +75,8 @@ const widgets: [string, IDrawerWidget][] = [
   }]
 ]
 
-const widgetMap: ReadonlyMap<string, IDrawerWidget> = new Map(widgets)
-const drawerMap: ReadonlyMap<string, IDrawerItem> = new Map([
+const widgetMap: ReadonlyMap<string, DrawerWidget> = new Map(widgets)
+const drawerMap: ReadonlyMap<string, DrawerItem> = new Map([
   ...items,
   ...widgets
 ])

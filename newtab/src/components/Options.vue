@@ -69,7 +69,7 @@ import { Location } from 'vue-router'
 import { commonModule, widgetsModule } from '@/store'
 import { drawerMap } from '@/options/widgetMetadata'
 
-interface IDrawerItem {
+interface DrawerItem {
   icon: string
   id?: number
   name: string
@@ -86,7 +86,7 @@ export default class Options extends Vue {
   source: string = 'test'
   activeComponent: string = 'Home'
 
-  get drawerItems (): IDrawerItem[] {
+  get drawerItems (): DrawerItem[] {
     return [
       drawerMap.get('common')!,
       drawerMap.get('widgets')!,

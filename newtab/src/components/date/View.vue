@@ -11,7 +11,7 @@
 import Updater, { next, getNextDate } from '@/lib/Updater'
 import formatDate from 'date-fns/format'
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { widgetsModule, IDateConfig, DateUpdateRate } from '@/store'
+import { widgetsModule, DateConfig, DateUpdateRate } from '@/store'
 
 @Component
 export default class DateView extends Vue {
@@ -31,7 +31,7 @@ export default class DateView extends Vue {
     this.updater.stop()
   }
 
-  get config (): IDateConfig {
+  get config (): DateConfig {
     return widgetsModule.dates[this.widgetId]
   }
 

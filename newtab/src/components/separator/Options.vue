@@ -28,7 +28,7 @@
 <script lang="ts">
 import Styling from '@/components/options/Styling.vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, ISeparatorConfig, IStyling } from '@/store'
+import { widgetsModule, SeparatorConfig, StylingConfig } from '@/store'
 
 @Component({
   components: {
@@ -39,14 +39,14 @@ export default class SeparatorOptions extends Vue {
   @Prop({ required: true })
   widgetId!: number
 
-  get config (): ISeparatorConfig {
+  get config (): SeparatorConfig {
     return widgetsModule.separators[this.widgetId]
   }
 
-  get styling (): IStyling {
+  get styling (): StylingConfig {
     return this.config.styling
   }
-  set styling (v: IStyling) {
+  set styling (v: StylingConfig) {
     this.save('styling', v)
   }
 

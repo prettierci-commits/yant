@@ -16,7 +16,6 @@
 
 <script lang="ts">
 import ColorTile from './ColorTile.vue'
-import vuetifyColors from 'vuetify/es5/util/colors'
 import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
 
 type value = string

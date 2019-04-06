@@ -7,14 +7,14 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, ISeparatorConfig } from '@/store'
+import { widgetsModule, SeparatorConfig } from '@/store'
 
 @Component
 export default class SeparatorView extends Vue {
   @Prop({ required: true })
   widgetId!: number
 
-  get config (): ISeparatorConfig {
+  get config (): SeparatorConfig {
     return widgetsModule.separators[this.widgetId]
   }
 

@@ -1,16 +1,16 @@
-export interface IFont {
+export interface FontConfig {
   color: string
   lineHeight: number
   size: number
   weight: number
 }
 
-export type animationColors = {
+export interface AnimationColors {
   fg: string
   bg: string
 }
 
-export interface IStyling {
+export interface StylingConfig {
   backgroundColor?: string
 
   color?: string
@@ -29,16 +29,16 @@ export interface IStyling {
   paddingBottom?: number
   paddingLeft?: number
 
-  animationColors?: animationColors[]
+  animationColors?: AnimationColors[]
   animationDuration?: number
   animationStart?: number
 }
 
-export interface IWidget {
-  styling: IStyling
+export interface WidgetConfig {
+  styling: StylingConfig
 }
 
-export interface IClockConfig extends IWidget {
+export interface ClockConfig extends WidgetConfig {
   separator: string
   showSeconds: boolean
   dimSeconds: boolean
@@ -55,15 +55,15 @@ export enum DateUpdateRate {
   Days = 6
 }
 
-export interface IDateConfig extends IWidget {
+export interface DateConfig extends WidgetConfig {
   formatString: string
   updateRate: DateUpdateRate
 }
 
-export interface IMottoConfig extends IWidget {
+export interface MottoConfig extends WidgetConfig {
   text: string
 }
 
-export interface ISeparatorConfig extends IWidget {
+export interface SeparatorConfig extends WidgetConfig {
   flexGrow: number
 }

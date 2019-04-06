@@ -1,13 +1,7 @@
-import { animationColors } from '@/store'
+import { AnimationColors } from '@/store'
 import { plan } from '@/lib/Planner'
 
-type keyframe = {
-  offset: number
-  backgroundColor?: string
-  color?: string
-}
-
-function prepareKeyframes (colors: animationColors[], duration: number) {
+function prepareKeyframes (colors: AnimationColors[], duration: number): Keyframe[] {
   if (colors.length < 1) {
     return []
   }
@@ -16,7 +10,7 @@ function prepareKeyframes (colors: animationColors[], duration: number) {
   const halfStepOffset = 1 / colors.length / 2
   const fgTransitionOffset = Math.min(fgTransitionDuration, halfStepOffset / 2)
 
-  const keyframes: keyframe[] = []
+  const keyframes: Keyframe[] = []
 
   const firstAndLastKeyframe = {
     backgroundColor: colors[0].bg,
@@ -52,12 +46,8 @@ function prepareKeyframes (colors: animationColors[], duration: number) {
   return keyframes
 }
 
-function computeLastStart (duration: number, now: number = Date.now()): number {
-  return Math.floor(now / duration) * duration
-}
-
-export type options = {
-  readonly colors?: animationColors[]
+export interface Options {
+  readonly colors?: AnimationColors[]
   readonly delay?: number
   readonly duration?: number
   readonly start?: number
@@ -68,14 +58,14 @@ export default class AnimationManager {
   private readonly delay: number
   private readonly duration: number
   private readonly element: HTMLElement
-  private readonly keyframes: keyframe[]
+  private readonly keyframes: Keyframe[]
   private readonly startTimestamp: number
   private readonly sync: boolean
 
   private animation: Animation | undefined
-  private cancelPlan: () => void = () => {}
+  private cancelPlan = (): void => {}
 
-  constructor (element: HTMLElement, options: options = {}) {
+  public constructor (element: HTMLElement, options: Options = {}) {
     this.element = element
 
     this.delay = options.delay != null ? options.delay : 0
@@ -93,7 +83,7 @@ export default class AnimationManager {
     )
   }
 
-  start () {
+  public start (): void {
     this.stop()
 
     const animation = this.element.animate(this.keyframes, {
@@ -104,7 +94,7 @@ export default class AnimationManager {
     this.animation = animation
 
     if (this.sync) {
-      this.cancelPlan = plan(() => {
+      this.cancelPlan = plan((): void => {
         const now = Date.now()
 
         const expected = now - this.startTimestamp
@@ -132,7 +122,7 @@ export default class AnimationManager {
       }, Date.now(), 5000)
     }
   }
-  stop () {
+  public stop (): void {
     this.cancelPlan()
 
     if (this.animation != null) {

@@ -9,8 +9,8 @@
         sm6
       >
         <DraggableWidgetList
-          header="Available"
           :widgets="[...available]"
+          header="Available"
         />
       </v-flex>
 
@@ -19,8 +19,8 @@
         sm6
       >
         <DraggableWidgetList
-          header="Active"
           :widgets="[...active]"
+          header="Active"
           @change="updateActive"
         />
       </v-flex>
@@ -31,11 +31,11 @@
 <script lang="ts">
 import DraggableWidgetList from './DraggableWidgetList.vue'
 import draggable from 'vuedraggable'
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { drawerMap } from '@/options/widgetMetadata'
 import { widgetsModule } from '@/store'
 
-interface IListItem {
+interface ListItem {
   icon: string
   id: number
   key: string
@@ -50,7 +50,7 @@ interface IListItem {
   }
 })
 export default class WidgetsOptions extends Vue {
-  get active (): IListItem[] {
+  get active (): ListItem[] {
     return widgetsModule.active.map(({ type, id }, i) => ({
       id,
       key: `a${i}`,
@@ -59,7 +59,7 @@ export default class WidgetsOptions extends Vue {
     }))
   }
 
-  get available (): IListItem[] {
+  get available (): ListItem[] {
     return widgetsModule.available.map(({ type, id }, i) => ({
       id,
       key: `b${i}`,
@@ -70,15 +70,15 @@ export default class WidgetsOptions extends Vue {
 
   updateActive ({ added, removed, moved }: {
     added?: {
-      element: IListItem
+      element: ListItem
       newIndex: number
     }
     removed?: {
-      element: IListItem
+      element: ListItem
       oldIndex: number
     }
     moved?: {
-      element: IListItem
+      element: ListItem
       newIndex: number
       oldIndex: number
     }

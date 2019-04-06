@@ -1,8 +1,12 @@
-import { IStyling } from './types'
+import { StylingConfig } from './types'
 
 export * from './types'
 
-export function generateStyleAttr (styling: IStyling) {
+export interface StyleObject {
+  [key: string]: string | null
+}
+
+export function generateStyleAttr (styling: StylingConfig): StyleObject {
   return {
     backgroundColor: styling.backgroundColor != null
       ? styling.backgroundColor

@@ -55,7 +55,7 @@
 <script lang="ts">
 import Styling from '@/components/options/Styling.vue'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, IClockConfig, IStyling } from '@/store'
+import { widgetsModule, ClockConfig, StylingConfig } from '@/store'
 
 @Component({
   components: {
@@ -66,14 +66,14 @@ export default class ClockOptions extends Vue {
   @Prop({ required: true })
   widgetId!: number
 
-  get config (): IClockConfig {
+  get config (): ClockConfig {
     return widgetsModule.clocks[this.widgetId]
   }
 
-  get styling (): IStyling {
+  get styling (): StylingConfig {
     return this.config.styling
   }
-  set styling (v: IStyling) {
+  set styling (v: StylingConfig) {
     this.save('styling', v)
   }
 

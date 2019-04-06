@@ -10,14 +10,14 @@
 
 <script lang="ts">
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, IMottoConfig } from '@/store'
+import { widgetsModule, MottoConfig } from '@/store'
 
 @Component
 export default class MottoView extends Vue {
   @Prop({ required: true })
   widgetId!: number
 
-  get config (): IMottoConfig {
+  get config (): MottoConfig {
     return widgetsModule.mottos[this.widgetId]
   }
 

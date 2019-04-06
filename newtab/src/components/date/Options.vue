@@ -30,7 +30,7 @@
 import Styling from '@/components/options/Styling.vue'
 import formatDate from 'date-fns/format'
 import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, IDateConfig, IStyling, DateUpdateRate } from '@/store'
+import { widgetsModule, DateConfig, StylingConfig, DateUpdateRate } from '@/store'
 
 @Component({
   components: {
@@ -41,14 +41,14 @@ export default class DateOptions extends Vue {
   @Prop({ required: true })
   widgetId!: number
 
-  get config (): IDateConfig {
+  get config (): DateConfig {
     return widgetsModule.dates[this.widgetId]
   }
 
-  get styling (): IStyling {
+  get styling (): StylingConfig {
     return this.config.styling
   }
-  set styling (v: IStyling) {
+  set styling (v: StylingConfig) {
     this.save('styling', v)
   }
 
@@ -60,7 +60,7 @@ export default class DateOptions extends Vue {
     this.save('formatString', v)
     this.save('updateRate', this.computeUpdateRate(v))
   }
-  get formatStringItems (): { text: string, value: string }[] {
+  get formatStringItems (): { text: string; value: string }[] {
     return [{
       text: 'Date and time',
       value: 'dddd, MMMM D, YYYY - HH:mm:ss'

@@ -28,9 +28,8 @@
 
 <script lang="ts">
 import Updater, { nextMinute, nextSecond } from '@/lib/Updater'
-import formatDate from 'date-fns/format'
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { widgetsModule, IClockConfig } from '@/store'
+import { widgetsModule, ClockConfig } from '@/store'
 
 @Component
 export default class ClockView extends Vue {
@@ -50,7 +49,7 @@ export default class ClockView extends Vue {
     this.updater.stop()
   }
 
-  get config (): IClockConfig {
+  get config (): ClockConfig {
     return widgetsModule.clocks[this.widgetId]
   }
 

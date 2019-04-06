@@ -27,7 +27,7 @@
 import Color from '@/components/options/Color.vue'
 import Styling from '@/components/options/Styling.vue'
 import { Component, Vue } from 'vue-property-decorator'
-import { commonModule, IStyling } from '@/store'
+import { commonModule, StylingConfig } from '@/store'
 
 @Component({
   components: {
@@ -38,10 +38,10 @@ import { commonModule, IStyling } from '@/store'
 export default class CommonOptions extends Vue {
   storeModule = commonModule
 
-  get styling (): IStyling {
+  get styling (): StylingConfig {
     return this.storeModule.styling
   }
-  set styling (v: IStyling) {
+  set styling (v: StylingConfig) {
     this.storeModule.setStyling(v)
   }
 

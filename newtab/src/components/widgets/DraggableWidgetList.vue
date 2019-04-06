@@ -35,28 +35,14 @@
 
 <script lang="ts">
 import draggable from 'vuedraggable'
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Vue, Prop } from 'vue-property-decorator'
 
-interface IListItem {
+interface ListItem {
   icon: string
   id: number
   key: string
   name: string
 }
-
-const widgetProps = new Map<string, {
-  name: string
-  icon: string
-}>([
-  ['motto', {
-    name: 'Motto',
-    icon: 'mdi-text'
-  }],
-  ['clock', {
-    name: 'Clock',
-    icon: 'mdi-clock'
-  }]
-])
 
 @Component({
   components: {
@@ -68,7 +54,7 @@ export default class DraggableWidgetList extends Vue {
   header!: string
 
   @Prop({ required: true })
-  widgets!: IListItem[]
+  widgets!: ListItem[]
 }
 </script>
 
