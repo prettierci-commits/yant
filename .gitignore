@@ -23,3 +23,6 @@ yarn-error.log*
 *.sln
 *.sw*
 .*@neomake_*.*
+
+# Built files
+/ext/src/newtab
