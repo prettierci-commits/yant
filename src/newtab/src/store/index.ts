@@ -1,7 +1,9 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import persist from './persist'
 import { getModule } from 'vuex-module-decorators'
+
+import createMutationsSharer from 'vuex-shared-mutations'
+import persist from './persist'
 
 import Common from './Common'
 import Widgets from './Widgets'
@@ -16,7 +18,10 @@ const store = new Vuex.Store({
     widgets: Widgets
   },
 
-  plugins: [persist.plugin],
+  plugins: [
+    persist.plugin,
+    createMutationsSharer({ predicate: (): boolean => true })
+  ],
 
   state: {
 
