@@ -36,8 +36,18 @@
       <v-toolbar-side-icon
         @click.stop="drawer = !drawer"
       />
+
       <v-toolbar-title>YANT</v-toolbar-title>
+
       <v-spacer />
+
+      <v-btn
+        icon
+        @click="openNewtab"
+      >
+        <v-icon>mdi-open-in-new</v-icon>
+      </v-btn>
+
       <v-btn
         :href="newtabLink"
         icon
@@ -55,8 +65,8 @@
       <v-divider />
 
       <router-view
-        class="router-options"
         :widget-id="$route.params.id"
+        class="router-options"
       />
     </v-content>
   </v-app>
@@ -127,6 +137,10 @@ export default class Options extends Vue {
 
   get newtabLink () {
     return `./index.html#${this.$route.path}`
+  }
+
+  openNewtab () {
+    window.open(this.newtabLink, '', 'chrome')
   }
 }
 </script>
