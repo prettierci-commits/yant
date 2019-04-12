@@ -1,17 +1,28 @@
+/* global chrome: false */
+
 import Vue from 'vue'
 import Vuex from 'vuex'
 import { getModule } from 'vuex-module-decorators'
 
 import createMutationsSharer from 'vuex-shared-mutations'
-import persist from './persist'
+import { LTM, chromeStorageWrapper, localStorageWrapper, executeWithDelay } from './LTM'
 
 import Common from './Common'
 import Widgets from './Widgets'
 
 Vue.use(Vuex)
 
+const ltm = new LTM({
+  storage: chrome && chrome.storage && chrome.storage.sync
+    ? chromeStorageWrapper<any, any>('YANT')
+    : localStorageWrapper<any>('YANT'),
+  execute: executeWithDelay(1000)
+})
+
 const store = new Vuex.Store({
   strict: process.env.NODE_ENV !== 'production',
+
+  state: {},
 
   modules: {
     common: Common,
@@ -19,19 +30,9 @@ const store = new Vuex.Store({
   },
 
   plugins: [
-    persist.plugin,
+    ltm.plugin,
     createMutationsSharer({ predicate: (): boolean => true })
-  ],
-
-  state: {
-
-  },
-  mutations: {
-
-  },
-  actions: {
-
-  }
+  ]
 })
 
 const commonModule = getModule(Common, store)
