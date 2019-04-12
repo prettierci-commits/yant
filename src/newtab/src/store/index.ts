@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 import { getModule } from 'vuex-module-decorators'
 
 import createMutationsSharer from 'vuex-shared-mutations'
-import { LTM, chromeStorageWrapper, localStorageWrapper, executeWithDelay } from './LTM'
+import { LTM, chromeStorageWrapper, localStorageWrapper, executeWithDelay, shallowMerge } from './LTM'
 
 import Common from './Common'
 import Widgets from './Widgets'
@@ -16,7 +16,8 @@ const ltm = new LTM({
   storage: chrome && chrome.storage && chrome.storage.sync
     ? chromeStorageWrapper<any, any>('YANT')
     : localStorageWrapper<any>('YANT'),
-  execute: executeWithDelay(1000)
+  execute: executeWithDelay(1000),
+  merge: shallowMerge
 })
 
 const store = new Vuex.Store({
