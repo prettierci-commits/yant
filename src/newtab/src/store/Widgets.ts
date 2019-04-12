@@ -3,7 +3,7 @@ import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
 import {
   generateStyleAttr, StylingConfig, StyleObject,
   ClockConfig, DateConfig, MottoConfig, SeparatorConfig,
-  DateUpdateRate
+  DateUpdateRate, WidgetType, Widget
 } from './lib'
 
 const defaults: {
@@ -42,11 +42,6 @@ const defaults: {
   }
 }
 
-interface Widget {
-  type: string
-  id: number
-}
-
 @Module({ namespaced: true, name: 'widgets' })
 export default class WidgetsModule extends VuexModule {
   public clocks: { [key: string]: ClockConfig } = { 1: defaults.clock }
@@ -55,27 +50,27 @@ export default class WidgetsModule extends VuexModule {
   public separators: { [key: string]: SeparatorConfig } = { 1: defaults.separator, 2: defaults.separator, 3: defaults.separator }
 
   public active: Widget[] = [{
-    type: 'separator',
+    type: WidgetType.separator,
     id: 1
   }, {
-    type: 'motto',
+    type: WidgetType.motto,
     id: 1
   }, {
-    type: 'separator',
+    type: WidgetType.separator,
     id: 2
   }, {
-    type: 'clock',
+    type: WidgetType.clock,
     id: 1
   }, {
-    type: 'date',
+    type: WidgetType.date,
     id: 1
   }, {
-    type: 'separator',
+    type: WidgetType.separator,
     id: 3
   }]
 
   public get available (): Widget[] {
-    return ['clock', 'date', 'motto', 'separator'].map((newType): Widget => ({
+    return Object.values(WidgetType).map((newType: WidgetType): Widget => ({
       type: newType,
       id: this.active
         .filter(({ type }): boolean => type === newType)
@@ -114,20 +109,21 @@ export default class WidgetsModule extends VuexModule {
   public removeFromActive ({ index, widget }: { index: number; widget: Widget }): void {
     this.active.splice(index, 1)
     switch (widget.type) {
-      case 'clock':
+      case WidgetType.clock:
         Vue.delete(this.clocks, widget.id)
         break
-      case 'date':
+      case WidgetType.date:
         Vue.delete(this.dates, widget.id)
         break
-      case 'motto':
+      case WidgetType.motto:
         Vue.delete(this.mottos, widget.id)
         break
-      case 'separator':
+      case WidgetType.separator:
         Vue.delete(this.separators, widget.id)
         break
       default:
-        throw new TypeError(`Unknown widget: ${widget.type}`)
+        const type: never = widget.type
+        throw new TypeError(`Unknown widget: ${type}`)
     }
   }
 

@@ -33,14 +33,12 @@ import DraggableWidgetList from './DraggableWidgetList.vue'
 import draggable from 'vuedraggable'
 import { Component, Vue } from 'vue-property-decorator'
 import { drawerMap } from '@/options/widgetMetadata'
-import { widgetsModule } from '@/store'
+import { widgetsModule, Widget } from '@/store'
 
-interface ListItem {
+interface ListItem extends Widget {
   icon: string
-  id: number
   key: string
   name: string
-  type: string
 }
 
 @Component({

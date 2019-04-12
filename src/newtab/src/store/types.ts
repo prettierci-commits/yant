@@ -1,3 +1,15 @@
+export enum WidgetType {
+  clock = 'clock',
+  date = 'date',
+  motto = 'motto',
+  separator = 'separator'
+}
+
+export interface Widget {
+  type: WidgetType
+  id: number
+}
+
 export interface FontConfig {
   color: string
   lineHeight: number
