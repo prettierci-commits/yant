@@ -1,3 +1,4 @@
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
 const path = require('path')
 
 module.exports = {
@@ -56,5 +57,12 @@ module.exports = {
     svgRule
       .use('vue-svg-loader')
       .loader('vue-svg-loader')
+
+    // Webpack Bundle Analyzer
+    config
+      .plugin('webpack-bundle-analyzer')
+      .use(BundleAnalyzerPlugin, [{
+        analyzerMode: process.env.NODE_ENV === 'production' ? 'static' : 'disabled'
+      }])
   }
 }
