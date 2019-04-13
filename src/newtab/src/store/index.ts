@@ -5,7 +5,7 @@ import Vuex from 'vuex'
 import { getModule } from 'vuex-module-decorators'
 
 import createMutationsSharer from 'vuex-shared-mutations'
-import { LTM, chromeStorageWrapper, localStorageWrapper, executeWithDelay, shallowMerge } from './LTM'
+import { LTM, chromeStorageWrapper, executeWithDelay, localStorageWrapper, shallowMerge } from './LTM'
 
 import Common from './Common'
 import Widgets from './Widgets'
