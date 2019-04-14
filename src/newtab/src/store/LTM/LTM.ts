@@ -64,7 +64,7 @@ export class LTM<S> {
     const loaded = await this.storage.load()
 
     if (!loaded) {
-      return
+      return this.resolveReady()
     }
 
     const merged = await this.merge(loaded, store.state)
