@@ -30,6 +30,7 @@ import ClockView from '@/components/clock/View.vue'
 import DateView from '@/components/date/View.vue'
 import MottoView from '@/components/motto/View.vue'
 import SeparatorView from '@/components/separator/View.vue'
+import SnowView from '@/components/snow/View.vue'
 
 @Component({
   components: {
@@ -37,7 +38,8 @@ import SeparatorView from '@/components/separator/View.vue'
     ClockView,
     DateView,
     MottoView,
-    SeparatorView
+    SeparatorView,
+    SnowView
   }
 })
 export default class RootView extends Vue {
@@ -108,6 +110,7 @@ export default class RootView extends Vue {
 
 <style scoped>
 .flex-container {
+  position: relative;
   align-items: center;
   display: flex;
   flex-direction: column;

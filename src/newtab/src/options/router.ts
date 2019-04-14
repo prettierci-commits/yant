@@ -9,6 +9,7 @@ import CommonOptions from '@/components/common/Options.vue'
 import DateOptions from '@/components/date/Options.vue'
 import MottoOptions from '@/components/motto/Options.vue'
 import SeparatorOptions from '@/components/separator/Options.vue'
+import SnowOptions from '@/components/snow/Options.vue'
 import StyleOptions from '@/components/style/Options.vue'
 import WidgetsOptions from '@/components/widgets/Options.vue'
 
@@ -46,6 +47,11 @@ const routes: RouteConfig[] = [{
     name: 'options-separator',
     component: SeparatorOptions,
     meta: drawerMap.get('separator')
+  }, {
+    path: 'snow/:id',
+    name: 'options-snow',
+    component: SnowOptions,
+    meta: drawerMap.get('snow')
   }, {
     path: 'widgets',
     name: 'options-widgets',

@@ -2,7 +2,8 @@ export enum WidgetType {
   clock = 'clock',
   date = 'date',
   motto = 'motto',
-  separator = 'separator'
+  separator = 'separator',
+  snow = 'snow',
 }
 
 export interface Widget {
@@ -46,11 +47,9 @@ export interface StylingConfig {
   animationStart?: number
 }
 
-export interface WidgetConfig {
+export interface ClockConfig {
   styling: StylingConfig
-}
 
-export interface ClockConfig extends WidgetConfig {
   separator: string
   showSeconds: boolean
   dimSeconds: boolean
@@ -67,15 +66,27 @@ export enum DateUpdateRate {
   Days = 6
 }
 
-export interface DateConfig extends WidgetConfig {
+export interface DateConfig {
+  styling: StylingConfig
+
   formatString: string
   updateRate: DateUpdateRate
 }
 
-export interface MottoConfig extends WidgetConfig {
+export interface MottoConfig {
+  styling: StylingConfig
+
   text: string
 }
 
-export interface SeparatorConfig extends WidgetConfig {
+export interface SeparatorConfig {
+  styling: StylingConfig
+
   flexGrow: number
+}
+
+export interface SnowConfig {
+  amount: number
+  symbols: string[]
+  speed: number
 }

@@ -84,6 +84,18 @@ const widgets: [string, DrawerWidget][] = [
     route: {
       name: 'options-separator'
     }
+  }],
+  ['snow', {
+    icon: 'mdi-snowflake',
+    name: 'Snow',
+    type: 'snow',
+    componentName: 'SnowView',
+    route: {
+      name: 'options-snow'
+    },
+    preview: {
+      minHeight: '20vh'
+    }
   }]
 ]
 

@@ -40,6 +40,7 @@ const commonModule = getModule(Common, store)
 const widgetsModule = getModule(Widgets, store)
 
 export * from './types'
+export * from './widgetDefaults'
 export default store
 export {
   commonModule,

@@ -1,46 +1,19 @@
 import Vue from 'vue'
 import { Module, VuexModule, Mutation } from 'vuex-module-decorators'
-import {
-  generateStyleAttr, StylingConfig, StyleObject,
-  ClockConfig, DateConfig, MottoConfig, SeparatorConfig,
-  DateUpdateRate, WidgetType, Widget
-} from './lib'
 
-const defaults: {
-  clock: ClockConfig
-  date: DateConfig
-  motto: MottoConfig
-  separator: SeparatorConfig
-} = {
-  clock: {
-    styling: {
-      fontScale: 9
-    },
-    separator: ':',
-    showSeconds: true,
-    dimSeconds: true,
-    dimSeparators: true
-  },
-  date: {
-    styling: {
-      fontScale: 2.5
-    },
-    formatString: 'dddd, MMMM D, YYYY',
-    updateRate: DateUpdateRate.Days
-  },
-  motto: {
-    styling: {
-      fontScale: 1.5
-    },
-    text: '<strong>So what are you waiting for?</strong>\nLive your life in a way that makes traveling light years just to hang out with you worth it.'
-  },
-  separator: {
-    styling: {
-      height: 40
-    },
-    flexGrow: 1
-  }
-}
+import { defaultWidgetConfigs as defaults } from './widgetDefaults'
+import {
+  ClockConfig,
+  DateConfig,
+  MottoConfig,
+  SeparatorConfig,
+  SnowConfig,
+  StyleObject,
+  StylingConfig,
+  Widget,
+  WidgetType,
+  generateStyleAttr
+} from './lib'
 
 @Module({ namespaced: true, name: 'widgets' })
 export default class WidgetsModule extends VuexModule {
@@ -48,6 +21,7 @@ export default class WidgetsModule extends VuexModule {
   public dates: { [key: string]: DateConfig } = { 1: defaults.date }
   public mottos: { [key: string]: MottoConfig } = { 1: defaults.motto }
   public separators: { [key: string]: SeparatorConfig } = { 1: defaults.separator, 2: defaults.separator, 3: defaults.separator }
+  public snows: { [key: string]: SnowConfig } = {}
 
   public active: Widget[] = [{
     type: WidgetType.separator,
@@ -87,20 +61,24 @@ export default class WidgetsModule extends VuexModule {
   @Mutation
   public addToActive ({ index, widget }: { index: number; widget: Widget }): void {
     switch (widget.type) {
-      case 'clock':
+      case WidgetType.clock:
         Vue.set(this.clocks, widget.id, defaults.clock)
         break
-      case 'date':
+      case WidgetType.date:
         Vue.set(this.dates, widget.id, defaults.date)
         break
-      case 'motto':
+      case WidgetType.motto:
         Vue.set(this.mottos, widget.id, defaults.motto)
         break
-      case 'separator':
+      case WidgetType.separator:
         Vue.set(this.separators, widget.id, defaults.separator)
         break
+      case WidgetType.snow:
+        Vue.set(this.snows, widget.id, defaults.snow)
+        break
       default:
-        throw new TypeError(`Unknown widget: ${widget.type}`)
+        const type: never = widget.type
+        throw new TypeError(`Unknown widget: ${type}`)
     }
     this.active.splice(index, 0, widget)
   }
@@ -120,6 +98,9 @@ export default class WidgetsModule extends VuexModule {
         break
       case WidgetType.separator:
         Vue.delete(this.separators, widget.id)
+        break
+      case WidgetType.snow:
+        Vue.delete(this.snows, widget.id)
         break
       default:
         const type: never = widget.type
@@ -151,5 +132,10 @@ export default class WidgetsModule extends VuexModule {
   @Mutation
   public setSeparator ({ id, value }: { id: number; value: SeparatorConfig }): void {
     Vue.set(this.separators, id, value)
+  }
+
+  @Mutation
+  public setSnow ({ id, value }: { id: number; value: SnowConfig }): void {
+    Vue.set(this.snows, id, value)
   }
 }
