@@ -4,6 +4,9 @@ export interface DrawerItem {
   icon: string
   name: string
   route: Location
+  preview?: {
+    minHeight: string
+  }
 }
 export interface DrawerWidget extends DrawerItem {
   componentName: string
@@ -19,6 +22,9 @@ const items: [string, DrawerItem][] = [
     name: 'Common',
     route: {
       name: 'options-common'
+    },
+    preview: {
+      minHeight: '20vh'
     }
   }],
   ['widgets', {
@@ -26,6 +32,9 @@ const items: [string, DrawerItem][] = [
     name: 'Widgets',
     route: {
       name: 'options-widgets'
+    },
+    preview: {
+      minHeight: '20vh'
     }
   }],
   ['style', {
@@ -33,6 +42,9 @@ const items: [string, DrawerItem][] = [
     name: 'Style (custom CSS)',
     route: {
       name: 'options-style'
+    },
+    preview: {
+      minHeight: '20vh'
     }
   }]
 ]

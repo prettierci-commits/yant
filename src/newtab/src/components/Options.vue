@@ -58,6 +58,7 @@
 
     <v-content class="body-1">
       <RootView
+        :style="previewStyle"
         :widgets="widgets"
         shrink
       />
@@ -76,7 +77,7 @@
 import RootView from './RootView.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { Location } from 'vue-router'
-import { commonModule, widgetsModule } from '@/store'
+import { widgetsModule } from '@/store'
 import { drawerMap } from '@/options/widgetMetadata'
 
 interface DrawerItem {
@@ -131,7 +132,9 @@ export default class Options extends Vue {
 
   get previewStyle () {
     return {
-      backgroundColor: commonModule.styling.backgroundColor
+      minHeight: this.$route.meta && this.$route.meta.preview
+        ? this.$route.meta.preview.minHeight
+        : null
     }
   }
 
