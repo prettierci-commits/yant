@@ -1,9 +1,12 @@
 <template>
-  <div id="app">
+  <div
+    v-if="ready"
+    id="app"
+  >
     <RootView :widgets="widgetsModule.active">
       <a
-        class="options-button"
         :href="optionsLink"
+        class="options-button"
       >
         <SettingsIcon />
       </a>
@@ -14,7 +17,7 @@
 <script lang="ts">
 import RootView from '@/components/RootView.vue'
 import { Component, Vue } from 'vue-property-decorator'
-import { widgetsModule } from '@/store'
+import { storeReady, widgetsModule } from '@/store'
 
 import SettingsIcon from '@/assets/settings.svg'
 
@@ -26,6 +29,15 @@ import SettingsIcon from '@/assets/settings.svg'
 })
 export default class App extends Vue {
   widgetsModule = widgetsModule
+
+  ready = false
+
+  async mounted () {
+    console.time('ready')
+    await storeReady
+    this.ready = true
+    console.timeEnd('ready')
+  }
 
   get optionsLink (): string {
     return `./options.html#${location.hash.slice(1)}`

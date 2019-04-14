@@ -46,3 +46,4 @@ export {
   commonModule,
   widgetsModule
 }
+export const storeReady = ltm.ready
