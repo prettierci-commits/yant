@@ -55,7 +55,16 @@ export default class RootView extends Vue {
   animationManager: AnimationManager | undefined
 
   get styleAttr () {
-    return commonModule.styleAttr
+    if (this.animation.colors.length === 1) {
+      const { bg, fg } = this.animation.colors[0]
+      return {
+        ...commonModule.styleAttr,
+        backgroundColor: bg,
+        color: fg
+      }
+    } else {
+      return commonModule.styleAttr
+    }
   }
   get customCSS (): string {
     return commonModule.style
@@ -75,9 +84,13 @@ export default class RootView extends Vue {
     }
   }
 
-  get animation () {
+  get animation (): {
+    colors: typeof commonModule.styling.animationColors
+    duration: typeof commonModule.styling.animationDuration
+    start: typeof commonModule.styling.animationStart
+  } {
     return {
-      colors: commonModule.styling.animationColors,
+      colors: commonModule.styling.animationColors || [],
       duration: commonModule.styling.animationDuration,
       start: commonModule.styling.animationStart
     }
@@ -98,12 +111,16 @@ export default class RootView extends Vue {
       this.animationManager.stop()
     }
 
-    this.animationManager = new AnimationManager(
-      this.$refs.container as HTMLElement,
-      this.animation
-    )
+    if (this.animation.colors.length > 1) {
+      this.animationManager = new AnimationManager(
+        this.$refs.container as HTMLElement,
+        this.animation
+      )
 
-    this.animationManager.start()
+      this.animationManager.start()
+    } else {
+      this.animationManager = undefined
+    }
   }
 }
 </script>
