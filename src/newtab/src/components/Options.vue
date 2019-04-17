@@ -56,19 +56,41 @@
       </v-btn>
     </v-toolbar>
 
-    <v-content class="body-1">
-      <RootView
-        :style="previewStyle"
-        :widgets="widgets"
-        shrink
-      />
+    <v-content class="body-1 options-content">
+      <v-container
+        fill-height
+        fluid
+        pa-0
+      >
+        <v-layout
+          fill-height
+          row
+          wrap
+        >
+          <v-flex
+            :class="previewContainerClass"
+            class="preview-container"
+            xs12
+            xl6
+          >
+            <RootView
+              :style="previewStyle"
+              :widgets="widgets"
+              shrink
+            />
+          </v-flex>
 
-      <v-divider />
-
-      <router-view
-        :widget-id="$route.params.id"
-        class="router-options"
-      />
+          <v-flex
+            xs12
+            xl6
+          >
+            <router-view
+              :widget-id="$route.params.id"
+              class="router-options"
+            />
+          </v-flex>
+        </v-layout>
+      </v-container>
     </v-content>
   </v-app>
 </template>
@@ -130,9 +152,19 @@ export default class Options extends Vue {
     }
   }
 
+  get sideBySide () {
+    return this.$vuetify.breakpoint.name === 'xl'
+  }
+
+  get previewContainerClass () {
+    return {
+      'side-by-side': this.sideBySide
+    }
+  }
+
   get previewStyle () {
     return {
-      minHeight: this.$route.meta && this.$route.meta.preview
+      minHeight: !this.sideBySide && this.$route.meta && this.$route.meta.preview
         ? this.$route.meta.preview.minHeight
         : null
     }
@@ -147,3 +179,15 @@ export default class Options extends Vue {
   }
 }
 </script>
+
+<style scoped>
+.preview-container:not(.side-by-side) {
+  border-bottom: 1px solid gray;
+}
+.preview-container.side-by-side {
+  border-right: 1px solid gray;
+}
+.preview-container.side-by-side > * {
+  min-height: 100%;
+}
+</style>
