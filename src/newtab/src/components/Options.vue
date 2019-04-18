@@ -63,6 +63,7 @@
         pa-0
       >
         <v-layout
+          :reverse="sideBySide"
           fill-height
           row
           wrap
