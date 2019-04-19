@@ -32,6 +32,12 @@ import MottoView from '@/components/motto/View.vue'
 import SeparatorView from '@/components/separator/View.vue'
 import SnowView from '@/components/snow/View.vue'
 
+interface Animation {
+  colors: Exclude<typeof commonModule.styling.animationColors, undefined>
+  duration: typeof commonModule.styling.animationDuration
+  start: typeof commonModule.styling.animationStart
+}
+
 @Component({
   components: {
     CSS,
@@ -84,11 +90,7 @@ export default class RootView extends Vue {
     }
   }
 
-  get animation (): {
-    colors: typeof commonModule.styling.animationColors
-    duration: typeof commonModule.styling.animationDuration
-    start: typeof commonModule.styling.animationStart
-  } {
+  get animation (): Animation {
     return {
       colors: commonModule.styling.animationColors || [],
       duration: commonModule.styling.animationDuration,
