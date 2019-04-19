@@ -17,6 +17,7 @@
           absolute
           animated-colors
           nosize
+          nocorners
         />
       </v-flex>
     </v-layout>

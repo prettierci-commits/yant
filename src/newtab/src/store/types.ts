@@ -42,6 +42,11 @@ export interface StylingConfig {
   paddingBottom?: number
   paddingLeft?: number
 
+  borderTopLeftRadius?: number
+  borderTopRightRadius?: number
+  borderBottomRightRadius?: number
+  borderBottomLeftRadius?: number
+
   animationColors?: AnimationColors[]
   animationDuration?: number
   animationStart?: number

@@ -53,6 +53,19 @@ export function generateStyleAttr (styling: StylingConfig): StyleObject {
       : null,
     paddingLeft: styling.paddingLeft != null
       ? `${styling.paddingLeft}px`
+      : null,
+
+    borderTopLeftRadius: styling.borderTopLeftRadius != null
+      ? `${styling.borderTopLeftRadius}px`
+      : null,
+    borderTopRightRadius: styling.borderTopRightRadius != null
+      ? `${styling.borderTopRightRadius}px`
+      : null,
+    borderBottomRightRadius: styling.borderBottomRightRadius != null
+      ? `${styling.borderBottomRightRadius}px`
+      : null,
+    borderBottomLeftRadius: styling.borderBottomLeftRadius != null
+      ? `${styling.borderBottomLeftRadius}px`
       : null
   }
 }

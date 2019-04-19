@@ -160,6 +160,31 @@
     </template>
 
     <v-layout
+      v-if="nocorners === false"
+      row
+      wrap
+    >
+      <v-flex
+        xs12
+        title
+        pt-5
+      >
+        Corners
+      </v-flex>
+      <v-flex
+        xs12
+      >
+        <NumberSet
+          v-model="borderRadiuses"
+          :labels="['Topleft', 'Topright', 'Bottomright', 'Bottomleft']"
+          :min="0"
+          :step="1"
+          :units="['px', 'px', 'px', 'px']"
+        />
+      </v-flex>
+    </v-layout>
+
+    <v-layout
       v-if="animatedColors === false"
       row
       wrap
@@ -284,6 +309,9 @@ export default class Styling extends Vue {
 
   @Prop({ default: false })
   nopadding!: boolean
+
+  @Prop({ default: false })
+  nocorners!: boolean
 
   @Prop({ default: false })
   animatedColors!: boolean
@@ -519,6 +547,23 @@ export default class Styling extends Vue {
       { key: 'paddingRight', value: v[1] },
       { key: 'paddingBottom', value: v[2] },
       { key: 'paddingLeft', value: v[3] }
+    ])
+  }
+
+  get borderRadiuses (): (number | undefined)[] {
+    return [
+      this.value.borderTopLeftRadius,
+      this.value.borderTopRightRadius,
+      this.value.borderBottomRightRadius,
+      this.value.borderBottomLeftRadius
+    ]
+  }
+  set borderRadiuses (v: (number | undefined)[]) {
+    this.emitStylingChanges([
+      { key: 'borderTopLeftRadius', value: v[0] },
+      { key: 'borderTopRightRadius', value: v[1] },
+      { key: 'borderBottomRightRadius', value: v[2] },
+      { key: 'borderBottomLeftRadius', value: v[3] }
     ])
   }
 
