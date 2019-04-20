@@ -58,13 +58,11 @@
 
     <v-content class="body-1 options-content">
       <v-container
-        fill-height
         fluid
         pa-0
       >
         <v-layout
           :reverse="sideBySide"
-          fill-height
           row
           wrap
         >
