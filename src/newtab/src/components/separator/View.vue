@@ -15,7 +15,7 @@ export default class SeparatorView extends Vue {
   widgetId!: number
 
   get config (): SeparatorConfig {
-    return widgetsModule.separators[this.widgetId]
+    return widgetsModule.configs[this.widgetId] as SeparatorConfig
   }
 
   get styleAttr () {

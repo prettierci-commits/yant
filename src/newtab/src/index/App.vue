@@ -3,7 +3,7 @@
     v-if="ready"
     id="app"
   >
-    <RootView :widgets="widgetsModule.active">
+    <RootView :widgets="widgets">
       <a
         :href="optionsLink"
         class="options-button"
@@ -15,7 +15,7 @@
 </template>
 
 <script lang="ts">
-import RootView from '@/components/RootView.vue'
+import RootView, { Widget } from '@/components/RootView.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { storeReady, widgetsModule } from '@/store'
 
@@ -28,13 +28,17 @@ import SettingsIcon from '@/assets/settings.svg'
   }
 })
 export default class App extends Vue {
-  widgetsModule = widgetsModule
-
   ready = false
 
   async mounted () {
     await storeReady
     this.ready = true
+  }
+
+  get widgets (): Widget[] {
+    return widgetsModule.configs.map(
+      ({ type }, id): Widget => ({ type, id })
+    )
   }
 
   get optionsLink (): string {

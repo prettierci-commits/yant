@@ -32,7 +32,7 @@ export default class DateView extends Vue {
   }
 
   get config (): DateConfig {
-    return widgetsModule.dates[this.widgetId]
+    return widgetsModule.configs[this.widgetId] as DateConfig
   }
 
   get styleAttr () {

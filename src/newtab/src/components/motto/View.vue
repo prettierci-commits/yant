@@ -18,7 +18,7 @@ export default class MottoView extends Vue {
   widgetId!: number
 
   get config (): MottoConfig {
-    return widgetsModule.mottos[this.widgetId]
+    return widgetsModule.configs[this.widgetId] as MottoConfig
   }
 
   get styleAttr () {

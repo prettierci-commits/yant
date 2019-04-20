@@ -48,12 +48,12 @@ export default class SnowOptions extends Vue {
   widgetId!: number
 
   get config (): SnowConfig {
-    return widgetsModule.snows[this.widgetId]
+    return widgetsModule.configs[this.widgetId] as SnowConfig
   }
   setConfig (v: Partial<SnowConfig>): void {
-    widgetsModule.setSnow({
+    widgetsModule.setConfig({
       id: this.widgetId,
-      value: {
+      config: {
         ...this.config,
         ...v
       }

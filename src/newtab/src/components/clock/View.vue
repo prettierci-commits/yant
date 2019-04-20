@@ -50,7 +50,7 @@ export default class ClockView extends Vue {
   }
 
   get config (): ClockConfig {
-    return widgetsModule.clocks[this.widgetId]
+    return widgetsModule.configs[this.widgetId] as ClockConfig
   }
 
   get styleAttr () {

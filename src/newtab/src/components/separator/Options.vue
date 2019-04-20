@@ -40,31 +40,30 @@ export default class SeparatorOptions extends Vue {
   widgetId!: number
 
   get config (): SeparatorConfig {
-    return widgetsModule.separators[this.widgetId]
+    return widgetsModule.configs[this.widgetId] as SeparatorConfig
+  }
+  setConfig (config: Partial<SeparatorConfig>): void {
+    widgetsModule.setConfig({
+      id: this.widgetId,
+      config: {
+        ...this.config,
+        ...config
+      }
+    })
   }
 
   get styling (): StylingConfig {
     return this.config.styling
   }
   set styling (v: StylingConfig) {
-    this.save('styling', v)
+    this.setConfig({ styling: v })
   }
 
   get flexGrow (): number | undefined {
     return this.config.flexGrow
   }
   set flexGrow (v: number | undefined) {
-    this.save('flexGrow', v || 0)
-  }
-
-  save (key: string, value: any): void {
-    widgetsModule.setSeparator({
-      id: this.widgetId,
-      value: {
-        ...this.config,
-        [key]: value
-      }
-    })
+    this.setConfig({ flexGrow: v || 0 })
   }
 }
 </script>

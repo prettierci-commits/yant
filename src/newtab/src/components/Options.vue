@@ -141,15 +141,18 @@ export default class Options extends Vue {
   }
 
   get widgets (): Widget[] {
-    if (this.$route.meta && this.$route.meta.type) {
-      return widgetsModule.active.map(({ type, id }): Widget => ({
+    if (this.$route.meta && this.$route.meta.type && this.$route.params.id != null) {
+      return widgetsModule.configs.map(({ type }, id): Widget => ({
         type,
         id,
         suppressed: this.$route.meta.type !== type ||
           +this.$route.params.id !== id
       }))
     } else {
-      return widgetsModule.active
+      return widgetsModule.configs.map(({ type }, id): Widget => ({
+        type,
+        id
+      }))
     }
   }
 

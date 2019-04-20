@@ -52,8 +52,13 @@ export interface StylingConfig {
   animationStart?: number
 }
 
-export interface ClockConfig {
+export interface BaseConfig {
+  type: WidgetType
   styling: StylingConfig
+}
+
+export interface ClockConfig extends BaseConfig {
+  type: WidgetType.clock
 
   separator: string
   showSeconds: boolean
@@ -71,27 +76,39 @@ export enum DateUpdateRate {
   Days = 6
 }
 
-export interface DateConfig {
-  styling: StylingConfig
+export interface DateConfig extends BaseConfig {
+  type: WidgetType.date
 
   formatString: string
   updateRate: DateUpdateRate
 }
 
-export interface MottoConfig {
-  styling: StylingConfig
+export interface MottoConfig extends BaseConfig {
+  type: WidgetType.motto
 
   text: string
 }
 
-export interface SeparatorConfig {
-  styling: StylingConfig
+export interface SeparatorConfig extends BaseConfig {
+  type: WidgetType.separator
 
   flexGrow: number
 }
 
-export interface SnowConfig {
+export interface SnowConfig extends BaseConfig {
+  type: WidgetType.snow
+
   amount: number
   symbols: string[]
   speed: number
 }
+
+export type AnyConfig = (
+  BaseConfig
+) & (
+  ClockConfig |
+  DateConfig |
+  MottoConfig |
+  SeparatorConfig |
+  SnowConfig
+)

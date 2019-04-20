@@ -82,27 +82,20 @@ export default class WidgetsOptions extends Vue {
     }
   }) {
     if (added) {
-      widgetsModule.addToActive({
-        index: added.newIndex,
-        widget: {
-          type: added.element.type,
-          id: added.element.id
-        }
+      widgetsModule.add({
+        id: added.newIndex,
+        type: added.element.type
       })
     }
     if (removed) {
-      widgetsModule.removeFromActive({
-        index: removed.oldIndex,
-        widget: {
-          type: removed.element.type,
-          id: removed.element.id
-        }
+      widgetsModule.delete({
+        id: removed.oldIndex
       })
     }
     if (moved) {
-      widgetsModule.reorderActive({
-        oldIndex: moved.oldIndex,
-        newIndex: moved.newIndex
+      widgetsModule.reorder({
+        oldId: moved.oldIndex,
+        newId: moved.newIndex
       })
     }
   }

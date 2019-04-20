@@ -42,14 +42,23 @@ export default class DateOptions extends Vue {
   widgetId!: number
 
   get config (): DateConfig {
-    return widgetsModule.dates[this.widgetId]
+    return widgetsModule.configs[this.widgetId] as DateConfig as DateConfig
+  }
+  setConfig (config: Partial<DateConfig>): void {
+    widgetsModule.setConfig({
+      id: this.widgetId,
+      config: {
+        ...this.config,
+        ...config
+      }
+    })
   }
 
   get styling (): StylingConfig {
     return this.config.styling
   }
   set styling (v: StylingConfig) {
-    this.save('styling', v)
+    this.setConfig({ styling: v })
   }
 
   get formatString (): string {
@@ -57,8 +66,10 @@ export default class DateOptions extends Vue {
   }
   set formatString (vRaw: string) {
     const v = vRaw || ' '
-    this.save('formatString', v)
-    this.save('updateRate', this.computeUpdateRate(v))
+    this.setConfig({
+      formatString: v,
+      updateRate: this.computeUpdateRate(v)
+    })
   }
   get formatStringItems (): { text: string; value: string }[] {
     return [{
@@ -265,16 +276,6 @@ export default class DateOptions extends Vue {
     }
 
     return DateUpdateRate.Days
-  }
-
-  save (key: string, value: any): void {
-    widgetsModule.setDate({
-      id: this.widgetId,
-      value: {
-        ...this.config,
-        [key]: value
-      }
-    })
   }
 }
 </script>

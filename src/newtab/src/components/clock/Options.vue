@@ -67,52 +67,51 @@ export default class ClockOptions extends Vue {
   widgetId!: number
 
   get config (): ClockConfig {
-    return widgetsModule.clocks[this.widgetId]
+    return widgetsModule.configs[this.widgetId] as ClockConfig
+  }
+  setConfig (config: Partial<ClockConfig>): void {
+    widgetsModule.setConfig({
+      id: this.widgetId,
+      config: {
+        ...this.config,
+        ...config
+      }
+    })
   }
 
   get styling (): StylingConfig {
     return this.config.styling
   }
   set styling (v: StylingConfig) {
-    this.save('styling', v)
+    this.setConfig({ styling: v })
   }
 
   get separator (): string {
     return this.config.separator
   }
   set separator (v: string) {
-    this.save('separator', v)
+    this.setConfig({ separator: v })
   }
 
   get showSeconds (): boolean {
     return this.config.showSeconds
   }
   set showSeconds (v: boolean) {
-    this.save('showSeconds', v)
+    this.setConfig({ showSeconds: v })
   }
 
   get dimSeconds (): boolean {
     return this.config.dimSeconds
   }
   set dimSeconds (v: boolean) {
-    this.save('dimSeconds', v)
+    this.setConfig({ dimSeconds: v })
   }
 
   get dimSeparators (): boolean {
     return this.config.dimSeparators
   }
   set dimSeparators (v: boolean) {
-    this.save('dimSeparators', v)
-  }
-
-  save (key: string, value: any): void {
-    widgetsModule.setClock({
-      id: this.widgetId,
-      value: {
-        ...this.config,
-        [key]: value
-      }
-    })
+    this.setConfig({ dimSeparators: v })
   }
 }
 </script>

@@ -24,7 +24,7 @@
 import AnimationManager from '@/lib/AnimationManager'
 import CSS from './CSS.vue'
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { commonModule } from '@/store'
+import { WidgetType, commonModule } from '@/store'
 import { widgetMap } from '@/options/widgetMetadata'
 
 import ClockView from '@/components/clock/View.vue'
@@ -40,8 +40,8 @@ interface Animation {
 }
 
 export interface Widget {
-  type: string
   id: number
+  type: WidgetType
   suppressed?: boolean
 }
 

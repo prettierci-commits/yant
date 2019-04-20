@@ -49,7 +49,7 @@ export default class SnowView extends Vue {
   widgetId!: number
 
   get config (): SnowConfig {
-    return widgetsModule.snows[this.widgetId]
+    return widgetsModule.configs[this.widgetId] as SnowConfig
   }
 
   get fallDuration (): Duration {

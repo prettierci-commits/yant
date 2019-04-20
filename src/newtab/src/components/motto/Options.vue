@@ -34,18 +34,14 @@ export default class MottoOptions extends Vue {
   widgetId!: number
 
   get config (): MottoConfig {
-    return widgetsModule.mottos[this.widgetId]
+    return widgetsModule.configs[this.widgetId] as MottoConfig
   }
-
-  get text (): string {
-    return this.config.text
-  }
-  set text (v: string) {
-    widgetsModule.setMotto({
+  setConfig (config: Partial<MottoConfig>): void {
+    widgetsModule.setConfig({
       id: this.widgetId,
-      value: {
+      config: {
         ...this.config,
-        text: v
+        ...config
       }
     })
   }
@@ -53,14 +49,15 @@ export default class MottoOptions extends Vue {
   get styling (): StylingConfig {
     return this.config.styling
   }
-  set styling (v: StylingConfig) {
-    widgetsModule.setMotto({
-      id: this.widgetId,
-      value: {
-        ...this.config,
-        styling: v
-      }
-    })
+  set styling (styling: StylingConfig) {
+    this.setConfig({ styling })
+  }
+
+  get text (): string {
+    return this.config.text
+  }
+  set text (text: string) {
+    this.setConfig({ text })
   }
 }
 </script>
