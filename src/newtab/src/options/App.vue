@@ -16,10 +16,8 @@ export default class App extends Vue {
   ready = false
 
   async mounted () {
-    console.time('ready')
     await storeReady
     this.ready = true
-    console.timeEnd('ready')
   }
 }
 </script>
