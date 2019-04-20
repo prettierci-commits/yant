@@ -75,9 +75,9 @@
             xl6
           >
             <RootView
+              :shrink="!sideBySide"
               :style="previewStyle"
               :widgets="widgets"
-              shrink
             />
           </v-flex>
 
@@ -191,6 +191,8 @@ export default class Options extends Vue {
   border-right: 1px solid gray;
 }
 .preview-container.side-by-side > * {
-  min-height: 100%;
+  min-height: calc(100vh - 64px);
+  position: sticky;
+  top: 64px;
 }
 </style>
