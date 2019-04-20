@@ -97,7 +97,7 @@
 </template>
 
 <script lang="ts">
-import RootView from './RootView.vue'
+import RootView, { Widget } from './RootView.vue'
 import { Component, Vue } from 'vue-property-decorator'
 import { Location } from 'vue-router'
 import { widgetsModule } from '@/store'
@@ -142,12 +142,14 @@ export default class Options extends Vue {
     ]
   }
 
-  get widgets () {
+  get widgets (): Widget[] {
     if (this.$route.meta && this.$route.meta.type) {
-      return [{
-        type: this.$route.meta.type,
-        id: +this.$route.params.id
-      }]
+      return widgetsModule.active.map(({ type, id }): Widget => ({
+        type,
+        id,
+        suppressed: this.$route.meta.type !== type ||
+          +this.$route.params.id !== id
+      }))
     } else {
       return widgetsModule.active
     }

@@ -7,9 +7,10 @@
   >
     <div
       :is="component"
-      v-for="({ component, id }, i) in widgetsDOM"
+      v-for="({ component, id, suppressed }, i) in widgetsDOM"
       :key="i"
       :widget-id="id"
+      :class="{ 'suppressed': suppressed }"
       class="widget"
     />
 
@@ -38,6 +39,12 @@ interface Animation {
   start: typeof commonModule.styling.animationStart
 }
 
+export interface Widget {
+  type: string
+  id: number
+  suppressed?: boolean
+}
+
 @Component({
   components: {
     CSS,
@@ -53,10 +60,7 @@ export default class RootView extends Vue {
   shrink!: boolean
 
   @Prop({ required: true })
-  widgets!: {
-    type: string
-    id: number
-  }[]
+  widgets!: Widget[]
 
   animationManager: AnimationManager | undefined
 
@@ -77,8 +81,9 @@ export default class RootView extends Vue {
   }
 
   get widgetsDOM () {
-    return this.widgets.map(({ type, id }) => ({
+    return this.widgets.map(({ type, id, suppressed }) => ({
       component: widgetMap.get(type)!.componentName,
+      suppressed: !!suppressed,
       id
     }))
   }
@@ -145,5 +150,10 @@ export default class RootView extends Vue {
 
 .show-immediatelly {
   opacity: 1;
+}
+
+.flex-container:not(:hover) > .widget.suppressed {
+  filter: blur(2px);
+  opacity: 0.3;
 }
 </style>
