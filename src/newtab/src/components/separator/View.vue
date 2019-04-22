@@ -19,10 +19,7 @@ export default class SeparatorView extends Vue {
   }
 
   get styleAttr () {
-    return {
-      ...widgetsModule.generateStyleAttr(this.config.styling),
-      flexGrow: this.config.flexGrow
-    }
+    return widgetsModule.generateStyleAttr(this.config.styling)
   }
 }
 </script>

@@ -35,6 +35,9 @@ export interface StylingConfig {
   fontWeight?: number
   lineHeight?: number
 
+  minHeight?: number
+  flexGrow?: number
+
   width?: number
   height?: number
   paddingTop?: number
@@ -91,8 +94,6 @@ export interface MottoConfig extends BaseConfig {
 
 export interface SeparatorConfig extends BaseConfig {
   type: WidgetType.separator
-
-  flexGrow: number
 }
 
 export interface SnowConfig extends BaseConfig {

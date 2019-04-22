@@ -4,9 +4,12 @@
       row
       wrap
     >
-      <v-flex xs12>
+      <v-flex
+        xs12
+        sm6
+      >
         <v-text-field
-          v-model="flexGrow"
+          v-model.number="flexGrow"
           :min="0"
           :step="1"
           label="Fill available space (flex grow)"
@@ -14,11 +17,16 @@
         />
       </v-flex>
 
-      <v-flex xs12>
-        <Styling
-          v-model="styling"
-          nofont
-          nopadding
+      <v-flex
+        xs12
+        sm6
+      >
+        <v-text-field
+          v-model.number="minHeight"
+          :min="0"
+          :step="1"
+          label="Minimum height"
+          type="number"
         />
       </v-flex>
     </v-layout>
@@ -58,12 +66,27 @@ export default class SeparatorOptions extends Vue {
   set styling (v: StylingConfig) {
     this.setConfig({ styling: v })
   }
+  setStyling (styling: Partial<StylingConfig>): void {
+    this.setConfig({
+      styling: {
+        ...this.styling,
+        ...styling
+      }
+    })
+  }
 
   get flexGrow (): number | undefined {
-    return this.config.flexGrow
+    return this.styling.flexGrow
   }
   set flexGrow (v: number | undefined) {
-    this.setConfig({ flexGrow: v || 0 })
+    this.setStyling({ flexGrow: v })
+  }
+
+  get minHeight (): number | undefined {
+    return this.styling.minHeight
+  }
+  set minHeight (v: number | undefined) {
+    this.setStyling({ minHeight: v })
   }
 }
 </script>

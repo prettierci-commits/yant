@@ -36,6 +36,13 @@ export function generateStyleAttr (styling: StylingConfig): StyleObject {
       ? `${styling.lineHeight}`
       : null,
 
+    minHeight: styling.minHeight != null
+      ? `${styling.minHeight}px`
+      : null,
+    flexGrow: styling.flexGrow != null
+      ? `${styling.flexGrow}`
+      : null,
+
     width: styling.width != null
       ? `${styling.width}px`
       : null,

@@ -52,9 +52,9 @@ export const defaultWidgetConfigs: {
   separator: {
     type: WidgetType.separator,
     styling: {
-      height: 40
-    },
-    flexGrow: 1
+      minHeight: 40,
+      flexGrow: 1
+    }
   },
   snow: {
     type: WidgetType.snow,
