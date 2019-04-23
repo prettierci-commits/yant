@@ -144,14 +144,14 @@ export default class RootView extends Vue {
   min-height: 100vh;
 }
 
-.flex-container > .widget {
-  overflow: hidden;
-}
-
 .show-immediatelly {
   opacity: 1;
 }
 
+.flex-container > .widget {
+  overflow: hidden;
+  transition: filter 1s ease, opacity 1s ease;
+}
 .flex-container:not(:hover) > .widget.suppressed {
   filter: blur(2px);
   opacity: 0.3;
