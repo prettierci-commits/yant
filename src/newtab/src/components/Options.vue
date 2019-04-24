@@ -83,10 +83,13 @@
             xs12
             xl6
           >
-            <router-view
-              :widget-id="$route.params.id"
-              class="router-options"
-            />
+            <v-fade-transition mode="out-in">
+              <router-view
+                :key="$route.fullPath"
+                :widget-id="$route.params.id"
+                class="router-options"
+              />
+            </v-fade-transition>
           </v-flex>
         </v-layout>
       </v-container>
