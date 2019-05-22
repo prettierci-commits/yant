@@ -6,18 +6,20 @@ module.exports = {
   outputDir: path.resolve(__dirname, '../../ext/src/newtab'),
 
   transpileDependencies: [
-    // 'vuex-persist',
-    'vuex-module-decorators'
+    'vuex-module-decorators',
+    'vuex-ltm'
   ],
 
   pages: {
     index: {
       entry: 'src/index/main.ts',
-      chunks: ['chunk-common', 'chunk-index-vendors', 'index']
+      chunks: ['chunk-common', 'chunk-index-vendors', 'index'],
+      template: 'public/index.html'
     },
     options: {
       entry: 'src/options/main.ts',
-      chunks: ['chunk-common', 'chunk-options-vendors', 'options']
+      chunks: ['chunk-common', 'chunk-options-vendors', 'options'],
+      template: 'public/options.html'
     }
   },
 

@@ -1,0 +1,34 @@
+.spinner-container {
+  position: fixed;
+  top: 50vh;
+  left: 50vw;
+
+  transform: translate(-50%, -50%);
+}
+.spinner-container.dark {
+  color: #303030;
+}
+.spinner-container.light {
+  color: #ffeb3b;
+}
+
+.spinner-item {
+  position: absolute;
+
+  font-size: 25vh;
+
+  animation: spinner-keyframes 3s infinite ease-in-out;
+}
+.spinner-item:last-child {
+  position: relative;
+}
+
+@keyframes spinner-keyframes {
+  from {
+    transform: rotate(0deg);
+  }
+  66%,
+  to {
+    transform: rotate(360deg);
+  }
+}
