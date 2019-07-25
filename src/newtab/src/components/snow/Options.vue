@@ -39,54 +39,52 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { SnowConfig, defaultWidgetConfigs, widgetsModule } from '@/store'
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { SnowConfig, defaultWidgetConfigs, widgetsModule } from "@/store";
 
 @Component
 export default class SnowOptions extends Vue {
   @Prop({ required: true })
-  widgetId!: number
+  widgetId!: number;
 
-  get config (): SnowConfig {
-    return widgetsModule.configs[this.widgetId] as SnowConfig
+  get config(): SnowConfig {
+    return widgetsModule.configs[this.widgetId] as SnowConfig;
   }
-  setConfig (v: Partial<SnowConfig>): void {
+  setConfig(v: Partial<SnowConfig>): void {
     widgetsModule.setConfig({
       id: this.widgetId,
       config: {
         ...this.config,
         ...v
       }
-    })
+    });
   }
 
-  get amount (): number {
-    return this.config.amount
+  get amount(): number {
+    return this.config.amount;
   }
-  set amount (v: number) {
+  set amount(v: number) {
     this.setConfig({
       amount: v
-    })
+    });
   }
 
-  get speed (): number {
-    return this.config.speed
+  get speed(): number {
+    return this.config.speed;
   }
-  set speed (v: number) {
+  set speed(v: number) {
     this.setConfig({
       speed: v
-    })
+    });
   }
 
-  get symbols (): string {
-    return this.config.symbols.join('')
+  get symbols(): string {
+    return this.config.symbols.join("");
   }
-  set symbols (v: string) {
+  set symbols(v: string) {
     this.setConfig({
-      symbols: v && v.length
-        ? v.split('')
-        : defaultWidgetConfigs.snow.symbols
-    })
+      symbols: v && v.length ? v.split("") : defaultWidgetConfigs.snow.symbols
+    });
   }
 }
 </script>

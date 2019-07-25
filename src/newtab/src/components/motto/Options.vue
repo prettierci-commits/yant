@@ -20,9 +20,9 @@
 </template>
 
 <script lang="ts">
-import Styling from '@/components/options/Styling.vue'
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, MottoConfig, StylingConfig } from '@/store'
+import Styling from "@/components/options/Styling.vue";
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { widgetsModule, MottoConfig, StylingConfig } from "@/store";
 
 @Component({
   components: {
@@ -31,33 +31,33 @@ import { widgetsModule, MottoConfig, StylingConfig } from '@/store'
 })
 export default class MottoOptions extends Vue {
   @Prop({ required: true })
-  widgetId!: number
+  widgetId!: number;
 
-  get config (): MottoConfig {
-    return widgetsModule.configs[this.widgetId] as MottoConfig
+  get config(): MottoConfig {
+    return widgetsModule.configs[this.widgetId] as MottoConfig;
   }
-  setConfig (config: Partial<MottoConfig>): void {
+  setConfig(config: Partial<MottoConfig>): void {
     widgetsModule.setConfig({
       id: this.widgetId,
       config: {
         ...this.config,
         ...config
       }
-    })
+    });
   }
 
-  get styling (): StylingConfig {
-    return this.config.styling
+  get styling(): StylingConfig {
+    return this.config.styling;
   }
-  set styling (styling: StylingConfig) {
-    this.setConfig({ styling })
+  set styling(styling: StylingConfig) {
+    this.setConfig({ styling });
   }
 
-  get text (): string {
-    return this.config.text
+  get text(): string {
+    return this.config.text;
   }
-  set text (text: string) {
-    this.setConfig({ text })
+  set text(text: string) {
+    this.setConfig({ text });
   }
 }
 </script>

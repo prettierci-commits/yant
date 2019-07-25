@@ -1,10 +1,10 @@
-import './vuetify.styl'
-import '@mdi/font/css/materialdesignicons.css'
-import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
-import colors from 'vuetify/es5/util/colors'
+import "./vuetify.styl";
+import "@mdi/font/css/materialdesignicons.css";
+import Vue from "vue";
+import Vuetify from "vuetify/lib";
+import colors from "vuetify/es5/util/colors";
 
-const color = colors.yellow
+const color = colors.yellow;
 
 Vue.use(Vuetify, {
   theme: {
@@ -15,5 +15,5 @@ Vue.use(Vuetify, {
   options: {
     customProperties: true
   },
-  iconfont: 'mdi'
-})
+  iconfont: "mdi"
+});

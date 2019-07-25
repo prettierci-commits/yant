@@ -1,72 +1,72 @@
 export enum WidgetType {
-  clock = 'clock',
-  date = 'date',
-  motto = 'motto',
-  separator = 'separator',
-  snow = 'snow',
+  clock = "clock",
+  date = "date",
+  motto = "motto",
+  separator = "separator",
+  snow = "snow"
 }
 
 export interface Widget {
-  type: WidgetType
-  id: number
+  type: WidgetType;
+  id: number;
 }
 
 export interface FontConfig {
-  color: string
-  lineHeight: number
-  size: number
-  weight: number
+  color: string;
+  lineHeight: number;
+  size: number;
+  weight: number;
 }
 
 export interface AnimationColors {
-  fg: string
-  bg: string
+  fg: string;
+  bg: string;
 }
 
 export interface StylingConfig {
-  backgroundColor?: string
+  backgroundColor?: string;
 
-  color?: string
-  fontFamily?: string
-  fontScale?: number
-  fontSize?: number
-  fontStyle?: string
-  fontVariantCaps?: string
-  fontWeight?: number
-  lineHeight?: number
+  color?: string;
+  fontFamily?: string;
+  fontScale?: number;
+  fontSize?: number;
+  fontStyle?: string;
+  fontVariantCaps?: string;
+  fontWeight?: number;
+  lineHeight?: number;
 
-  minHeight?: number
-  flexGrow?: number
+  minHeight?: number;
+  flexGrow?: number;
 
-  width?: number
-  height?: number
-  paddingTop?: number
-  paddingRight?: number
-  paddingBottom?: number
-  paddingLeft?: number
+  width?: number;
+  height?: number;
+  paddingTop?: number;
+  paddingRight?: number;
+  paddingBottom?: number;
+  paddingLeft?: number;
 
-  borderTopLeftRadius?: number
-  borderTopRightRadius?: number
-  borderBottomRightRadius?: number
-  borderBottomLeftRadius?: number
+  borderTopLeftRadius?: number;
+  borderTopRightRadius?: number;
+  borderBottomRightRadius?: number;
+  borderBottomLeftRadius?: number;
 
-  animationColors?: AnimationColors[]
-  animationDuration?: number
-  animationStart?: number
+  animationColors?: AnimationColors[];
+  animationDuration?: number;
+  animationStart?: number;
 }
 
 export interface BaseConfig {
-  type: WidgetType
-  styling: StylingConfig
+  type: WidgetType;
+  styling: StylingConfig;
 }
 
 export interface ClockConfig extends BaseConfig {
-  type: WidgetType.clock
+  type: WidgetType.clock;
 
-  separator: string
-  showSeconds: boolean
-  dimSeconds: boolean
-  dimSeparators: boolean
+  separator: string;
+  showSeconds: boolean;
+  dimSeconds: boolean;
+  dimSeparators: boolean;
 }
 
 export enum DateUpdateRate {
@@ -80,36 +80,29 @@ export enum DateUpdateRate {
 }
 
 export interface DateConfig extends BaseConfig {
-  type: WidgetType.date
+  type: WidgetType.date;
 
-  formatString: string
-  updateRate: DateUpdateRate
+  formatString: string;
+  updateRate: DateUpdateRate;
 }
 
 export interface MottoConfig extends BaseConfig {
-  type: WidgetType.motto
+  type: WidgetType.motto;
 
-  text: string
+  text: string;
 }
 
 export interface SeparatorConfig extends BaseConfig {
-  type: WidgetType.separator
+  type: WidgetType.separator;
 }
 
 export interface SnowConfig extends BaseConfig {
-  type: WidgetType.snow
+  type: WidgetType.snow;
 
-  amount: number
-  symbols: string[]
-  speed: number
+  amount: number;
+  symbols: string[];
+  speed: number;
 }
 
-export type AnyConfig = (
-  BaseConfig
-) & (
-  ClockConfig |
-  DateConfig |
-  MottoConfig |
-  SeparatorConfig |
-  SnowConfig
-)
+export type AnyConfig = (BaseConfig) &
+  (ClockConfig | DateConfig | MottoConfig | SeparatorConfig | SnowConfig);

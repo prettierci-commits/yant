@@ -1,1 +1,1 @@
-declare module 'vuex-shared-mutations';
+declare module "vuex-shared-mutations";

@@ -11,16 +11,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class CommonView extends Vue {
   texts: string[] = [
-    'Nechť již hříšné saxofony ďáblů rozezvučí síň úděsnými tóny waltzu, tanga a quickstepu.',
-    'Kŕdeľ šťastných ďatľov učí pri ústí Váhu mĺkveho koňa obhrýzať kôru a žrať čerstvé mäso.',
-    'A quick movement of the enemy will jeopardize six gunboats.',
-    'Xaver schreibt für Wikipedia zum Spaß quälend lang über Yoga, Soja und Öko.'
-  ]
+    "Nechť již hříšné saxofony ďáblů rozezvučí síň úděsnými tóny waltzu, tanga a quickstepu.",
+    "Kŕdeľ šťastných ďatľov učí pri ústí Váhu mĺkveho koňa obhrýzať kôru a žrať čerstvé mäso.",
+    "A quick movement of the enemy will jeopardize six gunboats.",
+    "Xaver schreibt für Wikipedia zum Spaß quälend lang über Yoga, Soja und Öko."
+  ];
 }
 </script>
 

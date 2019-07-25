@@ -1,1 +1,23 @@
-body{margin:0;padding:0}.options-button[data-v-158e2294]{color:inherit;cursor:pointer;height:40px;margin:0;opacity:0;padding:40px;position:fixed;right:0;top:0;width:40px;z-index:5}.options-button[data-v-158e2294]:hover{opacity:1}svg[data-v-158e2294]{fill:currentColor}
+body {
+  margin: 0;
+  padding: 0;
+}
+.options-button[data-v-158e2294] {
+  color: inherit;
+  cursor: pointer;
+  height: 40px;
+  margin: 0;
+  opacity: 0;
+  padding: 40px;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 40px;
+  z-index: 5;
+}
+.options-button[data-v-158e2294]:hover {
+  opacity: 1;
+}
+svg[data-v-158e2294] {
+  fill: currentColor;
+}

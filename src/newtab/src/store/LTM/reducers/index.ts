@@ -1,5 +1,5 @@
-export type Reducer<S> = (state: S) => Partial<S>
+export type Reducer<S> = (state: S) => Partial<S>;
 
-export function saveAll<S> (state: S): S {
-  return state
+export function saveAll<S>(state: S): S {
+  return state;
 }

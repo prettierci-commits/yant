@@ -9,20 +9,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, MottoConfig } from '@/store'
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { widgetsModule, MottoConfig } from "@/store";
 
 @Component
 export default class MottoView extends Vue {
   @Prop({ required: true })
-  widgetId!: number
+  widgetId!: number;
 
-  get config (): MottoConfig {
-    return widgetsModule.configs[this.widgetId] as MottoConfig
+  get config(): MottoConfig {
+    return widgetsModule.configs[this.widgetId] as MottoConfig;
   }
 
-  get styleAttr () {
-    return widgetsModule.generateStyleAttr(this.config.styling)
+  get styleAttr() {
+    return widgetsModule.generateStyleAttr(this.config.styling);
   }
 }
 </script>

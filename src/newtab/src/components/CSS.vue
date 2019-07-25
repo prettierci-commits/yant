@@ -3,31 +3,31 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 
 @Component
 export default class CSS extends Vue {
   @Prop({ required: true })
-  value!: string
+  value!: string;
 
-  styleElement = document.createElement('style')
+  styleElement = document.createElement("style");
 
-  @Watch('value')
-  updateStyle () {
-    this.styleElement.innerHTML = this.value
+  @Watch("value")
+  updateStyle() {
+    this.styleElement.innerHTML = this.value;
   }
 
-  created () {
-    this.styleElement.setAttribute('type', 'text/css')
+  created() {
+    this.styleElement.setAttribute("type", "text/css");
   }
 
-  mounted () {
-    this.updateStyle()
-    document.head.appendChild(this.styleElement)
+  mounted() {
+    this.updateStyle();
+    document.head.appendChild(this.styleElement);
   }
 
-  beforeDestroy () {
-    this.styleElement!.parentNode!.removeChild(this.styleElement)
+  beforeDestroy() {
+    this.styleElement!.parentNode!.removeChild(this.styleElement);
   }
 }
 </script>

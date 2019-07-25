@@ -6,20 +6,20 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, SeparatorConfig } from '@/store'
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { widgetsModule, SeparatorConfig } from "@/store";
 
 @Component
 export default class SeparatorView extends Vue {
   @Prop({ required: true })
-  widgetId!: number
+  widgetId!: number;
 
-  get config (): SeparatorConfig {
-    return widgetsModule.configs[this.widgetId] as SeparatorConfig
+  get config(): SeparatorConfig {
+    return widgetsModule.configs[this.widgetId] as SeparatorConfig;
   }
 
-  get styleAttr () {
-    return widgetsModule.generateStyleAttr(this.config.styling)
+  get styleAttr() {
+    return widgetsModule.generateStyleAttr(this.config.styling);
   }
 }
 </script>

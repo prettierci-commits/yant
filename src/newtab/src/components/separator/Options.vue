@@ -34,9 +34,9 @@
 </template>
 
 <script lang="ts">
-import Styling from '@/components/options/Styling.vue'
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, SeparatorConfig, StylingConfig } from '@/store'
+import Styling from "@/components/options/Styling.vue";
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { widgetsModule, SeparatorConfig, StylingConfig } from "@/store";
 
 @Component({
   components: {
@@ -45,48 +45,48 @@ import { widgetsModule, SeparatorConfig, StylingConfig } from '@/store'
 })
 export default class SeparatorOptions extends Vue {
   @Prop({ required: true })
-  widgetId!: number
+  widgetId!: number;
 
-  get config (): SeparatorConfig {
-    return widgetsModule.configs[this.widgetId] as SeparatorConfig
+  get config(): SeparatorConfig {
+    return widgetsModule.configs[this.widgetId] as SeparatorConfig;
   }
-  setConfig (config: Partial<SeparatorConfig>): void {
+  setConfig(config: Partial<SeparatorConfig>): void {
     widgetsModule.setConfig({
       id: this.widgetId,
       config: {
         ...this.config,
         ...config
       }
-    })
+    });
   }
 
-  get styling (): StylingConfig {
-    return this.config.styling
+  get styling(): StylingConfig {
+    return this.config.styling;
   }
-  set styling (v: StylingConfig) {
-    this.setConfig({ styling: v })
+  set styling(v: StylingConfig) {
+    this.setConfig({ styling: v });
   }
-  setStyling (styling: Partial<StylingConfig>): void {
+  setStyling(styling: Partial<StylingConfig>): void {
     this.setConfig({
       styling: {
         ...this.styling,
         ...styling
       }
-    })
+    });
   }
 
-  get flexGrow (): number | undefined {
-    return this.styling.flexGrow
+  get flexGrow(): number | undefined {
+    return this.styling.flexGrow;
   }
-  set flexGrow (v: number | undefined) {
-    this.setStyling({ flexGrow: v })
+  set flexGrow(v: number | undefined) {
+    this.setStyling({ flexGrow: v });
   }
 
-  get minHeight (): number | undefined {
-    return this.styling.minHeight
+  get minHeight(): number | undefined {
+    return this.styling.minHeight;
   }
-  set minHeight (v: number | undefined) {
-    this.setStyling({ minHeight: v })
+  set minHeight(v: number | undefined) {
+    this.setStyling({ minHeight: v });
   }
 }
 </script>

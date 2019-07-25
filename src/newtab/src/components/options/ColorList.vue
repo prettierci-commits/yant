@@ -63,15 +63,15 @@
 </template>
 
 <script lang="ts">
-import ColorTile from './ColorTile.vue'
-import ColorTileWithHint from './ColorTileWithHint.vue'
-import vuetifyColors from 'vuetify/es5/util/colors'
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+import ColorTile from "./ColorTile.vue";
+import ColorTileWithHint from "./ColorTileWithHint.vue";
+import vuetifyColors from "vuetify/es5/util/colors";
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
 type value = {
-  fg: string
-  bg: string
-}[]
+  fg: string;
+  bg: string;
+}[];
 
 @Component({
   components: {
@@ -81,75 +81,68 @@ type value = {
 })
 export default class ColorList extends Vue {
   @Prop({ required: true })
-  value!: value
+  value!: value;
 
   @Prop({ default: () => [] })
   labels!: {
-    text: string
-    title: string
-  }[]
+    text: string;
+    title: string;
+  }[];
 
-  get colors (): {
-    fg: string
-    bg: string
-    fgHint: string
+  get colors(): {
+    fg: string;
+    bg: string;
+    fgHint: string;
   }[] {
     return this.value.map(({ fg, bg }) => ({
       fg,
       bg,
       fgHint: this.getFgHint(bg)
-    }))
+    }));
   }
 
-  getFgHint (bg: string): string {
-    return this.isColorLight(bg)
-      ? '#000000'
-      : '#ffffff'
+  getFgHint(bg: string): string {
+    return this.isColorLight(bg) ? "#000000" : "#ffffff";
   }
 
-  isColorLight (hexColor: string): boolean {
-    const r = parseInt(hexColor.slice(1, 3), 16)
-    const g = parseInt(hexColor.slice(3, 5), 16)
-    const b = parseInt(hexColor.slice(5, 7), 16)
+  isColorLight(hexColor: string): boolean {
+    const r = parseInt(hexColor.slice(1, 3), 16);
+    const g = parseInt(hexColor.slice(3, 5), 16);
+    const b = parseInt(hexColor.slice(5, 7), 16);
 
-    const hsp = Math.sqrt(
-      0.299 * (r * r) +
-      0.587 * (g * g) +
-      0.114 * (b * b)
-    )
+    const hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
 
-    return hsp > 127.5
+    return hsp > 127.5;
   }
 
-  get colorPool (): string[] {
+  get colorPool(): string[] {
     return Object.values(vuetifyColors)
       .map(v => Object.values(v) as string[])
-      .flat(1)
+      .flat(1);
   }
 
-  @Emit('input')
-  add (): value {
-    const bg = this.colorPool[Math.floor(this.colorPool.length * Math.random())]
-    const fg = this.getFgHint(bg)
+  @Emit("input")
+  add(): value {
+    const bg = this.colorPool[
+      Math.floor(this.colorPool.length * Math.random())
+    ];
+    const fg = this.getFgHint(bg);
 
-    return [
-      ...this.value,
-      { fg, bg }
-    ]
+    return [...this.value, { fg, bg }];
   }
 
-  @Emit('input')
-  remove (): value {
-    return this.value.slice(0, -1)
+  @Emit("input")
+  remove(): value {
+    return this.value.slice(0, -1);
   }
 
-  @Emit('input')
-  emitInput (index: number, property: string, color: string): value {
+  @Emit("input")
+  emitInput(index: number, property: string, color: string): value {
     return [
       ...this.value.slice(0, index),
       { ...this.value[index], [property]: color },
       ...this.value.slice(index + 1)
-    ]
+    ];
   }
 }
 </script>
@@ -176,7 +169,8 @@ export default class ColorList extends Vue {
 .footer {
   grid-column: 1 / span 4;
 }
-.header, .footer {
+.header,
+.footer {
   text-align: center;
 }
 .index {
@@ -187,7 +181,9 @@ export default class ColorList extends Vue {
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
-.header, .label, .index {
+.header,
+.label,
+.index {
   padding: 0px 1ex;
 }
 </style>

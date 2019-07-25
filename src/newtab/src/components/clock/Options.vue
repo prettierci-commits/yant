@@ -53,9 +53,9 @@
 </template>
 
 <script lang="ts">
-import Styling from '@/components/options/Styling.vue'
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { widgetsModule, ClockConfig, StylingConfig } from '@/store'
+import Styling from "@/components/options/Styling.vue";
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { widgetsModule, ClockConfig, StylingConfig } from "@/store";
 
 @Component({
   components: {
@@ -64,54 +64,54 @@ import { widgetsModule, ClockConfig, StylingConfig } from '@/store'
 })
 export default class ClockOptions extends Vue {
   @Prop({ required: true })
-  widgetId!: number
+  widgetId!: number;
 
-  get config (): ClockConfig {
-    return widgetsModule.configs[this.widgetId] as ClockConfig
+  get config(): ClockConfig {
+    return widgetsModule.configs[this.widgetId] as ClockConfig;
   }
-  setConfig (config: Partial<ClockConfig>): void {
+  setConfig(config: Partial<ClockConfig>): void {
     widgetsModule.setConfig({
       id: this.widgetId,
       config: {
         ...this.config,
         ...config
       }
-    })
+    });
   }
 
-  get styling (): StylingConfig {
-    return this.config.styling
+  get styling(): StylingConfig {
+    return this.config.styling;
   }
-  set styling (v: StylingConfig) {
-    this.setConfig({ styling: v })
-  }
-
-  get separator (): string {
-    return this.config.separator
-  }
-  set separator (v: string) {
-    this.setConfig({ separator: v })
+  set styling(v: StylingConfig) {
+    this.setConfig({ styling: v });
   }
 
-  get showSeconds (): boolean {
-    return this.config.showSeconds
+  get separator(): string {
+    return this.config.separator;
   }
-  set showSeconds (v: boolean) {
-    this.setConfig({ showSeconds: v })
-  }
-
-  get dimSeconds (): boolean {
-    return this.config.dimSeconds
-  }
-  set dimSeconds (v: boolean) {
-    this.setConfig({ dimSeconds: v })
+  set separator(v: string) {
+    this.setConfig({ separator: v });
   }
 
-  get dimSeparators (): boolean {
-    return this.config.dimSeparators
+  get showSeconds(): boolean {
+    return this.config.showSeconds;
   }
-  set dimSeparators (v: boolean) {
-    this.setConfig({ dimSeparators: v })
+  set showSeconds(v: boolean) {
+    this.setConfig({ showSeconds: v });
+  }
+
+  get dimSeconds(): boolean {
+    return this.config.dimSeconds;
+  }
+  set dimSeconds(v: boolean) {
+    this.setConfig({ dimSeconds: v });
+  }
+
+  get dimSeparators(): boolean {
+    return this.config.dimSeparators;
+  }
+  set dimSeparators(v: boolean) {
+    this.setConfig({ dimSeparators: v });
   }
 }
 </script>

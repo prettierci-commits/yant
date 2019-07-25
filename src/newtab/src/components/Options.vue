@@ -98,17 +98,17 @@
 </template>
 
 <script lang="ts">
-import RootView, { Widget } from './RootView.vue'
-import { Component, Vue } from 'vue-property-decorator'
-import { Location } from 'vue-router'
-import { widgetsModule } from '@/store'
-import { drawerMap } from '@/options/widgetMetadata'
+import RootView, { Widget } from "./RootView.vue";
+import { Component, Vue } from "vue-property-decorator";
+import { Location } from "vue-router";
+import { widgetsModule } from "@/store";
+import { drawerMap } from "@/options/widgetMetadata";
 
 interface DrawerItem {
-  icon: string
-  id?: number
-  name: string
-  route: Location
+  icon: string;
+  id?: number;
+  name: string;
+  route: Location;
 }
 
 @Component({
@@ -117,15 +117,15 @@ interface DrawerItem {
   }
 })
 export default class Options extends Vue {
-  drawer: boolean = true
+  drawer: boolean = true;
 
-  get drawerItems (): DrawerItem[] {
+  get drawerItems(): DrawerItem[] {
     return [
-      drawerMap.get('common')!,
-      drawerMap.get('widgets')!,
-      drawerMap.get('style')!,
+      drawerMap.get("common")!,
+      drawerMap.get("widgets")!,
+      drawerMap.get("style")!,
       ...widgetsModule.active.map(({ type, id }) => {
-        const template = drawerMap.get(type)!
+        const template = drawerMap.get(type)!;
 
         return {
           ...template,
@@ -136,51 +136,60 @@ export default class Options extends Vue {
               id: `${id}`
             }
           }
-        }
+        };
       })
-    ]
+    ];
   }
 
-  get widgets (): Widget[] {
-    if (this.$route.meta && this.$route.meta.type && this.$route.params.id != null) {
-      return widgetsModule.configs.map(({ type }, id): Widget => ({
-        type,
-        id,
-        suppressed: this.$route.meta.type !== type ||
-          +this.$route.params.id !== id
-      }))
+  get widgets(): Widget[] {
+    if (
+      this.$route.meta &&
+      this.$route.meta.type &&
+      this.$route.params.id != null
+    ) {
+      return widgetsModule.configs.map(
+        ({ type }, id): Widget => ({
+          type,
+          id,
+          suppressed:
+            this.$route.meta.type !== type || +this.$route.params.id !== id
+        })
+      );
     } else {
-      return widgetsModule.configs.map(({ type }, id): Widget => ({
-        type,
-        id
-      }))
+      return widgetsModule.configs.map(
+        ({ type }, id): Widget => ({
+          type,
+          id
+        })
+      );
     }
   }
 
-  get sideBySide () {
-    return this.$vuetify.breakpoint.name === 'xl'
+  get sideBySide() {
+    return this.$vuetify.breakpoint.name === "xl";
   }
 
-  get previewContainerClass () {
+  get previewContainerClass() {
     return {
-      'side-by-side': this.sideBySide
-    }
+      "side-by-side": this.sideBySide
+    };
   }
 
-  get previewStyle () {
+  get previewStyle() {
     return {
-      minHeight: !this.sideBySide && this.$route.meta && this.$route.meta.preview
-        ? this.$route.meta.preview.minHeight
-        : null
-    }
+      minHeight:
+        !this.sideBySide && this.$route.meta && this.$route.meta.preview
+          ? this.$route.meta.preview.minHeight
+          : null
+    };
   }
 
-  get newtabLink () {
-    return `./index.html#${this.$route.path}`
+  get newtabLink() {
+    return `./index.html#${this.$route.path}`;
   }
 
-  openNewtab () {
-    window.open(this.newtabLink, '', 'chrome')
+  openNewtab() {
+    window.open(this.newtabLink, "", "chrome");
   }
 }
 </script>

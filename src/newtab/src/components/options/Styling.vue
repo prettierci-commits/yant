@@ -276,15 +276,15 @@
 </template>
 
 <script lang="ts">
-import Color from './Color.vue'
-import ColorList from './ColorList.vue'
-import DateTime from '@/components/DateTime.vue'
-import NumberSet from './NumberSet.vue'
-import formatDate from 'date-fns/format'
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
-import { StylingConfig, AnimationColors } from '@/store'
+import Color from "./Color.vue";
+import ColorList from "./ColorList.vue";
+import DateTime from "@/components/DateTime.vue";
+import NumberSet from "./NumberSet.vue";
+import formatDate from "date-fns/format";
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
+import { StylingConfig, AnimationColors } from "@/store";
 
-type value = StylingConfig
+type value = StylingConfig;
 
 @Component({
   components: {
@@ -296,289 +296,291 @@ type value = StylingConfig
 })
 export default class Styling extends Vue {
   @Prop({ required: true })
-  value!: value
+  value!: value;
 
   @Prop({ default: false })
-  absolute!: boolean
+  absolute!: boolean;
 
   @Prop({ default: false })
-  nofont!: boolean
+  nofont!: boolean;
 
   @Prop({ default: false })
-  nosize!: boolean
+  nosize!: boolean;
 
   @Prop({ default: false })
-  nopadding!: boolean
+  nopadding!: boolean;
 
   @Prop({ default: false })
-  nocorners!: boolean
+  nocorners!: boolean;
 
   @Prop({ default: false })
-  animatedColors!: boolean
+  animatedColors!: boolean;
 
   items = {
-    fontStyle: [{
-      text: 'Normal',
-      value: 'normal'
-    }, {
-      text: 'Italic',
-      value: 'italic'
-    }, {
-      text: 'Oblique',
-      value: 'oblique'
-    }],
-    fontVariantCaps: [{
-      text: 'Normal',
-      value: 'normal'
-    }, {
-      text: 'Small caps',
-      value: 'small-caps'
-    }, {
-      text: 'All small caps',
-      value: 'all-small-caps'
-    }]
+    fontStyle: [
+      {
+        text: "Normal",
+        value: "normal"
+      },
+      {
+        text: "Italic",
+        value: "italic"
+      },
+      {
+        text: "Oblique",
+        value: "oblique"
+      }
+    ],
+    fontVariantCaps: [
+      {
+        text: "Normal",
+        value: "normal"
+      },
+      {
+        text: "Small caps",
+        value: "small-caps"
+      },
+      {
+        text: "All small caps",
+        value: "all-small-caps"
+      }
+    ]
+  };
+
+  get animationColors(): AnimationColors[] | undefined {
+    return this.value.animationColors;
+  }
+  set animationColors(v: AnimationColors[] | undefined) {
+    this.emitStylingChange("animationColors", v);
   }
 
-  get animationColors (): AnimationColors[] | undefined {
-    return this.value.animationColors
-  }
-  set animationColors (v: AnimationColors[] | undefined) {
-    this.emitStylingChange('animationColors', v)
-  }
-
-  get animationDuration (): number | null {
+  get animationDuration(): number | null {
     return this.value.animationDuration != null
       ? this.value.animationDuration / 1000
-      : null
+      : null;
   }
-  set animationDuration (v: number | null) {
-    this.emitStylingChange('animationDuration', v != null ? v * 1000 : undefined)
+  set animationDuration(v: number | null) {
+    this.emitStylingChange(
+      "animationDuration",
+      v != null ? v * 1000 : undefined
+    );
   }
-  get animationDurationMessage () {
+  get animationDurationMessage() {
     if (!this.value.animationDuration) {
-      return ''
+      return "";
     }
 
-    const msg = []
+    const msg = [];
 
-    const d = Math.floor(this.value.animationDuration / 1000 / 60 / 60 / 24)
+    const d = Math.floor(this.value.animationDuration / 1000 / 60 / 60 / 24);
     if (d > 0) {
-      msg.push(`${d}&nbsp;d`)
+      msg.push(`${d}&nbsp;d`);
     }
 
-    const h = Math.floor((this.value.animationDuration / 1000 / 60 / 60) % 24)
+    const h = Math.floor((this.value.animationDuration / 1000 / 60 / 60) % 24);
     if (h > 0) {
-      msg.push(`${h}&nbsp;h`)
+      msg.push(`${h}&nbsp;h`);
     }
 
-    const m = Math.floor((this.value.animationDuration / 1000 / 60) % 60)
+    const m = Math.floor((this.value.animationDuration / 1000 / 60) % 60);
     if (m > 0) {
-      msg.push(`${m}&nbsp;m`)
+      msg.push(`${m}&nbsp;m`);
     }
 
-    const s = Math.floor((this.value.animationDuration / 1000) % 60)
+    const s = Math.floor((this.value.animationDuration / 1000) % 60);
     if (s > 0) {
-      msg.push(`${s}&nbsp;s`)
+      msg.push(`${s}&nbsp;s`);
     }
 
-    const ms = Math.floor(this.value.animationDuration % 1000)
+    const ms = Math.floor(this.value.animationDuration % 1000);
     if (ms > 0) {
-      msg.push(`${ms}&nbsp;ms`)
+      msg.push(`${ms}&nbsp;ms`);
     }
 
-    return msg.join(', ')
+    return msg.join(", ");
   }
 
-  get animationStart (): number | undefined {
-    return this.value.animationStart
+  get animationStart(): number | undefined {
+    return this.value.animationStart;
   }
-  set animationStart (v: number | undefined) {
-    this.emitStylingChange('animationStart', v)
+  set animationStart(v: number | undefined) {
+    this.emitStylingChange("animationStart", v);
   }
 
-  get animationStepLabels (): {
-    text: string
-    title: string
+  get animationStepLabels(): {
+    text: string;
+    title: string;
   }[] {
-    const colors = this.value.animationColors || []
-    const duration = this.value.animationDuration
-    const start = this.value.animationStart
+    const colors = this.value.animationColors || [];
+    const duration = this.value.animationDuration;
+    const start = this.value.animationStart;
 
     if (duration != null && start != null) {
-      const step = duration / colors.length
+      const step = duration / colors.length;
       return colors.map((_, i) => {
-        const timestamp = Math.round(start + i * step)
+        const timestamp = Math.round(start + i * step);
         return {
-          text: formatDate(
-            timestamp,
-            this.animationStepLabelFormat
-          ),
+          text: formatDate(timestamp, this.animationStepLabelFormat),
           title: new Date(timestamp).toLocaleString()
-        }
-      })
+        };
+      });
     } else {
       return colors.map(() => ({
-        text: '',
-        title: ''
-      }))
+        text: "",
+        title: ""
+      }));
     }
   }
-  get animationStepLabelFormat (): string {
-    const duration = this.value.animationDuration
+  get animationStepLabelFormat(): string {
+    const duration = this.value.animationDuration;
     if (duration == null) {
-      return '[]' // generates empty string in date-fns format
+      return "[]"; // generates empty string in date-fns format
     } else if (duration <= 60 * 1000) {
-      return 'ss.SSS'
+      return "ss.SSS";
     } else if (duration <= 60 * 60 * 1000) {
-      return 'HH:mm:ss.SSS'
+      return "HH:mm:ss.SSS";
     } else if (duration <= 24 * 60 * 60 * 1000) {
-      return 'HH:mm:ss'
+      return "HH:mm:ss";
     } else if (duration <= 365 * 24 * 60 * 60 * 1000) {
-      return 'MM/DD - HH:mm:ss'
+      return "MM/DD - HH:mm:ss";
     } else {
-      return 'YYYY/MM/DD - HH:mm:ss.SSS'
+      return "YYYY/MM/DD - HH:mm:ss.SSS";
     }
   }
 
-  get fontStyle (): string | undefined {
-    return this.value.fontStyle
+  get fontStyle(): string | undefined {
+    return this.value.fontStyle;
   }
-  set fontStyle (v: string | undefined) {
-    this.emitStylingChange('fontStyle', v)
-  }
-
-  get fontVariantCaps (): string | undefined {
-    return this.value.fontVariantCaps
-  }
-  set fontVariantCaps (v: string | undefined) {
-    this.emitStylingChange('fontVariantCaps', v)
+  set fontStyle(v: string | undefined) {
+    this.emitStylingChange("fontStyle", v);
   }
 
-  get fontFamily (): string | undefined {
-    return this.value.fontFamily
+  get fontVariantCaps(): string | undefined {
+    return this.value.fontVariantCaps;
   }
-  set fontFamily (v: string | undefined) {
-    this.emitStylingChange('fontFamily', v)
-  }
-
-  get fontSize (): number | undefined {
-    return this.value.fontSize
-  }
-  set fontSize (v: number | undefined) {
-    this.emitStylingChange('fontSize', v)
+  set fontVariantCaps(v: string | undefined) {
+    this.emitStylingChange("fontVariantCaps", v);
   }
 
-  get fontScale (): number | undefined {
-    return this.value.fontScale
+  get fontFamily(): string | undefined {
+    return this.value.fontFamily;
   }
-  set fontScale (v: number | undefined) {
-    this.emitStylingChange('fontScale', v)
-  }
-
-  get lineHeight (): number | undefined {
-    return this.value.lineHeight
-  }
-  set lineHeight (v: number | undefined) {
-    this.emitStylingChange('lineHeight', v)
+  set fontFamily(v: string | undefined) {
+    this.emitStylingChange("fontFamily", v);
   }
 
-  get fontWeight (): number | undefined {
-    return this.value.fontWeight
+  get fontSize(): number | undefined {
+    return this.value.fontSize;
   }
-  set fontWeight (v: number | undefined) {
-    this.emitStylingChange('fontWeight', v)
-  }
-
-  get color (): string | undefined {
-    return this.value.color
-  }
-  set color (v: string | undefined) {
-    this.emitStylingChange('color', v)
+  set fontSize(v: number | undefined) {
+    this.emitStylingChange("fontSize", v);
   }
 
-  get backgroundColor (): string | undefined {
-    return this.value.backgroundColor
+  get fontScale(): number | undefined {
+    return this.value.fontScale;
   }
-  set backgroundColor (v: string | undefined) {
-    this.emitStylingChange('backgroundColor', v)
+  set fontScale(v: number | undefined) {
+    this.emitStylingChange("fontScale", v);
   }
 
-  get dimensionsFull (): (number | undefined)[] {
-    return [
-      ...this.dimensionsSize,
-      ...this.dimensionsPadding
-    ]
+  get lineHeight(): number | undefined {
+    return this.value.lineHeight;
   }
-  set dimensionsFull (v: (number | undefined)[]) {
+  set lineHeight(v: number | undefined) {
+    this.emitStylingChange("lineHeight", v);
+  }
+
+  get fontWeight(): number | undefined {
+    return this.value.fontWeight;
+  }
+  set fontWeight(v: number | undefined) {
+    this.emitStylingChange("fontWeight", v);
+  }
+
+  get color(): string | undefined {
+    return this.value.color;
+  }
+  set color(v: string | undefined) {
+    this.emitStylingChange("color", v);
+  }
+
+  get backgroundColor(): string | undefined {
+    return this.value.backgroundColor;
+  }
+  set backgroundColor(v: string | undefined) {
+    this.emitStylingChange("backgroundColor", v);
+  }
+
+  get dimensionsFull(): (number | undefined)[] {
+    return [...this.dimensionsSize, ...this.dimensionsPadding];
+  }
+  set dimensionsFull(v: (number | undefined)[]) {
     this.emitStylingChanges([
-      { key: 'width', value: v[0] },
-      { key: 'height', value: v[1] },
-      { key: 'paddingTop', value: v[2] },
-      { key: 'paddingRight', value: v[3] },
-      { key: 'paddingBottom', value: v[4] },
-      { key: 'paddingLeft', value: v[5] }
-    ])
+      { key: "width", value: v[0] },
+      { key: "height", value: v[1] },
+      { key: "paddingTop", value: v[2] },
+      { key: "paddingRight", value: v[3] },
+      { key: "paddingBottom", value: v[4] },
+      { key: "paddingLeft", value: v[5] }
+    ]);
   }
 
-  get dimensionsSize (): (number | undefined)[] {
-    return [
-      this.value.width,
-      this.value.height
-    ]
+  get dimensionsSize(): (number | undefined)[] {
+    return [this.value.width, this.value.height];
   }
-  set dimensionsSize (v: (number | undefined)[]) {
+  set dimensionsSize(v: (number | undefined)[]) {
     this.emitStylingChanges([
-      { key: 'width', value: v[0] },
-      { key: 'height', value: v[1] }
-    ])
+      { key: "width", value: v[0] },
+      { key: "height", value: v[1] }
+    ]);
   }
 
-  get dimensionsPadding (): (number | undefined)[] {
+  get dimensionsPadding(): (number | undefined)[] {
     return [
       this.value.paddingTop,
       this.value.paddingRight,
       this.value.paddingBottom,
       this.value.paddingLeft
-    ]
+    ];
   }
-  set dimensionsPadding (v: (number | undefined)[]) {
+  set dimensionsPadding(v: (number | undefined)[]) {
     this.emitStylingChanges([
-      { key: 'paddingTop', value: v[0] },
-      { key: 'paddingRight', value: v[1] },
-      { key: 'paddingBottom', value: v[2] },
-      { key: 'paddingLeft', value: v[3] }
-    ])
+      { key: "paddingTop", value: v[0] },
+      { key: "paddingRight", value: v[1] },
+      { key: "paddingBottom", value: v[2] },
+      { key: "paddingLeft", value: v[3] }
+    ]);
   }
 
-  get borderRadiuses (): (number | undefined)[] {
+  get borderRadiuses(): (number | undefined)[] {
     return [
       this.value.borderTopLeftRadius,
       this.value.borderTopRightRadius,
       this.value.borderBottomRightRadius,
       this.value.borderBottomLeftRadius
-    ]
+    ];
   }
-  set borderRadiuses (v: (number | undefined)[]) {
+  set borderRadiuses(v: (number | undefined)[]) {
     this.emitStylingChanges([
-      { key: 'borderTopLeftRadius', value: v[0] },
-      { key: 'borderTopRightRadius', value: v[1] },
-      { key: 'borderBottomRightRadius', value: v[2] },
-      { key: 'borderBottomLeftRadius', value: v[3] }
-    ])
+      { key: "borderTopLeftRadius", value: v[0] },
+      { key: "borderTopRightRadius", value: v[1] },
+      { key: "borderBottomRightRadius", value: v[2] },
+      { key: "borderBottomLeftRadius", value: v[3] }
+    ]);
   }
 
-  emitStylingChange (key: string, value: any) {
-    this.emitStylingChanges([{ key, value }])
+  emitStylingChange(key: string, value: any) {
+    this.emitStylingChanges([{ key, value }]);
   }
-  @Emit('input')
-  emitStylingChanges (changes: { key: string; value: any }[]): value {
+  @Emit("input")
+  emitStylingChanges(changes: { key: string; value: any }[]): value {
     const styling: StylingConfig & { [key: string]: any } = {
       ...this.value
-    }
+    };
     changes.forEach(({ key, value }) => {
-      styling[key] = value
-    })
-    return styling
+      styling[key] = value;
+    });
+    return styling;
   }
 }
 </script>

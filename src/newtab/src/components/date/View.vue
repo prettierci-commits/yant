@@ -8,77 +8,77 @@
 </template>
 
 <script lang="ts">
-import Updater, { next, getNextDate } from '@/lib/Updater'
-import formatDate from 'date-fns/format'
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { widgetsModule, DateConfig, DateUpdateRate } from '@/store'
+import Updater, { next, getNextDate } from "@/lib/Updater";
+import formatDate from "date-fns/format";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import { widgetsModule, DateConfig, DateUpdateRate } from "@/store";
 
 @Component
 export default class DateView extends Vue {
   @Prop({ required: true })
-  widgetId!: number
+  widgetId!: number;
 
-  updater!: Updater
-  date: number = Date.now()
+  updater!: Updater;
+  date: number = Date.now();
 
-  created () {
-    this.updater = new Updater(this.updateDate)
+  created() {
+    this.updater = new Updater(this.updateDate);
   }
-  mounted () {
-    this.resetTimeout()
+  mounted() {
+    this.resetTimeout();
   }
-  beforeDestroy () {
-    this.updater.stop()
-  }
-
-  get config (): DateConfig {
-    return widgetsModule.configs[this.widgetId] as DateConfig
+  beforeDestroy() {
+    this.updater.stop();
   }
 
-  get styleAttr () {
-    return widgetsModule.generateStyleAttr(this.config.styling)
+  get config(): DateConfig {
+    return widgetsModule.configs[this.widgetId] as DateConfig;
   }
 
-  get textDate () {
-    return formatDate(this.date, this.config.formatString)
+  get styleAttr() {
+    return widgetsModule.generateStyleAttr(this.config.styling);
   }
 
-  @Watch('config.updateRate')
-  resetTimeout () {
-    this.updateDate(Date.now())
+  get textDate() {
+    return formatDate(this.date, this.config.formatString);
+  }
 
-    let setNextDateAndReturnMsToWait: getNextDate
+  @Watch("config.updateRate")
+  resetTimeout() {
+    this.updateDate(Date.now());
+
+    let setNextDateAndReturnMsToWait: getNextDate;
     switch (this.config.updateRate) {
       case DateUpdateRate.Days:
-        setNextDateAndReturnMsToWait = next.day
-        break
+        setNextDateAndReturnMsToWait = next.day;
+        break;
       case DateUpdateRate.Hours:
-        setNextDateAndReturnMsToWait = next.hour
-        break
+        setNextDateAndReturnMsToWait = next.hour;
+        break;
       case DateUpdateRate.Minutes:
-        setNextDateAndReturnMsToWait = next.minute
-        break
+        setNextDateAndReturnMsToWait = next.minute;
+        break;
       case DateUpdateRate.Seconds:
-        setNextDateAndReturnMsToWait = next.second
-        break
+        setNextDateAndReturnMsToWait = next.second;
+        break;
       case DateUpdateRate.Deciseconds:
-        setNextDateAndReturnMsToWait = next.decisecond
-        break
+        setNextDateAndReturnMsToWait = next.decisecond;
+        break;
       case DateUpdateRate.Centiseconds:
-        setNextDateAndReturnMsToWait = next.centisecond
-        break
+        setNextDateAndReturnMsToWait = next.centisecond;
+        break;
       case DateUpdateRate.Milliseconds:
-        setNextDateAndReturnMsToWait = next.millisecond
-        break
+        setNextDateAndReturnMsToWait = next.millisecond;
+        break;
       default:
-        setNextDateAndReturnMsToWait = next.day
+        setNextDateAndReturnMsToWait = next.day;
     }
 
-    this.updater.start(setNextDateAndReturnMsToWait)
+    this.updater.start(setNextDateAndReturnMsToWait);
   }
 
-  updateDate (timestamp: number) {
-    this.date = timestamp
+  updateDate(timestamp: number) {
+    this.date = timestamp;
   }
 }
 </script>

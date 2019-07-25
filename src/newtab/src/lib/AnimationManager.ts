@@ -1,133 +1,143 @@
-import { AnimationColors } from '@/store'
-import { plan } from '@/lib/Planner'
+import { AnimationColors } from "@/store";
+import { plan } from "@/lib/Planner";
 
-function prepareKeyframes (colors: AnimationColors[], duration: number): Keyframe[] {
+function prepareKeyframes(
+  colors: AnimationColors[],
+  duration: number
+): Keyframe[] {
   if (colors.length < 1) {
-    return []
+    return [];
   }
 
-  const fgTransitionDuration = 2000 / duration
-  const halfStepOffset = 1 / colors.length / 2
-  const fgTransitionOffset = Math.min(fgTransitionDuration, halfStepOffset / 2)
+  const fgTransitionDuration = 2000 / duration;
+  const halfStepOffset = 1 / colors.length / 2;
+  const fgTransitionOffset = Math.min(fgTransitionDuration, halfStepOffset / 2);
 
-  const keyframes: Keyframe[] = []
+  const keyframes: Keyframe[] = [];
 
   const firstAndLastKeyframe = {
     backgroundColor: colors[0].bg,
     color: colors[0].fg
-  }
+  };
 
-  keyframes.push({ ...firstAndLastKeyframe, offset: 0 })
+  keyframes.push({ ...firstAndLastKeyframe, offset: 0 });
   for (let i = 1; i < colors.length; ++i) {
-    const curr = colors[i]
-    const prev = colors[i - 1]
-    const offset = i / colors.length
+    const curr = colors[i];
+    const prev = colors[i - 1];
+    const offset = i / colors.length;
 
     if (curr.fg === prev.fg) {
       keyframes.push({
         offset,
         backgroundColor: curr.bg
-      })
+      });
     } else {
-      keyframes.push({
-        offset: offset - halfStepOffset - fgTransitionOffset,
-        color: prev.fg
-      }, {
-        offset: offset - halfStepOffset + fgTransitionOffset,
-        color: curr.fg
-      }, {
-        offset,
-        backgroundColor: curr.bg
-      })
+      keyframes.push(
+        {
+          offset: offset - halfStepOffset - fgTransitionOffset,
+          color: prev.fg
+        },
+        {
+          offset: offset - halfStepOffset + fgTransitionOffset,
+          color: curr.fg
+        },
+        {
+          offset,
+          backgroundColor: curr.bg
+        }
+      );
     }
   }
-  keyframes.push({ ...firstAndLastKeyframe, offset: 1 })
+  keyframes.push({ ...firstAndLastKeyframe, offset: 1 });
 
-  return keyframes
+  return keyframes;
 }
 
 export interface Options {
-  readonly colors?: AnimationColors[]
-  readonly delay?: number
-  readonly duration?: number
-  readonly start?: number
-  readonly sync?: boolean
+  readonly colors?: AnimationColors[];
+  readonly delay?: number;
+  readonly duration?: number;
+  readonly start?: number;
+  readonly sync?: boolean;
 }
 
 export default class AnimationManager {
-  private readonly delay: number
-  private readonly duration: number
-  private readonly element: HTMLElement
-  private readonly keyframes: Keyframe[]
-  private readonly startTimestamp: number
-  private readonly sync: boolean
+  private readonly delay: number;
+  private readonly duration: number;
+  private readonly element: HTMLElement;
+  private readonly keyframes: Keyframe[];
+  private readonly startTimestamp: number;
+  private readonly sync: boolean;
 
-  private animation: Animation | undefined
-  private cancelPlan = (): void => {}
+  private animation: Animation | undefined;
+  private cancelPlan = (): void => {};
 
-  public constructor (element: HTMLElement, options: Options = {}) {
-    this.element = element
+  public constructor(element: HTMLElement, options: Options = {}) {
+    this.element = element;
 
-    this.delay = options.delay != null ? options.delay : 0
-    this.duration = options.duration != null ? options.duration : 60000
-    this.startTimestamp = options.start != null
-      ? options.start
-      : Math.floor(this.duration * Math.random())
-    this.sync = options.sync != null
-      ? options.sync
-      : options.start != null
+    this.delay = options.delay != null ? options.delay : 0;
+    this.duration = options.duration != null ? options.duration : 60000;
+    this.startTimestamp =
+      options.start != null
+        ? options.start
+        : Math.floor(this.duration * Math.random());
+    this.sync = options.sync != null ? options.sync : options.start != null;
 
     this.keyframes = prepareKeyframes(
       options.colors != null ? options.colors : [],
       this.duration
-    )
+    );
   }
 
-  public start (): void {
-    this.stop()
+  public start(): void {
+    this.stop();
 
     const animation = this.element.animate(this.keyframes, {
       duration: this.duration,
       iterations: Number.POSITIVE_INFINITY
-    })
-    animation.currentTime = Date.now() - this.startTimestamp
-    this.animation = animation
+    });
+    animation.currentTime = Date.now() - this.startTimestamp;
+    this.animation = animation;
 
     if (this.sync) {
-      this.cancelPlan = plan((): void => {
-        const now = Date.now()
+      this.cancelPlan = plan(
+        (): void => {
+          const now = Date.now();
 
-        const expected = now - this.startTimestamp
-        const actual = animation.currentTime || 0
+          const expected = now - this.startTimestamp;
+          const actual = animation.currentTime || 0;
 
-        const diff = expected - actual
-        const absDiff = Math.abs(diff)
+          const diff = expected - actual;
+          const absDiff = Math.abs(diff);
 
-        if (animation.playbackRate === 1 && absDiff < 100) {
-          // acceptable
-        } else if (absDiff > 1000) {
-          animation.playbackRate = 1
-          animation.currentTime = expected
-        } else if (animation.playbackRate !== 1 && absDiff < 10) {
-          animation.playbackRate = 1
-        } else if (diff < 0) {
-          if (animation.playbackRate !== 0.999) {
-            animation.playbackRate = 0.999
+          if (animation.playbackRate === 1 && absDiff < 100) {
+            // acceptable
+          } else if (absDiff > 1000) {
+            animation.playbackRate = 1;
+            animation.currentTime = expected;
+          } else if (animation.playbackRate !== 1 && absDiff < 10) {
+            animation.playbackRate = 1;
+          } else if (diff < 0) {
+            if (animation.playbackRate !== 0.999) {
+              animation.playbackRate = 0.999;
+            }
+          } else if (diff > 0) {
+            if (animation.playbackRate !== 1.001) {
+              animation.playbackRate = 1.001;
+            }
           }
-        } else if (diff > 0) {
-          if (animation.playbackRate !== 1.001) {
-            animation.playbackRate = 1.001
-          }
-        }
-      }, Date.now(), 5000)
+        },
+        Date.now(),
+        5000
+      );
     }
   }
-  public stop (): void {
-    this.cancelPlan()
+  public stop(): void {
+    this.cancelPlan();
 
     if (this.animation != null) {
-      this.animation.cancel()
-      this.animation = undefined
+      this.animation.cancel();
+      this.animation = undefined;
     }
   }
 }

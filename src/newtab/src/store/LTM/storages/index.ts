@@ -1,3 +1,3 @@
-export * from './GenericStorageWrapper'
-export * from './chromeStorageWrapper'
-export * from './localStorageWrapper'
+export * from "./GenericStorageWrapper";
+export * from "./chromeStorageWrapper";
+export * from "./localStorageWrapper";

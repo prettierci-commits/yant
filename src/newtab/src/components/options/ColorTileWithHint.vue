@@ -15,10 +15,10 @@
 </template>
 
 <script lang="ts">
-import ColorTile from './ColorTile.vue'
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+import ColorTile from "./ColorTile.vue";
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
-type value = string
+type value = string;
 
 @Component({
   components: {
@@ -27,21 +27,21 @@ type value = string
 })
 export default class Color extends Vue {
   @Prop({ required: true })
-  value!: value
+  value!: value;
 
   @Prop({ required: true })
-  hint!: string
+  hint!: string;
 
-  get color (): string {
-    return this.value
+  get color(): string {
+    return this.value;
   }
-  set color (v: string) {
-    this.input(v)
+  set color(v: string) {
+    this.input(v);
   }
 
   @Emit()
-  input (v: value): value {
-    return v
+  input(v: value): value {
+    return v;
   }
 }
 </script>

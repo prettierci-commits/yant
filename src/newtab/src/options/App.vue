@@ -8,16 +8,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { storeReady } from '@/store'
+import { Component, Vue } from "vue-property-decorator";
+import { storeReady } from "@/store";
 
 @Component
 export default class App extends Vue {
-  ready = false
+  ready = false;
 
-  async mounted () {
-    await storeReady
-    this.ready = true
+  async mounted() {
+    await storeReady;
+    this.ready = true;
   }
 }
 </script>

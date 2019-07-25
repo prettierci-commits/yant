@@ -87,85 +87,85 @@
 </template>
 
 <script lang="ts">
-import formatDate from 'date-fns/format'
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+import formatDate from "date-fns/format";
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
-type value = number | null
+type value = number | null;
 
 @Component
 export default class DateTime extends Vue {
-  @Prop({ default: 'Date' })
-  label!: string
+  @Prop({ default: "Date" })
+  label!: string;
 
   @Prop({ required: true })
-  value!: value
+  value!: value;
 
-  showDate = false
-  showTime = false
+  showDate = false;
+  showTime = false;
 
-  get date (): string {
+  get date(): string {
     if (this.value != null) {
-      return formatDate(this.value, 'YYYY-MM-DD')
+      return formatDate(this.value, "YYYY-MM-DD");
     } else {
-      return ''
+      return "";
     }
   }
-  set date (v: string) {
-    const d = this.newDate()
+  set date(v: string) {
+    const d = this.newDate();
 
-    const [year, month, day] = v.split('-')
-    d.setFullYear(+year, +month - 1, +day)
+    const [year, month, day] = v.split("-");
+    d.setFullYear(+year, +month - 1, +day);
 
-    this.input(+d)
+    this.input(+d);
   }
 
-  get time (): string {
+  get time(): string {
     if (this.value != null) {
-      return formatDate(this.value, 'HH:mm')
+      return formatDate(this.value, "HH:mm");
     } else {
-      return ''
+      return "";
     }
   }
-  set time (v: string) {
-    const d = this.newDate()
+  set time(v: string) {
+    const d = this.newDate();
 
-    const [hours, minutes] = v.split(':')
-    d.setHours(+hours, +minutes)
+    const [hours, minutes] = v.split(":");
+    d.setHours(+hours, +minutes);
 
-    this.input(+d)
+    this.input(+d);
   }
 
-  get seconds (): number | null {
+  get seconds(): number | null {
     if (this.value != null) {
-      const d = new Date(this.value)
-      return d.getSeconds() + d.getMilliseconds() / 1000
+      const d = new Date(this.value);
+      return d.getSeconds() + d.getMilliseconds() / 1000;
     } else {
-      return null
+      return null;
     }
   }
-  set seconds (v: number | null) {
+  set seconds(v: number | null) {
     if (v != null) {
-      const d = this.newDate()
-      d.setSeconds(v)
-      this.input(+d)
+      const d = this.newDate();
+      d.setSeconds(v);
+      this.input(+d);
     } else {
-      this.input(null)
+      this.input(null);
     }
   }
 
-  newDate (): Date {
+  newDate(): Date {
     if (this.value != null) {
-      return new Date(this.value)
+      return new Date(this.value);
     } else {
-      const d = new Date()
-      d.setHours(0, 0, 0, 0)
-      return d
+      const d = new Date();
+      d.setHours(0, 0, 0, 0);
+      return d;
     }
   }
 
   @Emit()
-  input (v: value): value {
-    return v
+  input(v: value): value {
+    return v;
   }
 }
 </script>

@@ -34,14 +34,14 @@
 </template>
 
 <script lang="ts">
-import draggable from 'vuedraggable'
-import { Component, Vue, Prop } from 'vue-property-decorator'
+import draggable from "vuedraggable";
+import { Component, Vue, Prop } from "vue-property-decorator";
 
 interface ListItem {
-  icon: string
-  id: number
-  key: string
-  name: string
+  icon: string;
+  id: number;
+  key: string;
+  name: string;
 }
 
 @Component({
@@ -51,10 +51,10 @@ interface ListItem {
 })
 export default class DraggableWidgetList extends Vue {
   @Prop({ required: true })
-  header!: string
+  header!: string;
 
   @Prop({ required: true })
-  widgets!: ListItem[]
+  widgets!: ListItem[];
 }
 </script>
 

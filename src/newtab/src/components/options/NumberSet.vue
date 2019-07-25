@@ -24,59 +24,59 @@
 </template>
 
 <script lang="ts">
-import { Component, Emit, Prop, Vue } from 'vue-property-decorator'
+import { Component, Emit, Prop, Vue } from "vue-property-decorator";
 
-type value = (null | number)[]
+type value = (null | number)[];
 
 @Component
 export default class NumberSet extends Vue {
   @Prop({ required: true })
-  value!: value
+  value!: value;
 
   @Prop({ required: true })
-  labels!: string[]
+  labels!: string[];
 
   @Prop({ default: () => [] })
-  units!: string[]
+  units!: string[];
 
   @Prop({ default: undefined })
-  max!: number | undefined
+  max!: number | undefined;
 
   @Prop({ default: undefined })
-  min!: number | undefined
+  min!: number | undefined;
 
   @Prop({ default: undefined })
-  step!: number | undefined
+  step!: number | undefined;
 
-  get flexSizing () {
+  get flexSizing() {
     if (this.value.length <= 1) {
       return {
         xs12: true
-      }
+      };
     } else if (this.value.length <= 2) {
       return {
         xs12: true,
         sm6: true
-      }
+      };
     } else if (this.value.length <= 3) {
       return {
         xs12: true,
         sm6: true,
         md4: true
-      }
+      };
     } else if (this.value.length <= 4) {
       return {
         xs12: true,
         sm6: true,
         md3: true
-      }
+      };
     } else if (this.value.length <= 6) {
       return {
         xs12: true,
         sm6: true,
         md4: true,
         lg2: true
-      }
+      };
     } else {
       return {
         xs12: true,
@@ -84,17 +84,17 @@ export default class NumberSet extends Vue {
         md3: true,
         lg2: true,
         xl1: true
-      }
+      };
     }
   }
 
-  @Emit('input')
-  emitUpdate (i: number, v: number): value {
+  @Emit("input")
+  emitUpdate(i: number, v: number): value {
     return [
       ...this.value.slice(0, i),
       isNaN(v) ? null : v,
       ...this.value.slice(i + 1)
-    ]
+    ];
   }
 }
 </script>

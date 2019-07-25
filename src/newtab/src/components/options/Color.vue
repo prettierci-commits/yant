@@ -26,9 +26,9 @@
 </template>
 
 <script lang="ts">
-import vuetifyColors from 'vuetify/es5/util/colors'
-import { Component, Vue, Prop } from 'vue-property-decorator'
-import { Sketch } from 'vue-color'
+import vuetifyColors from "vuetify/es5/util/colors";
+import { Component, Vue, Prop } from "vue-property-decorator";
+import { Sketch } from "vue-color";
 
 @Component({
   components: {
@@ -37,28 +37,21 @@ import { Sketch } from 'vue-color'
 })
 export default class Color extends Vue {
   @Prop({ required: true })
-  value!: string
+  value!: string;
 
   @Prop({ required: true })
-  label!: string
+  label!: string;
 
   @Prop({ default: false })
-  clearable!: boolean
+  clearable!: boolean;
 
   @Prop({ default: false })
-  alpha!: boolean
+  alpha!: boolean;
 
-  get colors (): string[] {
-    return [
-      '#ffffff',
-      '#cdcdcd',
-      '#888888',
-      '#303030',
-      '#000000'
-    ].concat(
-      ...Object.values(vuetifyColors)
-        .map(({ base }) => base ? [base] : [])
-    )
+  get colors(): string[] {
+    return ["#ffffff", "#cdcdcd", "#888888", "#303030", "#000000"].concat(
+      ...Object.values(vuetifyColors).map(({ base }) => (base ? [base] : []))
+    );
   }
 }
 </script>

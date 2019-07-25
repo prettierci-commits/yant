@@ -17,16 +17,16 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import { commonModule } from '@/store'
+import { Component, Vue } from "vue-property-decorator";
+import { commonModule } from "@/store";
 
 @Component
 export default class StyleOptions extends Vue {
-  get style (): string {
-    return commonModule.style
+  get style(): string {
+    return commonModule.style;
   }
-  set style (v: string) {
-    commonModule.setStyle(v)
+  set style(v: string) {
+    commonModule.setStyle(v);
   }
 }
 </script>

@@ -27,59 +27,68 @@
 </template>
 
 <script lang="ts">
-import Updater, { nextMinute, nextSecond } from '@/lib/Updater'
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import { widgetsModule, ClockConfig } from '@/store'
+import Updater, { nextMinute, nextSecond } from "@/lib/Updater";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
+import { widgetsModule, ClockConfig } from "@/store";
 
 @Component
 export default class ClockView extends Vue {
   @Prop({ required: true })
-  widgetId!: number
+  widgetId!: number;
 
-  updater!: Updater
-  date: Date = new Date()
+  updater!: Updater;
+  date: Date = new Date();
 
-  created () {
-    this.updater = new Updater(this.updateDate)
+  created() {
+    this.updater = new Updater(this.updateDate);
   }
-  mounted () {
-    this.resetTimeout()
+  mounted() {
+    this.resetTimeout();
   }
-  beforeDestroy () {
-    this.updater.stop()
-  }
-
-  get config (): ClockConfig {
-    return widgetsModule.configs[this.widgetId] as ClockConfig
+  beforeDestroy() {
+    this.updater.stop();
   }
 
-  get styleAttr () {
-    return widgetsModule.generateStyleAttr(this.config.styling)
+  get config(): ClockConfig {
+    return widgetsModule.configs[this.widgetId] as ClockConfig;
   }
 
-  get hours () {
-    return this.date.getHours().toString().padStart(2, '0')
-  }
-  get minutes () {
-    return this.date.getMinutes().toString().padStart(2, '0')
-  }
-  get seconds () {
-    return this.date.getSeconds().toString().padStart(2, '0')
+  get styleAttr() {
+    return widgetsModule.generateStyleAttr(this.config.styling);
   }
 
-  @Watch('config.showSeconds')
-  resetTimeout () {
-    this.updateDate()
+  get hours() {
+    return this.date
+      .getHours()
+      .toString()
+      .padStart(2, "0");
+  }
+  get minutes() {
+    return this.date
+      .getMinutes()
+      .toString()
+      .padStart(2, "0");
+  }
+  get seconds() {
+    return this.date
+      .getSeconds()
+      .toString()
+      .padStart(2, "0");
+  }
+
+  @Watch("config.showSeconds")
+  resetTimeout() {
+    this.updateDate();
 
     if (this.config.showSeconds) {
-      this.updater.start(nextSecond)
+      this.updater.start(nextSecond);
     } else {
-      this.updater.start(nextMinute)
+      this.updater.start(nextMinute);
     }
   }
 
-  updateDate () {
-    this.date = new Date()
+  updateDate() {
+    this.date = new Date();
   }
 }
 </script>
